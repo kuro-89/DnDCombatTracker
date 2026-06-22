@@ -46,3 +46,6 @@ Planned future features include:
 
 
 Copyright (c) 2026 kuro
+
+No license has been chosen yet.  
+This project is currently shared for learning and demonstration purposes.
