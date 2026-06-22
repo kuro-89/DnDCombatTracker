@@ -530,16 +530,22 @@ function createCreatureCardHtml(creature, isActive) {
                 ×
             </button>
 
-            <div class="creature-card-header">
-                <h3>
-                    ${creature.name}
-                    <span class="creature-public-alias">
-                        aka "${creature.publicName}"
-                    </span>
-                </h3>
+            <div class="creature-card-top">
+                <div class="creature-image-placeholder">
+                    Bild folgt
+                </div>
 
-                <div class="creature-subtitle">
-                    <p>Typ: ${creature.type}</p>
+                <div class="creature-card-header">
+                    <h3>
+                        ${creature.name}
+                        <span class="creature-public-alias">
+                            aka "${creature.publicName}"
+                        </span>
+                    </h3>
+
+                    <div class="creature-subtitle">
+                        <p>Typ: ${creature.type}</p>
+                    </div>
                 </div>
             </div>
 
@@ -640,7 +646,7 @@ function renderTurnInfo(sortedCreatures) {
         </p>
 
         <p class="active-creature-name">
-            An der Reihe: ${activeCreature.publicName}
+            Aktiv: ${activeCreature.publicName}
         </p>
     `;
 }

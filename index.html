@@ -12,7 +12,7 @@
         <header class="app-header">
             <h1>D&D Combat Tracker v0.1</h1>
             <p>DM-Ansicht</p>
-            <p>build 2026-06-21 by Miriel</p>
+            <p>build 2026-06-22 by kuro</p>
         </header>
 
         <section class="turn-section">
@@ -30,64 +30,94 @@
             <p id="add-creature-error" class="form-error"></p>
 
             <div class="add-creature-form">
-                <div class="form-field">
-                    <label for="new-creature-name">Name</label>
-                    <input id="new-creature-name" type="text" value="Bandit A">
-                </div>
+                <fieldset class="form-group">
+                    <legend>Basisdaten</legend>
 
-                <div class="form-field">
-                    <label for="new-creature-public-name">Öffentlicher Name</label>
-                    <input id="new-creature-public-name" type="text" value="Bandit">
-                </div>
+                    <div class="form-grid form-grid-three">
+                        <div class="form-field">
+                            <label for="new-creature-name">Name</label>
+                            <input id="new-creature-name" type="text" value="Bandit A">
+                        </div>
 
-                <div class="form-field">
-                    <label for="new-creature-type">Typ</label>
-                    <select id="new-creature-type">
-                        <option value="player">Player</option>
-                        <option value="monster" selected>Monster</option>
-                        <option value="npc">NPC</option>
-                    </select>
-                </div>
+                        <div class="form-field">
+                            <label for="new-creature-public-name">Öffentlicher Name</label>
+                            <input id="new-creature-public-name" type="text" value="Bandit">
+                        </div>
 
-                <div class="form-field">
-                    <label for="new-creature-initiative">Initiative</label>
-                    <input id="new-creature-initiative" type="number" value="10">
-                </div>
+                        <div class="form-field">
+                            <label for="new-creature-type">Typ</label>
+                            <select id="new-creature-type">
+                                <option value="player">Player</option>
+                                <option value="monster" selected>Monster</option>
+                                <option value="npc">NPC</option>
+                            </select>
+                        </div>
 
-                <div class="form-field">
-                    <label for="new-creature-hp">HP</label>
-                    <input id="new-creature-hp" type="number" min="0" value="10">
-                </div>
+                        <div class="form-field form-field-wide">
+                            <label for="new-creature-image">Bild auswählen</label>
+                            <input id="new-creature-image" type="file" accept="image/*">
+                            <p class="form-hint">
+                                Nur vorbereitet. Das Bild wird noch nicht gespeichert oder angezeigt.
+                            </p>
+                        </div>
+                    </div>
+                </fieldset>
 
-                <div class="form-field">
-                    <label for="new-creature-max-hp">Max HP</label>
-                    <input id="new-creature-max-hp" type="number" min="1" value="10">
-                </div>
+                <fieldset class="form-group">
+                    <legend>Kampfwerte</legend>
 
-                <div class="form-field">
-                    <label for="new-creature-hp-visibility">Spieler-HP-Anzeige</label>
-                    <select id="new-creature-hp-visibility">
-                        <option value="full" selected>HP vollständig anzeigen</option>
-                        <option value="bar">Nur HP-Balken anzeigen</option>
-                        <option value="descriptive">Nur Beschreibung anzeigen</option>
-                        <option value="hidden">HP verbergen</option>
-                    </select>
-                </div>
+                    <div class="form-grid form-grid-four">
+                        <div class="form-field">
+                            <label for="new-creature-initiative">Initiative</label>
+                            <input id="new-creature-initiative" type="number" value="10">
+                        </div>
 
-                <div class="form-field">
-                    <label for="new-creature-ac">AC</label>
-                    <input id="new-creature-ac" type="number" min="0" value="10">
-                </div>
+                        <div class="form-field">
+                            <label for="new-creature-hp">HP</label>
+                            <input id="new-creature-hp" type="number" min="0" value="10">
+                        </div>
 
-                <div class="form-field">
-                    <label for="new-creature-passive-perception">Passive Perception</label>
-                    <input id="new-creature-passive-perception" type="number" min="0" value="10">
-                </div>
+                        <div class="form-field">
+                            <label for="new-creature-max-hp">Max HP</label>
+                            <input id="new-creature-max-hp" type="number" min="1" value="10">
+                        </div>
 
-                <div class="form-field">
-                    <label for="new-creature-passive-insight">Passive Insight</label>
-                    <input id="new-creature-passive-insight" type="number" min="0" value="10">
-                </div>
+                        <div class="form-field">
+                            <label for="new-creature-ac">AC</label>
+                            <input id="new-creature-ac" type="number" min="0" value="10">
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset class="form-group">
+                    <legend>Passive Werte</legend>
+
+                    <div class="form-grid form-grid-two">
+                        <div class="form-field">
+                            <label for="new-creature-passive-perception">Passive Perception</label>
+                            <input id="new-creature-passive-perception" type="number" min="0" value="10">
+                        </div>
+
+                        <div class="form-field">
+                            <label for="new-creature-passive-insight">Passive Insight</label>
+                            <input id="new-creature-passive-insight" type="number" min="0" value="10">
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset class="form-group form-group-compact">
+                    <legend>Spieler-Anzeige</legend>
+
+                    <div class="form-field form-field-medium">
+                        <label for="new-creature-hp-visibility">Spieler-HP-Anzeige</label>
+                        <select id="new-creature-hp-visibility">
+                            <option value="full" selected>HP vollständig anzeigen</option>
+                            <option value="bar">Nur HP-Balken anzeigen</option>
+                            <option value="descriptive">Nur Beschreibung anzeigen</option>
+                            <option value="hidden">HP verbergen</option>
+                        </select>
+                    </div>
+                </fieldset>
 
                 <button class="add-creature-button" onclick="handleAddCreatureButtonClick()">
                     Kreatur hinzufügen
