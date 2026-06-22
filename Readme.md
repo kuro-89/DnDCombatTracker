@@ -1,5 +1,5 @@
 # D&D Combat Tracker
-v.0.1 by kuro
+v.0.3 by kuro
 
 A browser-based D&D 5e combat tracker built with HTML, CSS and JavaScript.
 
