@@ -1,10 +1,15 @@
 # D&D Combat Tracker
 
+v.0.3 by kuro
+
+
+
+
 A browser-based D&D 5e combat tracker by kuro.
 
 ## Current Version
 
-`v0.3.2`
+v0.3.2
 
 ## Current Status
 
