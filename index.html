@@ -3,19 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>D&D Combat Tracker V 0.2 - DM-Ansicht by kuro</title>
+    <title>D&D Combat Tracker - DM-Ansicht by kuro</title>
 
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <main class="app">
         <header class="app-header">
-            <h1>D&D Combat Tracker V 0.3</h1>
+            <h1>D&D Combat Tracker</h1>
             <p>DM-Ansicht</p>
             <p>build 2026-06-22 by kuro</p>
         </header>
 
         <section class="turn-section">
+            <div class="turn-top-actions">
+                <details class="section-menu turn-management-menu">
+                    <summary class="section-menu-summary">
+                        Kampf verwalten
+                    </summary>
+
+                    <div class="section-menu-panel">
+                        <button onclick="resetCombatTurnCounter()">
+                            Zähler zurücksetzen
+                        </button>
+
+                        <button onclick="clearAllTempHp()">
+                            Alle Temp HP entfernen
+                        </button>
+
+                        <button onclick="clearConditionsFromHandCards()">
+                            Conditions der Handkarten entfernen
+                        </button>
+                        <button onclick="deleteAllCards()">
+                            Alle Karten löschen
+                        </button>
+                    </div>
+                </details>
+            </div>
+
             <div id="turn-info" class="turn-info"></div>
 
             <div class="turn-actions">
@@ -28,26 +53,28 @@
             <h2>Öffentliche Spieler-Vorschau</h2>
 
             <p class="section-info-card">
-                Diese Vorschau zeigt, was Spieler später ungefähr sehen könnten.
-                Sie zeigt nur Karten auf der Hand und keine geheimen DM-Werte.
+                Die Spieler-Vorschau zeigt die vorherige, aktive und nächste Karte.
+                Spieler können Karten in der Initiative-Leiste anklicken, um sie groß anzuzeigen.
             </p>
 
-            <div class="public-preview-shell">
+            <div id="public-preview-list" class="public-preview-list"></div>
+
+            <div class="public-initiative-shell">
                 <button
-                    class="public-preview-button public-preview-button-left"
+                    class="public-initiative-button"
                     onclick="scrollPublicPreview('left')"
-                    aria-label="Öffentliche Vorschau nach links scrollen"
+                    aria-label="Öffentliche Initiative-Leiste nach links scrollen"
                     title="Nach links scrollen"
                 >
                     ‹
                 </button>
 
-                <div id="public-preview-list" class="public-preview-list"></div>
+                <div id="public-preview-ribbon" class="public-preview-ribbon"></div>
 
                 <button
-                    class="public-preview-button public-preview-button-right"
+                    class="public-initiative-button"
                     onclick="scrollPublicPreview('right')"
-                    aria-label="Öffentliche Vorschau nach rechts scrollen"
+                    aria-label="Öffentliche Initiative-Leiste nach rechts scrollen"
                     title="Nach rechts scrollen"
                 >
                     ›
@@ -93,7 +120,8 @@
                             <label for="new-creature-image">Bild auswählen</label>
                             <input id="new-creature-image" type="file" accept="image/*">
                             <p class="form-hint">
-                                Nur vorbereitet. Das Bild wird noch nicht gespeichert oder angezeigt.
+                                Bilder werden lokal im Browser verarbeitet und nicht hochgeladen.
+                                Verwende nur Bilder, für die du die nötigen Rechte hast.
                             </p>
                         </div>
                     </div>
@@ -171,7 +199,35 @@
         </section>
 
         <section class="creature-list-section">
-            <h2>Karten auf der Hand</h2>
+            <div class="section-header-row">
+                <h2>Karten auf der Hand</h2>
+
+                <div class="section-toolbar">
+                    <details class="section-menu">
+                        <summary class="section-menu-summary">
+                            Hand-Aktionen
+                        </summary>
+
+                        <div class="section-menu-panel">
+                            <button onclick="moveAllHandCardsToDeck()">
+                                Alle Karten ins Deck verschieben
+                            </button>
+
+                            <button onclick="moveHandCardsOfTypeToDeck('player')">
+                                Alle Player ins Deck
+                            </button>
+
+                            <button onclick="moveHandCardsOfTypeToDeck('npc')">
+                                Alle NPCs ins Deck
+                            </button>
+
+                            <button onclick="moveHandCardsOfTypeToDeck('monster')">
+                                Alle Monster ins Deck
+                            </button>
+                        </div>
+                    </details>
+                </div>
+            </div>
 
             <p class="section-info-card">
                 Diese Karten sind im aktuellen Combat. Nur Karten auf der Hand werden für Initiative, Runde und Turn gezählt.
@@ -201,7 +257,35 @@
         </section>
 
         <section class="creature-list-section">
-            <h2>Kartendeck</h2>
+            <div class="section-header-row">
+                <h2>Kartendeck</h2>
+
+                <div class="section-toolbar">
+                    <details class="section-menu">
+                        <summary class="section-menu-summary">
+                            Deck-Aktionen
+                        </summary>
+
+                        <div class="section-menu-panel">
+                            <button onclick="moveAllDeckCardsToHand()">
+                                Alle Deck-Karten auf die Hand nehmen
+                            </button>
+
+                            <button onclick="moveDeckCardsOfTypeToHand('player')">
+                                Alle Player auf die Hand
+                            </button>
+
+                            <button onclick="moveDeckCardsOfTypeToHand('npc')">
+                                Alle NPCs auf die Hand
+                            </button>
+
+                            <button onclick="moveDeckCardsOfTypeToHand('monster')">
+                                Alle Monster auf die Hand
+                            </button>
+                        </div>
+                    </details>
+                </div>
+            </div>
 
             <p class="section-info-card">
                 Diese Karten sind vorbereitet, aber noch nicht auf der Hand.
