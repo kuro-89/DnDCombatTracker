@@ -189,3 +189,25 @@ Some demo character images in this repository were generated with ChatGPT/OpenAI
 They are original character illustrations created for this project and are not intended to copy or reproduce official Dungeons & Dragons artwork, third-party character art, or copyrighted franchise characters.
 
 These images are included only as demo/test assets for the combat tracker.
+
+## Copyright, License, and Asset Usage
+
+Copyright (c) 2026 kuro.
+
+No open-source license has been chosen for this project.
+
+This means that the source code is publicly visible if this repository is public, but no permission is granted to copy, modify, redistribute, publish, or reuse the code in other projects without explicit written permission from the author.
+
+All rights are reserved.
+
+### Image Assets
+
+The images in the `Images/` folder are AI-generated character images created for this project.
+
+They depict original D&D player characters and are included only as demo/test assets for this combat tracker.
+
+The image assets are not licensed for reuse, redistribution, modification, publication, training datasets, commercial use, or use in other projects.
+
+Do not copy, extract, reuse, edit, redistribute, or republish these images without explicit written permission from the author.
+
+These images are not official Dungeons & Dragons artwork and are not intended to copy or reproduce official Dungeons & Dragons artwork, third-party character art, or copyrighted franchise characters.
