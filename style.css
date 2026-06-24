@@ -1497,17 +1497,41 @@ body {
         height: 200px;
     }
 
+    .public-preview-section {
+        padding: 18px;
+    }
+
+    .public-preview-list {
+        margin-top: 10px;
+    }
+
     .public-three-card-stage {
-        padding: 10px;
+        padding: 12px 10px;
+    }
+
+    .public-stage-card-row {
+        justify-items: center;
+    }
+
+    .public-stage-slot-label {
+        margin-bottom: 6px;
+        font-size: 11px;
     }
 
     .public-stage-slot.focused .public-stage-card {
-        max-width: 100%;
+        width: 100%;
+        max-width: 280px;
+    }
+
+    .public-stage-card {
+        padding: 7px;
+        border-radius: 16px;
     }
 
     .public-stage-card-inner {
         gap: 6px;
         padding: 7px;
+        border-radius: 12px;
     }
 
     .public-stage-title {
@@ -1516,7 +1540,26 @@ body {
     }
 
     .public-stage-slot.focused .public-preview-image-box {
-        height: 170px;
+        height: 145px;
+    }
+
+    .public-preview-type {
+        padding: 6px 8px;
+        font-size: 11px;
+    }
+
+    .public-preview-section-box {
+        padding: 6px;
+    }
+
+    .public-preview-section-box h4 {
+        margin-bottom: 4px;
+    }
+
+    .public-focus-reset-button {
+        margin-top: 12px;
+        padding: 8px 12px;
+        font-size: 12px;
     }
 
     .public-preview-section-box {
@@ -1528,21 +1571,37 @@ body {
     }
 
     .public-initiative-title {
-        margin: 10px 0 4px;
+        margin: 12px 0 6px;
         font-size: 12px;
     }
 
     .public-initiative-shell {
-        grid-template-columns: 36px minmax(0, 1fr) 36px;
+        grid-template-columns: 34px minmax(0, 1fr) 34px;
         gap: 6px;
+        margin-top: 8px;
     }
 
     .public-initiative-button {
-        min-height: 48px;
-        font-size: 30px;
+        min-height: 56px;
+        font-size: 28px;
+        border-radius: 12px;
+    }
+
+    .public-preview-ribbon {
+        gap: 8px;
+        padding-bottom: 8px;
     }
 
     .public-ribbon-card {
-        flex-basis: 78vw;
+        flex-basis: 68vw;
+        grid-template-columns: 46px minmax(0, 1fr);
+        gap: 8px;
+        padding: 7px;
+    }
+
+    .public-ribbon-image-crop .public-preview-image-box {
+        width: 46px;
+        height: 46px;
+        min-height: 46px;
     }
 }
