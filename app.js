@@ -4,6 +4,14 @@
 
 const useDemoData = true;
 
+const appStorageKey = "miriels-deck-encounter-state-v4";
+const appChannelName = "miriels-deck-encounter-channel";
+
+let appView = getAppViewFromUrl();
+let appBroadcastChannel = null;
+let isApplyingExternalState = false;
+let lastAppliedStateText = "";
+
 let creatures = useDemoData ? createDemoCreatures() : [];
 
 function createDemoCreatures() {
@@ -83,20 +91,283 @@ const availableConditions = [
 let currentTurnIndex = 0;
 let roundNumber = 1;
 
-// null bedeutet: Die öffentliche Vorschau folgt automatisch der aktiven Karte.
-// Eine Zahl bedeutet: Die Spieler haben bewusst diese Karten-ID ausgewählt.
 let manuallySelectedPublicCardId = null;
 
-// Diese Werte brauchen wir für Swipe-Gesten auf Touch-Geräten.
 let publicPreviewTouchStartX = null;
 let publicPreviewTouchStartY = null;
 
-// Diese Variable verhindert, dass ein Trackpad-Scroll zu viele Karten auf einmal überspringt.
 let publicPreviewWheelIsCoolingDown = false;
 
 
 // ============================================================
-// 2. Grundlegende Karten-Abfragen und Sortierung
+// 2. Ansichtsmodus, Browser-Speicher und Tab-Synchronisation
+// ============================================================
+
+function getAppViewFromUrl() {
+    const urlParameters = new URLSearchParams(window.location.search);
+    const viewParameter = urlParameters.get("view");
+
+    if (viewParameter === "player") {
+        return "player";
+    }
+
+    return "dm";
+}
+
+function openAppView(viewName) {
+    const targetUrl = new URL(window.location.href);
+
+    if (viewName === "player") {
+        targetUrl.searchParams.set("view", "player");
+    } else {
+        targetUrl.searchParams.set("view", "dm");
+    }
+
+    window.open(targetUrl.toString(), "_blank");
+}
+
+function applyAppViewToPage() {
+    if (appView === "player") {
+        document.body.classList.add("player-view");
+        document.body.classList.remove("dm-view");
+    } else {
+        document.body.classList.add("dm-view");
+        document.body.classList.remove("player-view");
+    }
+
+    const kickerElement = document.querySelector("#app-view-kicker");
+
+    if (kickerElement !== null) {
+        kickerElement.textContent = appView === "player"
+            ? "Spieler-Ansicht"
+            : "DM-Ansicht";
+    }
+
+    const dmButtonElement = document.querySelector("#open-dm-view-button");
+    const playerButtonElement = document.querySelector("#open-player-view-button");
+
+    if (dmButtonElement !== null) {
+        dmButtonElement.classList.toggle("active-view-button", appView === "dm");
+    }
+
+    if (playerButtonElement !== null) {
+        playerButtonElement.classList.toggle("active-view-button", appView === "player");
+    }
+}
+
+function createPersistentAppState() {
+    return {
+        formatName: "Miriel's Deck of Encounters Local State",
+        formatVersion: 1,
+        savedAt: new Date().toISOString(),
+        encounter: {
+            roundNumber: roundNumber,
+            currentTurnIndex: currentTurnIndex,
+            manuallySelectedPublicCardId: manuallySelectedPublicCardId,
+            creatures: creatures
+        }
+    };
+}
+
+function saveAppStateToBrowser() {
+    const persistentState = createPersistentAppState();
+    const stateText = JSON.stringify(persistentState);
+
+    localStorage.setItem(appStorageKey, stateText);
+    lastAppliedStateText = stateText;
+
+    updateStorageStatus("Browser-Speicher: gespeichert");
+}
+
+function broadcastAppStateChange() {
+    if (appBroadcastChannel === null) {
+        return;
+    }
+
+    appBroadcastChannel.postMessage({
+        type: "encounter-state-changed"
+    });
+}
+
+function saveAndBroadcastAppState() {
+    if (isApplyingExternalState === true) {
+        return;
+    }
+
+    if (appView !== "dm") {
+        return;
+    }
+
+    saveAppStateToBrowser();
+    broadcastAppStateChange();
+}
+
+function loadAppStateFromBrowser() {
+    const savedStateText = localStorage.getItem(appStorageKey);
+
+    if (savedStateText === null) {
+        updateStorageStatus("Browser-Speicher: leer");
+        return false;
+    }
+
+    try {
+        const savedState = JSON.parse(savedStateText);
+        applyImportedEncounterState(savedState);
+        lastAppliedStateText = savedStateText;
+        updateStorageStatus("Browser-Speicher: geladen");
+        return true;
+    } catch (error) {
+        updateStorageStatus("Browser-Speicher: fehlerhaft");
+        return false;
+    }
+}
+
+function applyImportedEncounterState(importData) {
+    const encounterData = getEncounterDataFromImport(importData);
+
+    if (encounterData === null) {
+        return;
+    }
+
+    const importedCreatures = createImportedCreatures(encounterData.creatures);
+
+    creatures = importedCreatures;
+    roundNumber = getSafePositiveInteger(encounterData.roundNumber, 1);
+    currentTurnIndex = getSafeNonNegativeInteger(encounterData.currentTurnIndex, 0);
+
+    if (isImportedPublicSelectionValid(encounterData.manuallySelectedPublicCardId, creatures)) {
+        manuallySelectedPublicCardId = Number(encounterData.manuallySelectedPublicCardId);
+    } else {
+        clearManualPublicSelection();
+    }
+
+    const handCards = getHandCards();
+    ensureCurrentTurnIndexIsValid(handCards);
+}
+
+function applyExternalAppStateAndRender() {
+    const savedStateText = localStorage.getItem(appStorageKey);
+
+    if (savedStateText === null) {
+        return;
+    }
+
+    if (savedStateText === lastAppliedStateText) {
+        return;
+    }
+
+    lastAppliedStateText = savedStateText;
+
+    isApplyingExternalState = true;
+
+    const wasStateLoaded = loadAppStateFromBrowser();
+
+    if (wasStateLoaded === true) {
+        renderCards();
+    }
+
+    isApplyingExternalState = false;
+}
+
+function setupCrossTabSync() {
+    if ("BroadcastChannel" in window) {
+        appBroadcastChannel = new BroadcastChannel(appChannelName);
+
+        appBroadcastChannel.addEventListener("message", function(event) {
+            if (event.data === null || event.data.type !== "encounter-state-changed") {
+                return;
+            }
+
+            if (appView === "player") {
+                applyExternalAppStateAndRender();
+            }
+        });
+    }
+
+    window.addEventListener("storage", function(event) {
+        if (event.key !== appStorageKey) {
+            return;
+        }
+
+        if (appView === "player") {
+            applyExternalAppStateAndRender();
+        }
+    });
+}
+
+function setupPlayerViewPolling() {
+    if (appView !== "player") {
+        return;
+    }
+
+    setInterval(function() {
+        applyExternalAppStateAndRender();
+    }, 500);
+}
+
+function updateStorageStatus(message) {
+    const storageStatusElement = document.querySelector("#storage-status");
+
+    if (storageStatusElement === null) {
+        return;
+    }
+
+    const now = new Date();
+    const timeText = now.toLocaleTimeString("de-DE", {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit"
+    });
+
+    storageStatusElement.textContent = `${message} · ${timeText}`;
+}
+
+function saveCurrentStateManually() {
+    saveAppStateToBrowser();
+    broadcastAppStateChange();
+
+    alert("Der aktuelle Browser-Zustand wurde gespeichert.");
+}
+
+function reloadDemoCards() {
+    const shouldReloadDemoCards = confirm(
+        "Demo-Karten neu laden? Der aktuelle Encounter wird ersetzt."
+    );
+
+    if (shouldReloadDemoCards === false) {
+        return;
+    }
+
+    creatures = createDemoCreatures();
+    currentTurnIndex = 0;
+    roundNumber = 1;
+    clearManualPublicSelection();
+
+    renderCards();
+
+    alert("Die Demo-Karten wurden neu geladen.");
+}
+
+function clearSavedBrowserState() {
+    const shouldClearSavedState = confirm(
+        "Browser-Zustand löschen? Der aktuell sichtbare Encounter bleibt bis zum Neuladen sichtbar."
+    );
+
+    if (shouldClearSavedState === false) {
+        return;
+    }
+
+    localStorage.removeItem(appStorageKey);
+    lastAppliedStateText = "";
+
+    updateStorageStatus("Browser-Speicher: gelöscht");
+
+    alert("Der gespeicherte Browser-Zustand wurde gelöscht.");
+}
+
+
+// ============================================================
+// 3. Grundlegende Karten-Abfragen und Sortierung
 // ============================================================
 
 function getTypeSortValue(type) {
@@ -157,7 +428,7 @@ function getDeckCards() {
 
 
 // ============================================================
-// 3. Öffentliche Auswahl-Helfer
+// 4. Öffentliche Auswahl-Helfer
 // ============================================================
 
 function hasManualPublicSelection() {
@@ -182,7 +453,7 @@ function clearManualPublicSelection() {
 
 
 // ============================================================
-// 4. Turn-Logik
+// 5. Turn-Logik
 // ============================================================
 
 function ensureCurrentTurnIndexIsValid(handCards) {
@@ -261,7 +532,7 @@ function resetCombatTurnCounter() {
 
 
 // ============================================================
-// 5. Scroll- und Fokus-Logik
+// 6. Scroll- und Fokus-Logik
 // ============================================================
 
 function scrollCardRow(rowElementId, direction) {
@@ -465,7 +736,7 @@ function setupPublicPreviewNavigation() {
 
 
 // ============================================================
-// 6. Karten finden, verschieben, entfernen und Combat-Aufräumen
+// 7. Karten finden, verschieben, entfernen und Combat-Aufräumen
 // ============================================================
 
 function findCreatureById(id) {
@@ -641,7 +912,7 @@ function deleteAllCards() {
 
 
 // ============================================================
-// 7. HP und Kampfaktionen
+// 8. HP und Kampfaktionen
 // ============================================================
 
 function getHpChangeAmount(creatureId) {
@@ -736,6 +1007,24 @@ function getHpPercent(creature) {
     return rawPercent;
 }
 
+function getTempHpPercent(creature) {
+    if (creature.maxHp <= 0) {
+        return 0;
+    }
+
+    const rawPercent = Math.round((creature.tempHp / creature.maxHp) * 100);
+
+    if (rawPercent < 0) {
+        return 0;
+    }
+
+    if (rawPercent > 100) {
+        return 100;
+    }
+
+    return rawPercent;
+}
+
 function getHpDescription(creature) {
     const hpPercent = getHpPercent(creature);
 
@@ -780,7 +1069,7 @@ function getHpVisibilityLabel(creature) {
 
 
 // ============================================================
-// 8. Conditions
+// 9. Conditions
 // ============================================================
 
 function createConditionOptionsHtml() {
@@ -853,7 +1142,7 @@ function getConditionClassName(conditionName) {
 
 
 // ============================================================
-// 9. Bilder lokal einlesen
+// 10. Bilder lokal einlesen
 // ============================================================
 
 function readImageFileAsDataUrl(file) {
@@ -874,7 +1163,7 @@ function readImageFileAsDataUrl(file) {
 
 
 // ============================================================
-// 10. Encounter exportieren und importieren
+// 11. Encounter exportieren und importieren
 // ============================================================
 
 function createEncounterExportData() {
@@ -1223,30 +1512,38 @@ function getSafeConditions(value) {
 
 
 // ============================================================
-// 11. Öffentliche Spieler-Daten
+// 12. Öffentliche Spieler-Daten
 // ============================================================
 
 function createPublicHpData(creature) {
+    const hasTempHp = creature.tempHp > 0;
+
     if (creature.hpVisibility === "full") {
         return {
             mode: "full",
             hp: creature.hp,
             maxHp: creature.maxHp,
-            percent: getHpPercent(creature)
+            percent: getHpPercent(creature),
+            tempHp: creature.tempHp,
+            hasTempHp: hasTempHp,
+            tempHpPercent: getTempHpPercent(creature)
         };
     }
 
     if (creature.hpVisibility === "bar") {
         return {
             mode: "bar",
-            percent: getHpPercent(creature)
+            percent: getHpPercent(creature),
+            hasTempHp: hasTempHp,
+            tempHpPercent: getTempHpPercent(creature)
         };
     }
 
     if (creature.hpVisibility === "descriptive") {
         return {
             mode: "descriptive",
-            description: getHpDescription(creature)
+            description: getHpDescription(creature),
+            hasTempHp: hasTempHp
         };
     }
 
@@ -1344,7 +1641,7 @@ function getPublicTurnWindow(publicCards) {
 
 
 // ============================================================
-// 12. HTML-Erzeugung: Bilder, HP und Conditions
+// 13. HTML-Erzeugung: Bilder, HP und Conditions
 // ============================================================
 
 function createCreatureImageHtml(creature) {
@@ -1410,12 +1707,56 @@ function getPublicHpDisplayHtml(creature) {
     `;
 }
 
+function getPublicTempHpTextHtml(publicCard) {
+    if (publicCard.hp.hasTempHp !== true) {
+        return "";
+    }
+
+    if (publicCard.hp.mode === "full") {
+        return `
+            <p class="public-temp-hp-text">
+                Temp HP: ${publicCard.hp.tempHp}
+            </p>
+        `;
+    }
+
+    if (publicCard.hp.mode === "descriptive") {
+        return `
+            <p class="public-temp-hp-text">
+                Temp HP vorhanden
+            </p>
+        `;
+    }
+
+    return "";
+}
+
+function getPublicTempHpBarHtml(publicCard) {
+    if (publicCard.hp.hasTempHp !== true) {
+        return "";
+    }
+
+    if (publicCard.hp.mode !== "full" && publicCard.hp.mode !== "bar") {
+        return "";
+    }
+
+    return `
+        <div class="temp-hp-bar-outer" title="Temp HP">
+            <div
+                class="temp-hp-bar-inner"
+                style="width: ${publicCard.hp.tempHpPercent}%;"
+            ></div>
+        </div>
+    `;
+}
+
 function getPublicHpPreviewHtml(publicCard) {
     if (publicCard.hp.mode === "full") {
         return `
             <div class="public-preview-section-box">
                 <h4>HP</h4>
                 <p>${publicCard.hp.hp} / ${publicCard.hp.maxHp} HP</p>
+                ${getPublicTempHpTextHtml(publicCard)}
 
                 <div class="hp-bar-outer">
                     <div
@@ -1423,6 +1764,8 @@ function getPublicHpPreviewHtml(publicCard) {
                         style="width: ${publicCard.hp.percent}%;"
                     ></div>
                 </div>
+
+                ${getPublicTempHpBarHtml(publicCard)}
             </div>
         `;
     }
@@ -1438,6 +1781,8 @@ function getPublicHpPreviewHtml(publicCard) {
                         style="width: ${publicCard.hp.percent}%;"
                     ></div>
                 </div>
+
+                ${getPublicTempHpBarHtml(publicCard)}
             </div>
         `;
     }
@@ -1447,6 +1792,7 @@ function getPublicHpPreviewHtml(publicCard) {
             <div class="public-preview-section-box">
                 <h4>HP</h4>
                 <p>${publicCard.hp.description}</p>
+                ${getPublicTempHpTextHtml(publicCard)}
             </div>
         `;
     }
@@ -1518,7 +1864,7 @@ function createPublicConditionChipsHtml(publicCard) {
 
 
 // ============================================================
-// 13. HTML-Erzeugung: Öffentliche Spieler-Vorschau
+// 14. HTML-Erzeugung: Öffentliche Spieler-Vorschau
 // ============================================================
 
 function getPublicStageLabel(slotName) {
@@ -1694,7 +2040,7 @@ function createPublicTurnStatusHtml(handCards, activeCard) {
 
 
 // ============================================================
-// 14. HTML-Erzeugung: DM-Karten
+// 15. HTML-Erzeugung: DM-Karten
 // ============================================================
 
 function createCardMenuHtml(creature) {
@@ -1853,7 +2199,7 @@ function createCreatureCardHtml(creature, isActive) {
 
 
 // ============================================================
-// 15. Formular: Neue Karte hinzufügen
+// 16. Formular: Neue Karte hinzufügen
 // ============================================================
 
 function showAddCreatureError(message) {
@@ -2018,7 +2364,7 @@ async function handleAddCreatureButtonClick() {
 
 
 // ============================================================
-// 16. Rendering
+// 17. Rendering
 // ============================================================
 
 function renderTurnInfo(handCards) {
@@ -2140,14 +2486,30 @@ function renderCards() {
 
     renderTurnInfo(handCards);
     renderPublicPreview(publicCards, handCards);
-    renderCardList("#hand-card-list", handCards, activeCard);
-    renderCardList("#deck-card-list", deckCards, activeCard);
+
+    if (appView === "dm") {
+        renderCardList("#hand-card-list", handCards, activeCard);
+        renderCardList("#deck-card-list", deckCards, activeCard);
+    }
+
+    saveAndBroadcastAppState();
 }
 
 
 // ============================================================
-// 17. Start der App
+// 18. Start der App
 // ============================================================
 
+applyAppViewToPage();
+setupCrossTabSync();
+
+const wasStateLoaded = loadAppStateFromBrowser();
+
+if (wasStateLoaded === false && useDemoData === true) {
+    creatures = createDemoCreatures();
+    updateStorageStatus("Browser-Speicher: leer, Demo-Karten geladen");
+}
+
+setupPlayerViewPolling();
 setupPublicPreviewNavigation();
 renderCards();

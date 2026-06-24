@@ -15,10 +15,6 @@ body {
     padding: 32px;
 }
 
-/* ============================================================
-   App-Header
-   ============================================================ */
-
 .app-header {
     margin-bottom: 32px;
 }
@@ -27,14 +23,12 @@ body {
     position: relative;
     overflow: hidden;
 
-    min-height: 280px;
-    padding: 32px 520px 32px 32px;
+    padding: 28px 32px;
 
     border: 1px solid #8a6f2a;
     border-radius: 18px;
     background:
         radial-gradient(circle at top left, rgba(240, 198, 116, 0.18), transparent 34%),
-        radial-gradient(circle at right, rgba(132, 62, 176, 0.22), transparent 38%),
         linear-gradient(135deg, #332b1d, #1f1f24 58%, #18181d);
 
     box-shadow:
@@ -42,63 +36,25 @@ body {
         inset 0 0 0 1px rgba(255, 255, 255, 0.035);
 }
 
-.app-header-text {
-    position: relative;
-    z-index: 3;
-}
+.app-header-card::after {
+    content: "";
 
-.app-header-art {
     position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
+    top: 18px;
+    right: 22px;
 
-    width: 560px;
+    width: 110px;
+    height: 150px;
 
-    overflow: hidden;
+    border: 1px solid rgba(240, 198, 116, 0.18);
+    border-radius: 14px;
 
+    background:
+        linear-gradient(180deg, rgba(240, 198, 116, 0.12), rgba(31, 31, 36, 0.12)),
+        rgba(255, 255, 255, 0.02);
+
+    transform: rotate(9deg);
     pointer-events: none;
-}
-
-.app-header-art::before {
-    content: "";
-
-    position: absolute;
-    inset: 0;
-
-    background:
-        linear-gradient(90deg, #1f1f24 0%, rgba(31, 31, 36, 0.78) 14%, rgba(31, 31, 36, 0.18) 46%, rgba(31, 31, 36, 0.12) 100%),
-        linear-gradient(180deg, rgba(31, 31, 36, 0.10), rgba(31, 31, 36, 0.48));
-
-    z-index: 1;
-}
-
-.app-header-art::after {
-    content: "";
-
-    position: absolute;
-    inset: 0;
-
-    background:
-        radial-gradient(circle at 72% 48%, rgba(132, 62, 176, 0.18), transparent 32%),
-        linear-gradient(90deg, rgba(31, 31, 36, 0.22), transparent 42%);
-
-    z-index: 2;
-}
-
-.app-header-art img {
-    width: 100%;
-    height: 100%;
-
-    display: block;
-
-    object-fit: cover;
-    object-position: center right;
-
-    filter:
-        saturate(0.9)
-        contrast(1.04)
-        brightness(0.82);
 }
 
 .app-kicker {
@@ -115,7 +71,7 @@ body {
     position: relative;
     z-index: 1;
 
-    max-width: 780px;
+    max-width: 980px;
     margin: 0;
 
     color: #ffffff;
@@ -146,28 +102,14 @@ body {
     font-size: 14px;
 }
 
-/* ============================================================
-   Große App-Bereiche / Panels
-   ============================================================ */
-
 .add-creature-section,
 .combat-control-section,
 .public-preview-section {
-    position: relative;
-    overflow: hidden;
-
-    background:
-        radial-gradient(circle at top left, rgba(240, 198, 116, 0.08), transparent 34%),
-        linear-gradient(135deg, #2d2d35, #24242b 62%, #1f1f24);
-
-    border: 1px solid #555560;
-    border-radius: 18px;
+    background: #2d2d35;
+    border: 1px solid #44444f;
+    border-radius: 12px;
     padding: 24px;
     margin-bottom: 32px;
-
-    box-shadow:
-        0 14px 30px rgba(0, 0, 0, 0.24),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.025);
 }
 
 .dm-workspace {
@@ -183,19 +125,6 @@ body {
     margin-bottom: 0;
 }
 
-.add-creature-section h2,
-.combat-control-section h2,
-.public-preview-section h2,
-.creature-list-section h2 {
-    margin-top: 0;
-    margin-bottom: 16px;
-
-    color: #ffffff;
-    font-size: clamp(24px, 3vw, 36px);
-    line-height: 1;
-    letter-spacing: -0.03em;
-}
-
 .combat-control-section h2 {
     margin: 0;
 }
@@ -203,10 +132,6 @@ body {
 .combat-control-section .section-info-card {
     margin-bottom: 16px;
 }
-
-/* ============================================================
-   Turn-Anzeige
-   ============================================================ */
 
 .turn-top-actions {
     display: flex;
@@ -242,10 +167,6 @@ body {
     flex-wrap: wrap;
 }
 
-/* ============================================================
-   Buttons
-   ============================================================ */
-
 .turn-actions button,
 .add-creature-form button,
 .condition-controls button,
@@ -277,9 +198,12 @@ body {
     background: #3a3a46;
 }
 
-/* ============================================================
-   Formular
-   ============================================================ */
+.add-creature-section h2,
+.combat-control-section h2,
+.public-preview-section h2 {
+    margin-top: 0;
+    margin-bottom: 16px;
+}
 
 .form-error {
     min-height: 20px;
@@ -297,14 +221,9 @@ body {
 .form-group {
     margin: 0;
     padding: 16px;
-
-    border: 1px solid rgba(240, 198, 116, 0.22);
-    border-radius: 14px;
-
-    background:
-        linear-gradient(135deg, rgba(37, 37, 44, 0.96), rgba(31, 31, 36, 0.96));
-
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.025);
+    border: 1px solid #44444f;
+    border-radius: 12px;
+    background: #25252c;
 }
 
 .form-group legend {
@@ -412,27 +331,8 @@ body {
     color: #f0c674;
 }
 
-/* ============================================================
-   Kartenlisten-Bereiche
-   ============================================================ */
-
 .creature-list-section {
-    position: relative;
-    overflow: hidden;
-
     margin-bottom: 40px;
-    padding: 24px;
-
-    border: 1px solid #44444f;
-    border-radius: 18px;
-
-    background:
-        radial-gradient(circle at top left, rgba(240, 198, 116, 0.06), transparent 32%),
-        linear-gradient(135deg, #292930, #222229 62%, #1f1f24);
-
-    box-shadow:
-        0 14px 30px rgba(0, 0, 0, 0.22),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.02);
 }
 
 .creature-list-section h2 {
@@ -536,15 +436,10 @@ body {
 .empty-list-message {
     margin: 0;
     padding: 16px;
-
-    border: 1px dashed rgba(240, 198, 116, 0.32);
-    border-radius: 14px;
-
+    border: 1px dashed #555560;
+    border-radius: 12px;
     color: #c7c7c7;
-    background:
-        linear-gradient(135deg, rgba(58, 51, 34, 0.42), rgba(37, 37, 44, 0.86));
-
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.025);
+    background: #25252c;
 }
 
 .card-row-shell {
@@ -1422,20 +1317,97 @@ body {
     }
 }
 
+
+/* ============================================================
+   Speicherstatus
+   ============================================================ */
+
+.storage-status {
+    margin: 0 0 16px;
+    padding: 10px 12px;
+
+    border: 1px solid rgba(138, 180, 248, 0.28);
+    border-radius: 12px;
+
+    background: rgba(38, 50, 65, 0.72);
+    color: #b7d0ff;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.storage-status.storage-status-warning {
+    border-color: rgba(240, 198, 116, 0.34);
+    background: rgba(58, 51, 34, 0.72);
+    color: #f0c674;
+}
+
+.storage-status.storage-status-danger {
+    border-color: rgba(255, 159, 159, 0.34);
+    background: rgba(107, 47, 47, 0.48);
+    color: #ffb7b7;
+}
+
+
+/* ============================================================
+   Footer / Projekt-Hinweise
+   ============================================================ */
+
+.app-footer {
+    margin-top: 40px;
+    padding-top: 24px;
+
+    border-top: 1px solid rgba(240, 198, 116, 0.18);
+}
+
+.project-notice {
+    border: 1px solid #44444f;
+    border-radius: 14px;
+
+    background:
+        linear-gradient(135deg, rgba(37, 37, 44, 0.92), rgba(31, 31, 36, 0.92));
+
+    color: #c7c7c7;
+
+    box-shadow:
+        0 10px 22px rgba(0, 0, 0, 0.18),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.025);
+}
+
+.project-notice summary {
+    padding: 14px 16px;
+
+    color: #f0c674;
+    cursor: pointer;
+
+    font-weight: 800;
+    letter-spacing: 0.02em;
+}
+
+.project-notice summary:hover {
+    color: #ffe2a0;
+}
+
+.project-notice-content {
+    display: grid;
+    gap: 10px;
+
+    padding: 0 16px 16px;
+}
+
+.project-notice-content p {
+    margin: 0;
+
+    color: #c7c7c7;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
 /* ============================================================
    Responsive Layout: Tablet / kleinere Bildschirme
    ============================================================ */
 
 @media (max-width: 900px) {
-    .app-header-card {
-        min-height: 250px;
-        padding-right: 330px;
-    }
-
-    .app-header-art {
-        width: 360px;
-    }
-
     .dm-workspace {
         grid-template-columns: 1fr;
     }
@@ -1507,40 +1479,15 @@ body {
     }
 
     .app-header-card {
-        min-height: 190px;
         padding: 22px 18px;
     }
 
-    .app-header-art {
-        display: block;
-
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-
-        width: auto;
-
-        opacity: 0.42;
-    }
-
-    .app-header-art::before {
-        background:
-            linear-gradient(90deg, rgba(31, 31, 36, 0.92) 0%, rgba(31, 31, 36, 0.72) 52%, rgba(31, 31, 36, 0.36) 100%),
-            linear-gradient(180deg, rgba(31, 31, 36, 0.26), rgba(31, 31, 36, 0.82));
-    }
-
-    .app-header-art::after {
-        display: none;
-    }
-
-    .app-header-art img {
-        object-position: 72% center;
-
-        filter:
-            saturate(0.82)
-            contrast(1.04)
-            brightness(0.72);
+    .app-header-card::after {
+        width: 72px;
+        height: 104px;
+        top: 14px;
+        right: 14px;
+        opacity: 0.55;
     }
 
     .app-kicker {
@@ -1553,21 +1500,6 @@ body {
 
     .app-build-info {
         font-size: 12px;
-    }
-
-    .add-creature-section,
-    .combat-control-section,
-    .public-preview-section,
-    .creature-list-section {
-        padding: 18px;
-        border-radius: 18px;
-    }
-
-    .add-creature-section h2,
-    .combat-control-section h2,
-    .public-preview-section h2,
-    .creature-list-section h2 {
-        font-size: 28px;
     }
 
     .form-grid-two,
@@ -1651,37 +1583,17 @@ body {
         height: 200px;
     }
 
-    .public-preview-list {
-        margin-top: 10px;
-    }
-
     .public-three-card-stage {
-        padding: 12px 10px;
-    }
-
-    .public-stage-card-row {
-        justify-items: center;
-    }
-
-    .public-stage-slot-label {
-        margin-bottom: 6px;
-        font-size: 11px;
+        padding: 10px;
     }
 
     .public-stage-slot.focused .public-stage-card {
-        width: 100%;
-        max-width: 310px;
-    }
-
-    .public-stage-card {
-        padding: 7px;
-        border-radius: 16px;
+        max-width: 100%;
     }
 
     .public-stage-card-inner {
         gap: 6px;
         padding: 7px;
-        border-radius: 12px;
     }
 
     .public-stage-title {
@@ -1690,12 +1602,7 @@ body {
     }
 
     .public-stage-slot.focused .public-preview-image-box {
-        height: 165px;
-    }
-
-    .public-preview-type {
-        padding: 6px 8px;
-        font-size: 11px;
+        height: 170px;
     }
 
     .public-preview-section-box {
@@ -1706,52 +1613,237 @@ body {
         margin-bottom: 4px;
     }
 
-    .public-focus-reset-button {
-        margin-top: 12px;
-        padding: 8px 12px;
-        font-size: 12px;
-    }
-
     .public-initiative-title {
-        margin: 12px 0 6px;
+        margin: 10px 0 4px;
         font-size: 12px;
     }
 
     .public-initiative-shell {
-        grid-template-columns: 30px minmax(0, 1fr) 30px;
+        grid-template-columns: 36px minmax(0, 1fr) 36px;
         gap: 6px;
-        margin-top: 8px;
     }
 
     .public-initiative-button {
-        min-height: 52px;
-        font-size: 26px;
-        border-radius: 12px;
-    }
-
-    .public-preview-ribbon {
-        gap: 8px;
-        padding-bottom: 8px;
+        min-height: 48px;
+        font-size: 30px;
     }
 
     .public-ribbon-card {
-        flex: 0 0 132px;
-        grid-template-columns: 38px minmax(0, 1fr);
-        gap: 7px;
-        padding: 7px;
+        flex-basis: 78vw;
+    }
+}
+
+/* ============================================================
+   Session 41: DM-/Spieler-Ansicht, Header-Artwork, Temp HP
+   ============================================================ */
+
+body.player-view .dm-only {
+    display: none;
+}
+
+body.player-view .app {
+    max-width: 1100px;
+}
+
+body.player-view .public-preview-section {
+    margin-bottom: 0;
+}
+
+.app-header-card {
+    min-height: 280px;
+    padding: 32px 520px 32px 32px;
+    background:
+        radial-gradient(circle at top left, rgba(240, 198, 116, 0.18), transparent 34%),
+        radial-gradient(circle at right, rgba(132, 62, 176, 0.22), transparent 38%),
+        linear-gradient(135deg, #332b1d, #1f1f24 58%, #18181d);
+}
+
+.app-header-card::after {
+    display: none;
+}
+
+.app-header-text {
+    position: relative;
+    z-index: 3;
+}
+
+.app-header-art {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 560px;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.app-header-art::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(90deg, #1f1f24 0%, rgba(31, 31, 36, 0.78) 14%, rgba(31, 31, 36, 0.18) 46%, rgba(31, 31, 36, 0.12) 100%),
+        linear-gradient(180deg, rgba(31, 31, 36, 0.10), rgba(31, 31, 36, 0.48));
+    z-index: 1;
+}
+
+.app-header-art::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 72% 48%, rgba(132, 62, 176, 0.18), transparent 32%),
+        linear-gradient(90deg, rgba(31, 31, 36, 0.22), transparent 42%);
+    z-index: 2;
+}
+
+.app-header-art img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center right;
+    filter: saturate(0.9) contrast(1.04) brightness(0.82);
+}
+
+.app-view-actions {
+    position: relative;
+    z-index: 4;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+}
+
+.app-view-actions button {
+    padding: 8px 12px;
+    border: 1px solid rgba(240, 198, 116, 0.36);
+    border-radius: 999px;
+    background: rgba(58, 51, 34, 0.78);
+    color: #f0c674;
+    cursor: pointer;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.app-view-actions button:hover {
+    border-color: #f0c674;
+    background: rgba(74, 63, 40, 0.92);
+}
+
+.app-view-actions button.active-view-button {
+    border-color: #8ab4f8;
+    background: rgba(38, 50, 65, 0.9);
+    color: #8ab4f8;
+}
+
+.temp-hp-bar-outer {
+    width: 100%;
+    height: 8px;
+    margin-top: 5px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: #1f1f24;
+    overflow: hidden;
+}
+
+.temp-hp-bar-inner {
+    height: 100%;
+    border-radius: 999px;
+    background: #8ab4f8;
+}
+
+.public-temp-hp-text {
+    margin-top: 4px !important;
+    color: #8ab4f8 !important;
+    font-weight: 700;
+}
+
+@media (max-width: 900px) {
+    .app-header-card {
+        min-height: 250px;
+        padding-right: 330px;
     }
 
-    .public-ribbon-image-crop .public-preview-image-box {
-        width: 38px;
-        height: 38px;
-        min-height: 38px;
+    .app-header-art {
+        width: 360px;
+    }
+}
+
+@media (max-width: 560px) {
+    .app-header-card {
+        min-height: 190px;
+        padding: 22px 18px;
     }
 
-    .public-ribbon-text strong {
+    .app-header-art {
+        display: block;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: auto;
+        opacity: 0.42;
+    }
+
+    .app-header-art::before {
+        background:
+            linear-gradient(90deg, rgba(31, 31, 36, 0.92) 0%, rgba(31, 31, 36, 0.72) 52%, rgba(31, 31, 36, 0.36) 100%),
+            linear-gradient(180deg, rgba(31, 31, 36, 0.26), rgba(31, 31, 36, 0.82));
+    }
+
+    .app-header-art::after {
+        display: none;
+    }
+
+    .app-header-art img {
+        object-position: 72% center;
+        filter: saturate(0.82) contrast(1.04) brightness(0.72);
+    }
+
+    .app-view-actions {
+        gap: 8px;
+        margin-top: 14px;
+    }
+
+    .app-view-actions button {
+        padding: 7px 10px;
         font-size: 12px;
     }
 
-    .public-ribbon-text span {
-        font-size: 11px;
+    .creature-list {
+        padding-left: 0;
+        padding-right: 0;
     }
+
+    .creature-card {
+        flex-basis: calc(100% - 8px);
+        max-width: calc(100% - 8px);
+        min-height: 0;
+    }
+
+    .storage-status {
+        font-size: 12px;
+        padding: 9px 10px;
+    }
+
+    .app-footer {
+        margin-top: 28px;
+        padding-top: 18px;
+    }
+
+    .project-notice summary {
+        padding: 12px 14px;
+        font-size: 14px;
+    }
+
+    .project-notice-content {
+        padding: 0 14px 14px;
+    }
+
+    .project-notice-content p {
+        font-size: 13px;
+    }
+
 }

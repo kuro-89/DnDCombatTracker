@@ -12,7 +12,7 @@
         <header class="app-header">
             <div class="app-header-card">
                 <div class="app-header-text">
-                    <p class="app-kicker">DM-Ansicht</p>
+                    <p id="app-view-kicker" class="app-kicker">DM-Ansicht</p>
 
                     <h1>Miriel’s Deck of Encounters</h1>
 
@@ -21,8 +21,26 @@
                     </p>
 
                     <p class="app-build-info">
-                        v0.4.0 build 2026-06-24 by kuro
+                        v0.4.1 build 2026-06-24 by kuro
                     </p>
+
+                    <div class="app-view-actions" aria-label="Ansicht wechseln">
+                        <button
+                            id="open-dm-view-button"
+                            type="button"
+                            onclick="openAppView('dm')"
+                        >
+                            DM-Ansicht öffnen
+                        </button>
+
+                        <button
+                            id="open-player-view-button"
+                            type="button"
+                            onclick="openAppView('player')"
+                        >
+                            Spieler-Ansicht öffnen
+                        </button>
+                    </div>
                 </div>
 
                 <div class="app-header-art" aria-hidden="true">
@@ -44,9 +62,7 @@
             </p>
 
             <div id="public-preview-list" class="public-preview-list"></div>
-
             <h3 class="public-initiative-title">Initiative</h3>
-
             <div class="public-initiative-shell">
                 <button
                     class="public-initiative-button"
@@ -70,7 +86,7 @@
             </div>
         </section>
 
-        <div class="dm-workspace">
+        <div class="dm-workspace dm-only">
             <section class="add-creature-section">
                 <h2>Neue Karte hinzufügen</h2>
 
@@ -222,6 +238,18 @@
                                     Encounter importieren
                                 </button>
 
+                                <button onclick="saveCurrentStateManually()">
+                                    Browser-Zustand speichern
+                                </button>
+
+                                <button onclick="reloadDemoCards()">
+                                    Demo-Karten neu laden
+                                </button>
+
+                                <button onclick="clearSavedBrowserState()">
+                                    Browser-Zustand löschen
+                                </button>
+
                                 <input
                                     id="encounter-import-file"
                                     type="file"
@@ -239,6 +267,10 @@
                     Später kommen hier Massenaktionen und Effekte für mehrere Karten hinzu.
                 </p>
 
+                <div id="storage-status" class="storage-status">
+                    Browser-Speicher: wird geprüft …
+                </div>
+
                 <div id="turn-info" class="turn-info"></div>
 
                 <div class="turn-actions">
@@ -248,7 +280,7 @@
             </section>
         </div>
 
-        <section class="creature-list-section">
+        <section class="creature-list-section dm-only">
             <div class="section-header-row">
                 <h2>Karten auf der Hand</h2>
 
@@ -306,7 +338,7 @@
             </div>
         </section>
 
-        <section class="creature-list-section">
+        <section class="creature-list-section dm-only">
             <div class="section-header-row">
                 <h2>Kartendeck</h2>
 
@@ -363,6 +395,38 @@
                 </button>
             </div>
         </section>
+
+        <footer class="app-footer">
+            <details class="project-notice">
+                <summary>
+                    Projekt- und Nutzungshinweise
+                </summary>
+
+                <div class="project-notice-content">
+                    <p>
+                        Miriel’s Deck of Encounters ist ein privates Hobbyprojekt
+                        zur Unterstützung privater Fantasy-Tabletop-Runden.
+                    </p>
+
+                    <p>
+                        Diese Website ist nicht kommerziell. Es gibt keine Werbung,
+                        kein Tracking, keine kostenpflichtigen Dienste und keine
+                        offiziellen Verbindungen zu Rechteinhabern von Rollenspielsystemen.
+                    </p>
+
+                    <p>
+                        Alle Projektdateien, Texte, Designs und Bilder sind nicht zur
+                        Wiederverwendung, Veränderung oder Weiterverbreitung freigegeben,
+                        sofern nicht ausdrücklich etwas anderes angegeben ist.
+                    </p>
+
+                    <p>
+                        Die App speichert Encounter-Daten nur lokal im Browser dieses Geräts.
+                        Es werden durch die App selbst keine Encounter-Daten an einen Server gesendet.
+                    </p>
+                </div>
+            </details>
+        </footer>
     </main>
 
     <script src="app.js"></script>

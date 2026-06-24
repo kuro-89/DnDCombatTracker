@@ -61,6 +61,7 @@ The app runs locally in the browser by opening `index.html`.
 - Public player preview with filtered information.
 - Public preview spotlight navigation by clicking, horizontal scrolling, or swiping.
 - Card-based DM layout with hand, deck, and public initiative ribbon.
+- Player-View and DM-View in seperate tabs 
 
 ## Public Player Preview
 
