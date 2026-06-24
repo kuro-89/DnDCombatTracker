@@ -15,6 +15,10 @@ body {
     padding: 32px;
 }
 
+/* ============================================================
+   App-Header
+   ============================================================ */
+
 .app-header {
     margin-bottom: 32px;
 }
@@ -23,12 +27,14 @@ body {
     position: relative;
     overflow: hidden;
 
-    padding: 28px 32px;
+    min-height: 280px;
+    padding: 32px 520px 32px 32px;
 
     border: 1px solid #8a6f2a;
     border-radius: 18px;
     background:
         radial-gradient(circle at top left, rgba(240, 198, 116, 0.18), transparent 34%),
+        radial-gradient(circle at right, rgba(132, 62, 176, 0.22), transparent 38%),
         linear-gradient(135deg, #332b1d, #1f1f24 58%, #18181d);
 
     box-shadow:
@@ -36,25 +42,63 @@ body {
         inset 0 0 0 1px rgba(255, 255, 255, 0.035);
 }
 
-.app-header-card::after {
+.app-header-text {
+    position: relative;
+    z-index: 3;
+}
+
+.app-header-art {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+
+    width: 560px;
+
+    overflow: hidden;
+
+    pointer-events: none;
+}
+
+.app-header-art::before {
     content: "";
 
     position: absolute;
-    top: 18px;
-    right: 22px;
-
-    width: 110px;
-    height: 150px;
-
-    border: 1px solid rgba(240, 198, 116, 0.18);
-    border-radius: 14px;
+    inset: 0;
 
     background:
-        linear-gradient(180deg, rgba(240, 198, 116, 0.12), rgba(31, 31, 36, 0.12)),
-        rgba(255, 255, 255, 0.02);
+        linear-gradient(90deg, #1f1f24 0%, rgba(31, 31, 36, 0.78) 14%, rgba(31, 31, 36, 0.18) 46%, rgba(31, 31, 36, 0.12) 100%),
+        linear-gradient(180deg, rgba(31, 31, 36, 0.10), rgba(31, 31, 36, 0.48));
 
-    transform: rotate(9deg);
-    pointer-events: none;
+    z-index: 1;
+}
+
+.app-header-art::after {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background:
+        radial-gradient(circle at 72% 48%, rgba(132, 62, 176, 0.18), transparent 32%),
+        linear-gradient(90deg, rgba(31, 31, 36, 0.22), transparent 42%);
+
+    z-index: 2;
+}
+
+.app-header-art img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+    object-position: center right;
+
+    filter:
+        saturate(0.9)
+        contrast(1.04)
+        brightness(0.82);
 }
 
 .app-kicker {
@@ -71,7 +115,7 @@ body {
     position: relative;
     z-index: 1;
 
-    max-width: 980px;
+    max-width: 780px;
     margin: 0;
 
     color: #ffffff;
@@ -102,14 +146,28 @@ body {
     font-size: 14px;
 }
 
+/* ============================================================
+   Große App-Bereiche / Panels
+   ============================================================ */
+
 .add-creature-section,
 .combat-control-section,
 .public-preview-section {
-    background: #2d2d35;
-    border: 1px solid #44444f;
-    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+
+    background:
+        radial-gradient(circle at top left, rgba(240, 198, 116, 0.08), transparent 34%),
+        linear-gradient(135deg, #2d2d35, #24242b 62%, #1f1f24);
+
+    border: 1px solid #555560;
+    border-radius: 18px;
     padding: 24px;
     margin-bottom: 32px;
+
+    box-shadow:
+        0 14px 30px rgba(0, 0, 0, 0.24),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.025);
 }
 
 .dm-workspace {
@@ -125,6 +183,19 @@ body {
     margin-bottom: 0;
 }
 
+.add-creature-section h2,
+.combat-control-section h2,
+.public-preview-section h2,
+.creature-list-section h2 {
+    margin-top: 0;
+    margin-bottom: 16px;
+
+    color: #ffffff;
+    font-size: clamp(24px, 3vw, 36px);
+    line-height: 1;
+    letter-spacing: -0.03em;
+}
+
 .combat-control-section h2 {
     margin: 0;
 }
@@ -132,6 +203,10 @@ body {
 .combat-control-section .section-info-card {
     margin-bottom: 16px;
 }
+
+/* ============================================================
+   Turn-Anzeige
+   ============================================================ */
 
 .turn-top-actions {
     display: flex;
@@ -167,6 +242,10 @@ body {
     flex-wrap: wrap;
 }
 
+/* ============================================================
+   Buttons
+   ============================================================ */
+
 .turn-actions button,
 .add-creature-form button,
 .condition-controls button,
@@ -198,12 +277,9 @@ body {
     background: #3a3a46;
 }
 
-.add-creature-section h2,
-.combat-control-section h2,
-.public-preview-section h2 {
-    margin-top: 0;
-    margin-bottom: 16px;
-}
+/* ============================================================
+   Formular
+   ============================================================ */
 
 .form-error {
     min-height: 20px;
@@ -221,9 +297,14 @@ body {
 .form-group {
     margin: 0;
     padding: 16px;
-    border: 1px solid #44444f;
-    border-radius: 12px;
-    background: #25252c;
+
+    border: 1px solid rgba(240, 198, 116, 0.22);
+    border-radius: 14px;
+
+    background:
+        linear-gradient(135deg, rgba(37, 37, 44, 0.96), rgba(31, 31, 36, 0.96));
+
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.025);
 }
 
 .form-group legend {
@@ -331,8 +412,27 @@ body {
     color: #f0c674;
 }
 
+/* ============================================================
+   Kartenlisten-Bereiche
+   ============================================================ */
+
 .creature-list-section {
+    position: relative;
+    overflow: hidden;
+
     margin-bottom: 40px;
+    padding: 24px;
+
+    border: 1px solid #44444f;
+    border-radius: 18px;
+
+    background:
+        radial-gradient(circle at top left, rgba(240, 198, 116, 0.06), transparent 32%),
+        linear-gradient(135deg, #292930, #222229 62%, #1f1f24);
+
+    box-shadow:
+        0 14px 30px rgba(0, 0, 0, 0.22),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.02);
 }
 
 .creature-list-section h2 {
@@ -436,10 +536,15 @@ body {
 .empty-list-message {
     margin: 0;
     padding: 16px;
-    border: 1px dashed #555560;
-    border-radius: 12px;
+
+    border: 1px dashed rgba(240, 198, 116, 0.32);
+    border-radius: 14px;
+
     color: #c7c7c7;
-    background: #25252c;
+    background:
+        linear-gradient(135deg, rgba(58, 51, 34, 0.42), rgba(37, 37, 44, 0.86));
+
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.025);
 }
 
 .card-row-shell {
@@ -1322,6 +1427,15 @@ body {
    ============================================================ */
 
 @media (max-width: 900px) {
+    .app-header-card {
+        min-height: 250px;
+        padding-right: 330px;
+    }
+
+    .app-header-art {
+        width: 360px;
+    }
+
     .dm-workspace {
         grid-template-columns: 1fr;
     }
@@ -1393,15 +1507,40 @@ body {
     }
 
     .app-header-card {
+        min-height: 190px;
         padding: 22px 18px;
     }
 
-    .app-header-card::after {
-        width: 72px;
-        height: 104px;
-        top: 14px;
-        right: 14px;
-        opacity: 0.55;
+    .app-header-art {
+        display: block;
+
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+
+        width: auto;
+
+        opacity: 0.42;
+    }
+
+    .app-header-art::before {
+        background:
+            linear-gradient(90deg, rgba(31, 31, 36, 0.92) 0%, rgba(31, 31, 36, 0.72) 52%, rgba(31, 31, 36, 0.36) 100%),
+            linear-gradient(180deg, rgba(31, 31, 36, 0.26), rgba(31, 31, 36, 0.82));
+    }
+
+    .app-header-art::after {
+        display: none;
+    }
+
+    .app-header-art img {
+        object-position: 72% center;
+
+        filter:
+            saturate(0.82)
+            contrast(1.04)
+            brightness(0.72);
     }
 
     .app-kicker {
@@ -1414,6 +1553,21 @@ body {
 
     .app-build-info {
         font-size: 12px;
+    }
+
+    .add-creature-section,
+    .combat-control-section,
+    .public-preview-section,
+    .creature-list-section {
+        padding: 18px;
+        border-radius: 18px;
+    }
+
+    .add-creature-section h2,
+    .combat-control-section h2,
+    .public-preview-section h2,
+    .creature-list-section h2 {
+        font-size: 28px;
     }
 
     .form-grid-two,
@@ -1497,10 +1651,6 @@ body {
         height: 200px;
     }
 
-    .public-preview-section {
-        padding: 18px;
-    }
-
     .public-preview-list {
         margin-top: 10px;
     }
@@ -1520,7 +1670,7 @@ body {
 
     .public-stage-slot.focused .public-stage-card {
         width: 100%;
-        max-width: 280px;
+        max-width: 310px;
     }
 
     .public-stage-card {
@@ -1540,7 +1690,7 @@ body {
     }
 
     .public-stage-slot.focused .public-preview-image-box {
-        height: 145px;
+        height: 165px;
     }
 
     .public-preview-type {
@@ -1562,28 +1712,20 @@ body {
         font-size: 12px;
     }
 
-    .public-preview-section-box {
-        padding: 6px;
-    }
-
-    .public-preview-section-box h4 {
-        margin-bottom: 4px;
-    }
-
     .public-initiative-title {
         margin: 12px 0 6px;
         font-size: 12px;
     }
 
     .public-initiative-shell {
-        grid-template-columns: 34px minmax(0, 1fr) 34px;
+        grid-template-columns: 30px minmax(0, 1fr) 30px;
         gap: 6px;
         margin-top: 8px;
     }
 
     .public-initiative-button {
-        min-height: 56px;
-        font-size: 28px;
+        min-height: 52px;
+        font-size: 26px;
         border-radius: 12px;
     }
 
@@ -1593,15 +1735,23 @@ body {
     }
 
     .public-ribbon-card {
-        flex-basis: 68vw;
-        grid-template-columns: 46px minmax(0, 1fr);
-        gap: 8px;
+        flex: 0 0 132px;
+        grid-template-columns: 38px minmax(0, 1fr);
+        gap: 7px;
         padding: 7px;
     }
 
     .public-ribbon-image-crop .public-preview-image-box {
-        width: 46px;
-        height: 46px;
-        min-height: 46px;
+        width: 38px;
+        height: 38px;
+        min-height: 38px;
+    }
+
+    .public-ribbon-text strong {
+        font-size: 12px;
+    }
+
+    .public-ribbon-text span {
+        font-size: 11px;
     }
 }

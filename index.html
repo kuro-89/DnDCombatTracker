@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Miriel’s Deck of Encounters - DM-Ansicht by kuro</title>
+    <title>Miriel's Deck of Encounters</title>
 
     <link rel="stylesheet" href="style.css">
 </head>
@@ -11,17 +11,26 @@
     <main class="app">
         <header class="app-header">
             <div class="app-header-card">
-                <p class="app-kicker">DM-Ansicht</p>
+                <div class="app-header-text">
+                    <p class="app-kicker">DM-Ansicht</p>
 
-                <h1>Miriel’s Deck of Encounters</h1>
+                    <h1>Miriel’s Deck of Encounters</h1>
 
-                <p class="app-tagline">
-                    A card-based encounter &amp; initiative tracker
-                </p>
+                    <p class="app-tagline">
+                        A card-based encounter &amp; initiative tracker
+                    </p>
 
-                <p class="app-build-info">
-                    v0.4.0 build 2026-06-24 by kuro
-                </p>
+                    <p class="app-build-info">
+                        v0.4.0 build 2026-06-24 by kuro
+                    </p>
+                </div>
+
+                <div class="app-header-art" aria-hidden="true">
+                    <img
+                        src="Images/miriel_header.png"
+                        alt=""
+                    >
+                </div>
             </div>
         </header>
 
@@ -35,7 +44,9 @@
             </p>
 
             <div id="public-preview-list" class="public-preview-list"></div>
+
             <h3 class="public-initiative-title">Initiative</h3>
+
             <div class="public-initiative-shell">
                 <button
                     class="public-initiative-button"
