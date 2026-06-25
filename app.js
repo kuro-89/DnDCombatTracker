@@ -105,6 +105,9 @@ let publicPreviewTouchStartY = null;
 // Diese Variable verhindert, dass ein Trackpad-Scroll zu viele Karten auf einmal überspringt.
 let publicPreviewWheelIsCoolingDown = false;
 
+// Kurzes Kampf-Log für sichtbare DM-Aktionen.
+let combatLogMessages = [];
+
 
 // ============================================================
 // 2. Ansichtsmodus, Browser-Speicher und Tab-Synchronisation
@@ -171,6 +174,7 @@ function createPersistentAppState() {
             roundNumber: roundNumber,
             currentTurnIndex: currentTurnIndex,
             manuallySelectedPublicCardId: manuallySelectedPublicCardId,
+            combatLogMessages: combatLogMessages,
             creatures: creatures
         }
     };
@@ -247,6 +251,8 @@ function applyImportedEncounterState(importData) {
     } else {
         clearManualPublicSelection();
     }
+
+    combatLogMessages = getSafeCombatLogMessages(encounterData.combatLogMessages);
 
     const handCards = getHandCards();
     ensureCurrentTurnIndexIsValid(handCards);
@@ -348,7 +354,9 @@ function reloadDemoCards() {
     creatures = createDemoCreatures();
     currentTurnIndex = 0;
     roundNumber = 1;
+    combatLogMessages = [];
     clearManualPublicSelection();
+    addCombatLogMessage("Demo-Karten neu geladen.");
 
     renderCards();
 
@@ -508,19 +516,31 @@ function selectAllHandCards() {
 
 function updateSelectionStatus() {
     const selectionStatusElement = document.querySelector("#selection-status");
+    const selectionTargetNamesElement = document.querySelector("#selection-target-names");
 
     if (selectionStatusElement === null) {
         return;
     }
 
-    const selectedCount = getSelectedHandCardCount();
+    const selectedTargets = getSelectedHandCards();
+    const selectedCount = selectedTargets.length;
 
     if (selectedCount === 1) {
         selectionStatusElement.textContent = "1 Karte ausgewählt";
+    } else {
+        selectionStatusElement.textContent = `${selectedCount} Karten ausgewählt`;
+    }
+
+    if (selectionTargetNamesElement === null) {
         return;
     }
 
-    selectionStatusElement.textContent = `${selectedCount} Karten ausgewählt`;
+    if (selectedCount === 0) {
+        selectionTargetNamesElement.textContent = "Keine Ziele ausgewählt.";
+        return;
+    }
+
+    selectionTargetNamesElement.textContent = createTargetNamesText(selectedTargets);
 }
 
 
@@ -570,6 +590,12 @@ function nextTurn() {
         roundNumber = roundNumber + 1;
     }
 
+    const newActiveCard = getActiveCard(getHandCards());
+
+    if (newActiveCard !== null) {
+        addCombatLogMessage(`Nächster Zug: ${newActiveCard.name}.`);
+    }
+
     renderCards();
 }
 
@@ -591,6 +617,12 @@ function previousTurn() {
         }
     }
 
+    const newActiveCard = getActiveCard(getHandCards());
+
+    if (newActiveCard !== null) {
+        addCombatLogMessage(`Vorheriger Zug: ${newActiveCard.name}.`);
+    }
+
     renderCards();
 }
 
@@ -599,6 +631,7 @@ function resetCombatTurnCounter() {
     roundNumber = 1;
     clearManualPublicSelection();
 
+    addCombatLogMessage("Zähler zurückgesetzt.");
     renderCards();
 }
 
@@ -951,6 +984,7 @@ function clearAllTempHp() {
         creature.tempHp = 0;
     }
 
+    addCombatLogMessage("Alle Temp HP entfernt.");
     renderCards();
 }
 
@@ -967,6 +1001,7 @@ function clearConditionsFromHandCards() {
         }
     }
 
+    addCombatLogMessage("Alle Conditions von Handkarten entfernt.");
     renderCards();
 }
 
@@ -980,7 +1015,9 @@ function deleteAllCards() {
     creatures = [];
     currentTurnIndex = 0;
     roundNumber = 1;
+    combatLogMessages = [];
     clearManualPublicSelection();
+    addCombatLogMessage("Alle Karten gelöscht.");
 
     renderCards();
 }
@@ -1065,6 +1102,218 @@ function handleTempHpButtonClick(creatureId) {
     const amount = getHpChangeAmount(creatureId);
 
     applyTempHp(creature, amount);
+    renderCards();
+}
+
+
+function getGroupActionAmount() {
+    const inputElement = document.querySelector("#group-action-amount");
+
+    if (inputElement === null) {
+        return 0;
+    }
+
+    return Number(inputElement.value);
+}
+
+function getSelectedGroupCondition() {
+    const selectElement = document.querySelector("#group-condition-select");
+
+    if (selectElement === null) {
+        return "";
+    }
+
+    return selectElement.value;
+}
+
+function getCurrentTimeText() {
+    const now = new Date();
+
+    return now.toLocaleTimeString("de-DE", {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit"
+    });
+}
+
+function createTargetNamesText(targets) {
+    return targets.map(function(creature) {
+        return creature.name;
+    }).join(", ");
+}
+
+function addCombatLogMessage(message) {
+    combatLogMessages.unshift({
+        time: getCurrentTimeText(),
+        text: message
+    });
+
+    if (combatLogMessages.length > 12) {
+        combatLogMessages = combatLogMessages.slice(0, 12);
+    }
+}
+
+function renderCombatLog() {
+    const combatLogElement = document.querySelector("#combat-log-list");
+
+    if (combatLogElement === null) {
+        return;
+    }
+
+    if (combatLogMessages.length === 0) {
+        combatLogElement.innerHTML = `
+            <p class="combat-log-empty">
+                Noch keine Aktionen.
+            </p>
+        `;
+
+        return;
+    }
+
+    let html = "";
+
+    for (const logMessage of combatLogMessages) {
+        html += `
+            <article class="combat-log-entry">
+                <span class="combat-log-time">${logMessage.time}</span>
+                <span class="combat-log-text">${logMessage.text}</span>
+            </article>
+        `;
+    }
+
+    combatLogElement.innerHTML = html;
+}
+
+function getValidatedGroupActionAmount() {
+    const amount = getGroupActionAmount();
+
+    if (Number.isFinite(amount) === false || amount < 0) {
+        alert("Bitte gib einen gültigen Betrag ab 0 ein.");
+        return null;
+    }
+
+    return Math.floor(amount);
+}
+
+function getSelectedTargetsOrWarn() {
+    const selectedTargets = getSelectedHandCards();
+
+    if (selectedTargets.length === 0) {
+        alert("Bitte wähle zuerst mindestens eine Karte auf der Hand aus.");
+        return [];
+    }
+
+    return selectedTargets;
+}
+
+function applyDamageToSelectedCards() {
+    const selectedTargets = getSelectedTargetsOrWarn();
+
+    if (selectedTargets.length === 0) {
+        return;
+    }
+
+    const amount = getValidatedGroupActionAmount();
+
+    if (amount === null) {
+        return;
+    }
+
+    for (const creature of selectedTargets) {
+        applyDamage(creature, amount);
+    }
+
+    addCombatLogMessage(`${amount} Schaden auf ${selectedTargets.length} Ziel(e): ${createTargetNamesText(selectedTargets)}.`);
+    renderCards();
+}
+
+function applyHealingToSelectedCards() {
+    const selectedTargets = getSelectedTargetsOrWarn();
+
+    if (selectedTargets.length === 0) {
+        return;
+    }
+
+    const amount = getValidatedGroupActionAmount();
+
+    if (amount === null) {
+        return;
+    }
+
+    for (const creature of selectedTargets) {
+        applyHealing(creature, amount);
+    }
+
+    addCombatLogMessage(`${amount} Heilung auf ${selectedTargets.length} Ziel(e): ${createTargetNamesText(selectedTargets)}.`);
+    renderCards();
+}
+
+function applyTempHpToSelectedCards() {
+    const selectedTargets = getSelectedTargetsOrWarn();
+
+    if (selectedTargets.length === 0) {
+        return;
+    }
+
+    const amount = getValidatedGroupActionAmount();
+
+    if (amount === null) {
+        return;
+    }
+
+    for (const creature of selectedTargets) {
+        applyTempHp(creature, amount);
+    }
+
+    addCombatLogMessage(`${amount} Temp HP auf ${selectedTargets.length} Ziel(e) gesetzt: ${createTargetNamesText(selectedTargets)}.`);
+    renderCards();
+}
+
+function addConditionToSelectedCards() {
+    const selectedTargets = getSelectedTargetsOrWarn();
+
+    if (selectedTargets.length === 0) {
+        return;
+    }
+
+    const conditionName = getSelectedGroupCondition();
+
+    if (conditionName === "") {
+        alert("Bitte wähle eine Condition aus.");
+        return;
+    }
+
+    for (const creature of selectedTargets) {
+        if (creatureHasCondition(creature, conditionName) === false) {
+            creature.conditions.push(conditionName);
+        }
+    }
+
+    addCombatLogMessage(`Condition ${conditionName} auf ${selectedTargets.length} Ziel(e) angewendet: ${createTargetNamesText(selectedTargets)}.`);
+    renderCards();
+}
+
+function removeConditionFromSelectedCards() {
+    const selectedTargets = getSelectedTargetsOrWarn();
+
+    if (selectedTargets.length === 0) {
+        return;
+    }
+
+    const conditionName = getSelectedGroupCondition();
+
+    if (conditionName === "") {
+        alert("Bitte wähle eine Condition aus.");
+        return;
+    }
+
+    for (const creature of selectedTargets) {
+        creature.conditions = creature.conditions.filter(function(condition) {
+            return condition !== conditionName;
+        });
+    }
+
+    addCombatLogMessage(`Condition ${conditionName} von ${selectedTargets.length} Ziel(e) entfernt: ${createTargetNamesText(selectedTargets)}.`);
     renderCards();
 }
 
@@ -1243,13 +1492,14 @@ function readImageFileAsDataUrl(file) {
 
 function createEncounterExportData() {
     return {
-        formatName: "TTRPG Combat Tracker Encounter",
+        formatName: "Miriel\'s Deck of Encounters Encounter",
         formatVersion: 1,
         exportedAt: new Date().toISOString(),
         encounter: {
             roundNumber: roundNumber,
             currentTurnIndex: currentTurnIndex,
             manuallySelectedPublicCardId: manuallySelectedPublicCardId,
+            combatLogMessages: combatLogMessages,
             creatures: creatures
         }
     };
@@ -1264,7 +1514,7 @@ function createExportFileName() {
     const hours = String(now.getHours()).padStart(2, "0");
     const minutes = String(now.getMinutes()).padStart(2, "0");
 
-    return `ttrpg-combat-encounter-${year}-${month}-${day}-${hours}-${minutes}.json`;
+    return `miriels-deck-encounter-${year}-${month}-${day}-${hours}-${minutes}.json`;
 }
 
 function downloadTextFile(fileName, textContent) {
@@ -1367,6 +1617,8 @@ function importEncounterData(importData) {
     } else {
         clearManualPublicSelection();
     }
+
+    combatLogMessages = getSafeCombatLogMessages(encounterData.combatLogMessages);
 
     const handCards = getHandCards();
     ensureCurrentTurnIndexIsValid(handCards);
@@ -1584,6 +1836,28 @@ function getSafeConditions(value) {
     }
 
     return safeConditions;
+}
+
+function getSafeCombatLogMessages(value) {
+    if (Array.isArray(value) === false) {
+        return [];
+    }
+
+    const safeMessages = [];
+
+    for (const rawMessage of value) {
+        if (rawMessage !== null && typeof rawMessage === "object") {
+            const safeTime = getSafeString(rawMessage.time, "--:--:--");
+            const safeText = getSafeString(rawMessage.text, "Unbekannte Aktion.");
+
+            safeMessages.push({
+                time: safeTime,
+                text: safeText
+            });
+        }
+    }
+
+    return safeMessages.slice(0, 12);
 }
 
 
@@ -1898,15 +2172,6 @@ function createConditionChipsHtml(creature) {
                 <span class="condition-chip-name">
                     ${condition}
                 </span>
-
-                <button
-                    class="condition-chip-remove"
-                    onclick="event.stopPropagation(); removeConditionFromCreature(${creature.id}, '${condition}')"
-                    title="${condition} entfernen"
-                    aria-label="${condition} entfernen"
-                >
-                    ×
-                </button>
             </span>
         `;
     }
@@ -2180,54 +2445,17 @@ function createCreatureCardHtml(creature, isActive) {
         ? `<span class="selected-target-label">ausgewählt</span>`
         : "";
 
-    const combatOnlySectionsHtml = isCompactDeckCard
-        ? ""
-        : `
+    const conditionsSectionHtml = creature.isInCombat === true
+        ? `
             <div class="creature-card-section">
                 <h4>Conditions</h4>
 
                 <div class="condition-chip-list">
                     ${createConditionChipsHtml(creature)}
                 </div>
-
-                <div class="condition-controls" onclick="event.stopPropagation()">
-                    <select id="condition-select-${creature.id}">
-                        ${createConditionOptionsHtml()}
-                    </select>
-
-                    <button onclick="addConditionToCreature(${creature.id})">
-                        Condition hinzufügen
-                    </button>
-                </div>
             </div>
-
-            <div class="creature-card-section">
-                <h4>Kampfaktionen</h4>
-
-                <div class="creature-actions" onclick="event.stopPropagation()">
-                    <input
-                        id="hp-change-amount-${creature.id}"
-                        type="number"
-                        min="0"
-                        value="0"
-                    >
-
-                    <div class="creature-action-buttons">
-                        <button onclick="handleDamageButtonClick(${creature.id})">
-                            Schaden
-                        </button>
-
-                        <button onclick="handleHealingButtonClick(${creature.id})">
-                            Heilung
-                        </button>
-
-                        <button onclick="handleTempHpButtonClick(${creature.id})">
-                            Temp HP
-                        </button>
-                    </div>
-                </div>
-            </div>
-        `;
+        `
+        : "";
 
     return `
         <article
@@ -2288,7 +2516,7 @@ function createCreatureCardHtml(creature, isActive) {
                     </div>
                 </div>
 
-                ${combatOnlySectionsHtml}
+                ${conditionsSectionHtml}
             </div>
         </article>
     `;
@@ -2475,23 +2703,37 @@ function renderTurnInfo(handCards) {
 
     if (activeCard === null) {
         turnInfoElement.innerHTML = `
-            <h2>Runde ${roundNumber}</h2>
-            <p>Keine Karten auf der Hand.</p>
+            <div class="turn-info-main">
+                <h2>Runde ${roundNumber}</h2>
+                <p>Keine Karten auf der Hand.</p>
+            </div>
+
+            <div class="turn-actions turn-actions-inline">
+                <button onclick="previousTurn()">Vorheriger Zug</button>
+                <button onclick="nextTurn()">Nächster Zug</button>
+            </div>
         `;
 
         return;
     }
 
     turnInfoElement.innerHTML = `
-        <h2>Runde ${roundNumber}</h2>
+        <div class="turn-info-main">
+            <h2>Runde ${roundNumber}</h2>
 
-        <p class="turn-label">
-            Turn ${currentTurnIndex + 1} von ${handCards.length}
-        </p>
+            <p class="turn-label">
+                Turn ${currentTurnIndex + 1} von ${handCards.length}
+            </p>
 
-        <p class="active-creature-name">
-            Aktiv: ${activeCard.publicName}
-        </p>
+            <p class="active-creature-name">
+                Aktiv: ${activeCard.publicName}
+            </p>
+        </div>
+
+        <div class="turn-actions turn-actions-inline">
+            <button onclick="previousTurn()">Vorheriger Zug</button>
+            <button onclick="nextTurn()">Nächster Zug</button>
+        </div>
     `;
 }
 
@@ -2588,6 +2830,7 @@ function renderCards() {
         renderCardList("#hand-card-list", handCards, activeCard);
         renderCardList("#deck-card-list", deckCards, activeCard);
         updateSelectionStatus();
+        renderCombatLog();
     }
 
     saveAndBroadcastAppState();

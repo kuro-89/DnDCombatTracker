@@ -7,15 +7,9 @@
     --color-bg-dark: #18181d;
     --color-panel: #25252c;
     --color-panel-light: #2d2d35;
-    --color-panel-blue: #263241;
-
-    --color-border: #44444f;
-    --color-border-light: #555560;
 
     --color-gold: #f0c674;
     --color-gold-soft: #e6d7b4;
-    --color-gold-dark: #3a3322;
-
     --color-blue: #8ab4f8;
     --color-blue-soft: #d7e6ff;
     --color-danger: #ff9f9f;
@@ -23,6 +17,10 @@
     --color-text: #f5f5f5;
     --color-text-muted: #c7c7c7;
     --color-text-soft: #a9a9b3;
+
+    --border-soft: rgba(240, 198, 116, 0.18);
+    --border-medium: rgba(240, 198, 116, 0.28);
+    --border-blue: rgba(138, 180, 248, 0.32);
 
     --radius-small: 8px;
     --radius-medium: 12px;
@@ -211,17 +209,16 @@ body {
 }
 
 /* ============================================================
-   Grundlayout / Hauptbereiche
+   Gemeinsame Panel-Optik
    ============================================================ */
 
-.add-creature-section,
-.combat-control-section,
 .public-preview-section,
-.creature-list-section {
+.combat-control-section,
+.creature-list-section,
+.add-creature-section {
     position: relative;
 
     margin-bottom: 32px;
-    padding: 24px;
 
     border: 1px solid rgba(240, 198, 116, 0.24);
     border-radius: var(--radius-large);
@@ -234,40 +231,16 @@ body {
     box-shadow: var(--shadow-panel);
 }
 
-.add-creature-section h2,
-.combat-control-section h2,
-.public-preview-section h2,
-.creature-list-section h2 {
-    margin-top: 0;
-
-    color: var(--color-gold);
-    letter-spacing: -0.02em;
+.combat-control-section,
+.creature-list-section {
+    padding: 24px;
 }
 
-.public-preview-section > p,
-.add-creature-section > p,
-.combat-control-section > p,
-.creature-list-section > p {
-    color: #d8cfb9;
+.public-preview-section,
+.add-creature-details {
+    padding: 0;
+    overflow: hidden;
 }
-
-.dm-workspace {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 32px;
-    align-items: start;
-
-    margin-bottom: 32px;
-}
-
-.dm-workspace .add-creature-section,
-.dm-workspace .combat-control-section {
-    margin-bottom: 0;
-}
-
-/* ============================================================
-   Section Header: Titel + Aktionen
-   ============================================================ */
 
 .section-header-row {
     display: flex;
@@ -281,9 +254,169 @@ body {
     border-bottom: 1px solid rgba(240, 198, 116, 0.14);
 }
 
-.section-header-row h2 {
+.section-header-row h2,
+.combat-control-section h2,
+.creature-list-section h2 {
     margin: 0;
+
+    color: var(--color-gold);
+    letter-spacing: -0.02em;
 }
+
+.dashboard-group-title {
+    margin: 0 0 14px;
+
+    color: var(--color-gold);
+    font-size: 28px;
+    letter-spacing: -0.03em;
+}
+
+.dm-dashboard-group {
+    margin-bottom: 36px;
+}
+
+/* ============================================================
+   Einklapp-Header: Spieler-Vorschau + Neue Karte hinzufügen
+   ============================================================ */
+
+.public-preview-section > summary,
+.public-preview-summary,
+.add-creature-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+
+    padding: 22px 24px;
+
+    cursor: pointer;
+    list-style: none;
+}
+
+.public-preview-section > summary::-webkit-details-marker,
+.public-preview-summary::-webkit-details-marker,
+.add-creature-summary::-webkit-details-marker {
+    display: none;
+}
+
+.public-preview-section > summary::after,
+.public-preview-summary::after,
+.add-creature-summary::after {
+    content: none !important;
+    display: none !important;
+}
+
+.public-preview-section > summary h2,
+.public-preview-summary > span:first-child,
+.add-creature-summary > span:first-child {
+    margin: 0;
+
+    color: var(--color-gold);
+    font-size: 26px;
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+}
+
+/* Alte Texte im HTML unsichtbar machen und durch einheitliches Label ersetzen */
+.public-preview-summary-hint,
+.details-toggle-label,
+.details-toggle-button,
+.public-preview-toggle-label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    min-width: 190px;
+    padding: 9px 14px;
+
+    border: 1px solid rgba(240, 198, 116, 0.34);
+    border-radius: 999px;
+
+    background:
+        linear-gradient(135deg, rgba(58, 51, 34, 0.78), rgba(31, 31, 36, 0.78));
+
+    color: var(--color-gold);
+
+    cursor: pointer;
+    font: inherit;
+    font-size: 0;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+
+    box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.025);
+}
+
+.public-preview-section[open] .public-preview-summary-hint::before,
+.public-preview-section[open] .public-preview-toggle-label::before,
+.add-creature-details[open] .details-toggle-label::before,
+.add-creature-details[open] .details-toggle-button::before {
+    content: "Einklappen";
+    font-size: 13px;
+}
+
+.public-preview-section:not([open]) .public-preview-summary-hint::before,
+.public-preview-section:not([open]) .public-preview-toggle-label::before,
+.add-creature-details:not([open]) .details-toggle-label::before,
+.add-creature-details:not([open]) .details-toggle-button::before {
+    content: "Ausklappen";
+    font-size: 13px;
+}
+
+.public-preview-section[open] .public-preview-summary-hint::after,
+.public-preview-section[open] .public-preview-toggle-label::after,
+.add-creature-details[open] .details-toggle-label::after,
+.add-creature-details[open] .details-toggle-button::after {
+    content: "▴";
+    font-size: 12px;
+}
+
+.public-preview-section:not([open]) .public-preview-summary-hint::after,
+.public-preview-section:not([open]) .public-preview-toggle-label::after,
+.add-creature-details:not([open]) .details-toggle-label::after,
+.add-creature-details:not([open]) .details-toggle-button::after {
+    content: "▾";
+    font-size: 12px;
+}
+
+.public-preview-section > summary:hover .public-preview-summary-hint,
+.public-preview-section > summary:hover .public-preview-toggle-label,
+.public-preview-summary:hover .public-preview-summary-hint,
+.add-creature-summary:hover .details-toggle-label,
+.add-creature-summary:hover .details-toggle-button {
+    border-color: var(--color-gold);
+
+    background:
+        linear-gradient(135deg, rgba(74, 63, 40, 0.92), rgba(38, 32, 24, 0.92));
+
+    color: #ffe2a0;
+}
+
+.public-preview-section > summary:focus,
+.public-preview-summary:focus,
+.add-creature-summary:focus {
+    outline: none;
+}
+
+.public-preview-section > summary:focus-visible .public-preview-summary-hint,
+.public-preview-section > summary:focus-visible .public-preview-toggle-label,
+.public-preview-summary:focus-visible .public-preview-summary-hint,
+.add-creature-summary:focus-visible .details-toggle-label,
+.add-creature-summary:focus-visible .details-toggle-button {
+    border-color: var(--color-blue);
+    box-shadow: 0 0 0 3px rgba(138, 180, 248, 0.18);
+}
+
+.public-preview-content,
+.add-creature-body {
+    padding: 0 24px 24px;
+}
+
+/* ============================================================
+   Section-Menüs
+   ============================================================ */
 
 .section-toolbar {
     display: flex;
@@ -346,7 +479,7 @@ body {
     position: absolute;
     top: calc(100% + 8px);
     right: 0;
-    z-index: 30;
+    z-index: 40;
 
     display: grid;
     gap: 8px;
@@ -372,50 +505,15 @@ body {
 }
 
 /* ============================================================
-   Allgemeine Karten / Infoflächen
+   Buttons und Inputs
    ============================================================ */
 
-.section-info-card,
-.empty-list-message,
-.turn-info,
-.storage-status,
-.selection-control-panel {
-    border: 1px solid rgba(240, 198, 116, 0.18);
-    border-radius: 14px;
-
-    background:
-        linear-gradient(135deg, rgba(45, 39, 31, 0.72), rgba(31, 31, 36, 0.84));
-
-    box-shadow:
-        inset 0 0 0 1px rgba(255, 255, 255, 0.025);
-}
-
-.section-info-card,
-.empty-list-message {
-    margin: 0;
-    padding: 16px;
-
-    color: #d8cfb9;
-    line-height: 1.5;
-}
-
-.empty-list-message {
-    flex: 1 0 100%;
-    border-style: dashed;
-    color: var(--color-text-muted);
-}
-
-/* ============================================================
-   Buttons
-   ============================================================ */
-
-.turn-actions button,
+button,
 .add-creature-form button,
-.condition-controls button,
-.creature-actions button,
-.card-menu-panel button,
-.section-menu-panel button,
+.mass-action-buttons button,
 .selection-actions button,
+.section-menu-panel button,
+.card-menu-panel button,
 .public-focus-reset-button {
     padding: 8px 12px;
 
@@ -435,30 +533,24 @@ body {
         inset 0 0 0 1px rgba(255, 255, 255, 0.025);
 }
 
-.turn-actions button:hover,
+button:hover,
 .add-creature-form button:hover,
-.condition-controls button:hover,
-.creature-actions button:hover,
-.card-menu-panel button:hover,
-.section-menu-panel button:hover,
+.mass-action-buttons button:hover,
 .selection-actions button:hover,
+.section-menu-panel button:hover,
+.card-menu-panel button:hover,
 .public-focus-reset-button:hover {
     border-color: var(--color-gold);
+
     background:
         linear-gradient(135deg, rgba(88, 75, 48, 0.96), rgba(68, 58, 38, 0.96));
 }
 
+button:disabled,
 .card-menu-panel button:disabled,
 .section-menu-panel button:disabled {
     opacity: 0.45;
     cursor: not-allowed;
-}
-
-.card-menu-panel button:disabled:hover,
-.section-menu-panel button:disabled:hover {
-    border-color: rgba(240, 198, 116, 0.28);
-    background:
-        linear-gradient(135deg, rgba(74, 63, 40, 0.92), rgba(58, 51, 34, 0.92));
 }
 
 .card-menu-danger,
@@ -479,9 +571,256 @@ body {
         linear-gradient(135deg, rgba(104, 44, 44, 0.96), rgba(58, 34, 34, 0.96)) !important;
 }
 
+input,
+select {
+    width: 100%;
+    height: 40px;
+    padding: 8px;
+
+    border: 1px solid rgba(240, 198, 116, 0.20);
+    border-radius: 10px;
+
+    background: rgba(18, 18, 22, 0.78);
+    color: var(--color-text);
+
+    font: inherit;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    border-color: var(--color-gold);
+    box-shadow: 0 0 0 3px rgba(240, 198, 116, 0.14);
+}
+
 /* ============================================================
-   Scroll-Buttons bewusst NICHT gold
+   Kampfsteuerung
    ============================================================ */
+
+.combat-actions-panel {
+    margin-bottom: 24px;
+}
+
+.turn-control-card {
+    margin-bottom: 16px;
+}
+
+.turn-info {
+    padding: 16px;
+
+    border: 1px solid rgba(138, 180, 248, 0.26);
+    border-radius: 14px;
+
+    background:
+        radial-gradient(circle at top left, rgba(138, 180, 248, 0.14), transparent 36%),
+        linear-gradient(135deg, rgba(38, 50, 65, 0.78), rgba(31, 31, 36, 0.88));
+
+    box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.025);
+}
+
+.turn-info h2 {
+    margin: 0;
+
+    color: var(--color-blue);
+    font-size: 28px;
+}
+
+.turn-info p {
+    margin: 8px 0 0;
+
+    color: #d0d0d0;
+}
+
+.turn-label {
+    color: var(--color-gold);
+    font-weight: 700;
+}
+
+.active-creature-name {
+    color: #ffffff;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.turn-action-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+
+    margin-top: 14px;
+}
+
+.combat-action-row {
+    display: grid;
+    grid-template-columns: minmax(240px, 0.9fr) minmax(260px, 1fr) minmax(260px, 1fr);
+    gap: 16px;
+
+    margin-bottom: 16px;
+}
+
+.combat-support-row {
+    display: grid;
+    grid-template-columns: minmax(260px, 0.8fr) minmax(320px, 1.2fr);
+    gap: 16px;
+}
+
+.control-group,
+.combat-log-panel {
+    padding: 16px;
+
+    border: 1px solid var(--border-soft);
+    border-radius: 14px;
+
+    background:
+        linear-gradient(135deg, rgba(18, 18, 22, 0.42), rgba(31, 31, 36, 0.72));
+}
+
+.control-group h3,
+.combat-log-panel h3 {
+    margin: 0 0 12px;
+
+    color: var(--color-gold);
+    font-size: 16px;
+}
+
+.selection-control-panel {
+    display: grid;
+    gap: 10px;
+}
+
+.selection-status {
+    color: var(--color-blue);
+    font-size: 18px;
+    font-weight: 900;
+}
+
+.selection-target-names {
+    color: var(--color-text-muted);
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+.selection-actions,
+.mass-action-buttons,
+.cleanup-action-buttons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.selection-actions button {
+    border-color: rgba(138, 180, 248, 0.36);
+    background: rgba(38, 50, 65, 0.84);
+    color: var(--color-blue-soft);
+}
+
+.selection-actions button:hover {
+    border-color: var(--color-blue);
+    background: rgba(48, 63, 82, 0.94);
+}
+
+.mass-action-field {
+    display: grid;
+    gap: 6px;
+
+    margin-bottom: 12px;
+}
+
+.mass-action-field label {
+    color: var(--color-gold-soft);
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.combat-log-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+
+    margin-bottom: 12px;
+}
+
+.storage-status {
+    max-width: 320px;
+    padding: 6px 10px;
+
+    border: 1px solid rgba(138, 180, 248, 0.24);
+    border-radius: 999px;
+
+    background: rgba(38, 50, 65, 0.54);
+    color: #b7d0ff;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.storage-status.storage-status-warning {
+    border-color: rgba(240, 198, 116, 0.34);
+    background: rgba(58, 51, 34, 0.72);
+    color: var(--color-gold);
+}
+
+.storage-status.storage-status-danger {
+    border-color: rgba(255, 159, 159, 0.34);
+    background: rgba(107, 47, 47, 0.48);
+    color: #ffb7b7;
+}
+
+.combat-log-list {
+    display: grid;
+    gap: 8px;
+
+    max-height: 170px;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+.combat-log-entry {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 8px;
+
+    padding: 8px 10px;
+
+    border: 1px solid rgba(138, 180, 248, 0.16);
+    border-radius: 10px;
+
+    background: rgba(38, 50, 65, 0.30);
+}
+
+.combat-log-time {
+    color: var(--color-blue);
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.combat-log-text {
+    color: var(--color-text-muted);
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.combat-log-empty {
+    margin: 0;
+
+    color: var(--color-text-soft);
+    font-size: 13px;
+}
+
+/* ============================================================
+   Kartenreihen und Scroll-Buttons
+   ============================================================ */
+
+.card-row-shell {
+    display: grid;
+    grid-template-columns: 52px minmax(0, 1fr) 52px;
+    gap: 12px;
+    align-items: stretch;
+
+    margin-top: 16px;
+}
 
 .card-row-button,
 .public-initiative-button {
@@ -515,11 +854,6 @@ body {
     color: var(--color-blue);
 }
 
-.card-row-button:active,
-.public-initiative-button:active {
-    transform: translateY(1px);
-}
-
 .card-row-button {
     min-height: 180px;
     font-size: 48px;
@@ -528,286 +862,6 @@ body {
 .public-initiative-button {
     min-height: 64px;
     font-size: 34px;
-}
-
-/* ============================================================
-   Formular
-   ============================================================ */
-
-.form-error {
-    min-height: 20px;
-    margin: 0 0 16px;
-
-    color: var(--color-danger);
-    font-weight: 700;
-}
-
-.add-creature-form {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 16px;
-}
-
-.form-group {
-    margin: 0;
-    padding: 16px;
-
-    border: 1px solid rgba(240, 198, 116, 0.16);
-    border-radius: 14px;
-
-    background:
-        linear-gradient(135deg, rgba(31, 31, 36, 0.70), rgba(24, 24, 29, 0.78));
-}
-
-.form-group legend {
-    padding: 0 8px;
-
-    color: var(--color-gold);
-    font-weight: 900;
-}
-
-.form-group-compact {
-    display: flex;
-    align-items: flex-start;
-}
-
-.form-field-medium {
-    width: 100%;
-    max-width: 320px;
-}
-
-.form-grid {
-    display: grid;
-    gap: 16px;
-}
-
-.form-grid-two {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.form-grid-three {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.form-grid-four {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-}
-
-.form-field {
-    display: grid;
-    gap: 6px;
-}
-
-.form-field-wide {
-    grid-column: span 3;
-}
-
-.form-field-wide-four {
-    grid-column: span 4;
-}
-
-.form-field label,
-.checkbox-field {
-    color: var(--color-gold-soft);
-    font-size: 14px;
-    font-weight: 700;
-}
-
-.form-field input,
-.form-field select,
-.condition-controls select,
-.creature-actions input {
-    width: 100%;
-    height: 40px;
-    padding: 8px;
-
-    border: 1px solid rgba(240, 198, 116, 0.20);
-    border-radius: 10px;
-
-    background: rgba(18, 18, 22, 0.78);
-    color: var(--color-text);
-
-    font: inherit;
-}
-
-.form-field input[type="file"] {
-    padding: 6px;
-}
-
-.form-field input:focus,
-.form-field select:focus,
-.condition-controls select:focus,
-.creature-actions input:focus {
-    outline: none;
-    border-color: var(--color-gold);
-    box-shadow: 0 0 0 3px rgba(240, 198, 116, 0.14);
-}
-
-.form-hint {
-    margin: 0;
-
-    color: var(--color-text-soft);
-    font-size: 13px;
-}
-
-.checkbox-field {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-
-    cursor: pointer;
-}
-
-.checkbox-field input {
-    width: 18px;
-    height: 18px;
-
-    accent-color: var(--color-gold);
-}
-
-.add-creature-form .add-creature-button {
-    justify-self: start;
-
-    padding: 10px 16px;
-}
-
-/* ============================================================
-   Kampfsteuerung / Turn Info / Speicher / Auswahl
-   ============================================================ */
-
-.combat-control-section h2 {
-    margin: 0;
-}
-
-.combat-control-section .section-info-card {
-    margin-bottom: 16px;
-}
-
-.turn-top-actions {
-    display: flex;
-    justify-content: flex-end;
-
-    margin-bottom: 16px;
-}
-
-.turn-info {
-    padding: 16px;
-
-    border-color: rgba(138, 180, 248, 0.22);
-
-    background:
-        radial-gradient(circle at top left, rgba(138, 180, 248, 0.12), transparent 36%),
-        linear-gradient(135deg, rgba(38, 50, 65, 0.78), rgba(31, 31, 36, 0.88));
-}
-
-.turn-info h2 {
-    margin: 0;
-
-    color: var(--color-blue);
-    font-size: 28px;
-}
-
-.turn-info p {
-    margin: 8px 0 0;
-
-    color: #d0d0d0;
-}
-
-.turn-label {
-    color: var(--color-gold);
-    font-weight: 700;
-}
-
-.active-creature-name {
-    color: #ffffff;
-    font-size: 22px;
-    font-weight: 700;
-}
-
-.turn-actions {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-
-    margin-top: 16px;
-}
-
-.storage-status {
-    margin: 12px 0 16px;
-    padding: 10px 12px;
-
-    border-color: rgba(138, 180, 248, 0.28);
-
-    background: rgba(38, 50, 65, 0.72);
-    color: #b7d0ff;
-
-    font-size: 13px;
-    font-weight: 700;
-}
-
-.storage-status.storage-status-warning {
-    border-color: rgba(240, 198, 116, 0.34);
-    background: rgba(58, 51, 34, 0.72);
-    color: var(--color-gold);
-}
-
-.storage-status.storage-status-danger {
-    border-color: rgba(255, 159, 159, 0.34);
-    background: rgba(107, 47, 47, 0.48);
-    color: #ffb7b7;
-}
-
-.selection-control-panel {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    flex-wrap: wrap;
-
-    margin-top: 12px;
-    margin-bottom: 14px;
-    padding: 12px 14px;
-
-    border-color: rgba(138, 180, 248, 0.24);
-
-    background:
-        radial-gradient(circle at top left, rgba(138, 180, 248, 0.12), transparent 34%),
-        linear-gradient(135deg, rgba(38, 50, 65, 0.74), rgba(31, 31, 36, 0.86));
-}
-
-.selection-status {
-    color: var(--color-blue);
-    font-weight: 900;
-}
-
-.selection-actions {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-}
-
-.selection-actions button {
-    border-color: rgba(138, 180, 248, 0.36);
-    background: rgba(38, 50, 65, 0.84);
-    color: var(--color-blue-soft);
-}
-
-.selection-actions button:hover {
-    border-color: var(--color-blue);
-    background: rgba(48, 63, 82, 0.94);
-}
-
-/* ============================================================
-   Kartenreihen
-   ============================================================ */
-
-.card-row-shell {
-    display: grid;
-    grid-template-columns: 52px minmax(0, 1fr) 52px;
-    gap: 12px;
-    align-items: stretch;
-
-    margin-top: 16px;
 }
 
 .creature-list {
@@ -825,24 +879,29 @@ body {
 }
 
 .creature-list::-webkit-scrollbar,
-.public-preview-ribbon::-webkit-scrollbar {
+.public-preview-ribbon::-webkit-scrollbar,
+.combat-log-list::-webkit-scrollbar {
     height: 12px;
+    width: 10px;
 }
 
 .creature-list::-webkit-scrollbar-track,
-.public-preview-ribbon::-webkit-scrollbar-track {
+.public-preview-ribbon::-webkit-scrollbar-track,
+.combat-log-list::-webkit-scrollbar-track {
     border-radius: 999px;
     background: var(--color-panel);
 }
 
 .creature-list::-webkit-scrollbar-thumb,
-.public-preview-ribbon::-webkit-scrollbar-thumb {
+.public-preview-ribbon::-webkit-scrollbar-thumb,
+.combat-log-list::-webkit-scrollbar-thumb {
     border-radius: 999px;
-    background: var(--color-border-light);
+    background: #555560;
 }
 
 .creature-list::-webkit-scrollbar-thumb:hover,
-.public-preview-ribbon::-webkit-scrollbar-thumb:hover {
+.public-preview-ribbon::-webkit-scrollbar-thumb:hover,
+.combat-log-list::-webkit-scrollbar-thumb:hover {
     background: #696976;
 }
 
@@ -855,7 +914,7 @@ body {
 
     flex: 0 0 clamp(300px, 26vw, 370px);
     max-width: 370px;
-    min-height: 650px;
+    min-height: 570px;
     padding: 10px;
 
     border: 2px solid rgba(240, 198, 116, 0.28);
@@ -880,7 +939,7 @@ body {
         0 0 0 3px rgba(240, 198, 116, 0.20),
         0 16px 34px rgba(0, 0, 0, 0.40);
 
-    transform: translateY(-4px);
+    transform: translateY(-8px);
 }
 
 .creature-card.selectable-card {
@@ -929,14 +988,6 @@ body {
     background:
         radial-gradient(circle at top left, rgba(138, 180, 248, 0.14), transparent 34%),
         linear-gradient(180deg, rgba(42, 57, 76, 0.92), rgba(31, 31, 36, 0.98));
-}
-
-.deck-card-compact .creature-card-inner {
-    gap: 8px;
-}
-
-.deck-card-compact .creature-card-section {
-    padding: 8px;
 }
 
 .creature-card-title-row {
@@ -1039,10 +1090,6 @@ body {
     text-align: left;
 }
 
-/* ============================================================
-   Bilddarstellung
-   ============================================================ */
-
 .creature-image-box,
 .public-preview-image-box {
     display: flex;
@@ -1065,10 +1112,6 @@ body {
     border-radius: 10px;
 }
 
-.deck-card-compact .creature-image-box {
-    height: 220px;
-}
-
 .public-preview-image-box {
     width: 100%;
 
@@ -1085,10 +1128,6 @@ body {
     text-align: center;
 }
 
-.public-preview-image-placeholder {
-    font-size: 13px;
-}
-
 .creature-image,
 .public-preview-image {
     display: block;
@@ -1101,10 +1140,6 @@ body {
     object-fit: contain;
     object-position: center center;
 }
-
-/* ============================================================
-   Karteninhalt
-   ============================================================ */
 
 .creature-type-line {
     display: flex;
@@ -1191,7 +1226,7 @@ body {
     height: 12px;
     margin-top: 8px;
 
-    border: 1px solid var(--color-border-light);
+    border: 1px solid #555560;
     border-radius: 999px;
 
     background: var(--color-bg);
@@ -1309,54 +1344,13 @@ body {
 .condition-unconscious { background: #1f2937; }
 .condition-concentrating { background: #2563eb; }
 
-.condition-controls {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 8px;
-
-    margin-top: 8px;
-}
-
-.condition-controls select {
-    height: 38px;
-}
-
-.condition-controls button {
-    width: 100%;
-}
-
-.creature-actions {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 8px;
-}
-
-.creature-actions input {
-    height: 36px;
-}
-
-.creature-action-buttons {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-}
-
-.creature-action-buttons button {
-    flex: 1 1 84px;
-
-    padding: 6px 8px;
-
-    font-size: 13px;
-    text-align: center;
-}
-
 /* ============================================================
    Öffentliche Spieler-Vorschau
    ============================================================ */
 
 .public-preview-list {
     min-width: 0;
-    margin-top: 16px;
+    margin-top: 0;
 
     touch-action: pan-y;
 }
@@ -1464,23 +1458,11 @@ body {
     animation: publicCardEnter 180ms ease-out;
 }
 
-.public-stage-card:hover {
-    border-color: var(--color-gold);
-}
-
 .public-stage-slot.focused .public-stage-card {
     max-width: 300px;
 
     opacity: 1;
     transform: translateY(0) scale(1);
-}
-
-.public-stage-slot.focused.auto-active-focus .public-stage-slot-label {
-    color: var(--color-blue);
-}
-
-.public-stage-slot.focused.manual-selected-focus .public-stage-slot-label {
-    color: var(--color-gold);
 }
 
 .public-stage-slot.focused.auto-active-focus .public-stage-card {
@@ -1512,18 +1494,6 @@ body {
     background:
         radial-gradient(circle at top left, rgba(240, 198, 116, 0.08), transparent 34%),
         linear-gradient(180deg, rgba(39, 36, 31, 0.96), rgba(31, 31, 36, 0.98));
-}
-
-.public-stage-slot.focused.auto-active-focus .public-stage-card-inner {
-    background:
-        radial-gradient(circle at top left, rgba(138, 180, 248, 0.10), transparent 34%),
-        linear-gradient(180deg, rgba(38, 50, 65, 0.96), rgba(31, 31, 36, 0.98));
-}
-
-.public-stage-slot.focused.manual-selected-focus .public-stage-card-inner {
-    background:
-        radial-gradient(circle at top left, rgba(240, 198, 116, 0.10), transparent 34%),
-        linear-gradient(180deg, rgba(48, 42, 29, 0.96), rgba(31, 31, 36, 0.98));
 }
 
 .public-stage-title {
@@ -1614,16 +1584,6 @@ body {
     font-size: 13px;
 }
 
-.public-focus-reset-button:hover {
-    border-color: #b7d0ff;
-    background: #334155;
-    color: #b7d0ff;
-}
-
-/* ============================================================
-   Öffentliche Initiative-Leiste
-   ============================================================ */
-
 .public-initiative-title {
     margin: 14px 0 6px;
 
@@ -1681,14 +1641,6 @@ body {
     scroll-snap-align: start;
 }
 
-.public-ribbon-card:hover {
-    opacity: 1;
-    border-color: rgba(138, 180, 248, 0.32);
-
-    background:
-        linear-gradient(135deg, rgba(38, 50, 65, 0.72), rgba(31, 31, 36, 0.92));
-}
-
 .public-ribbon-card.active-turn-card {
     opacity: 1;
     border-color: var(--color-blue);
@@ -1706,15 +1658,6 @@ body {
 
     box-shadow:
         0 0 0 2px rgba(240, 198, 116, 0.18),
-        0 10px 22px rgba(0, 0, 0, 0.32);
-}
-
-.public-ribbon-card.active-turn-card.selected-card {
-    border-color: var(--color-gold);
-
-    box-shadow:
-        0 0 0 2px rgba(240, 198, 116, 0.24),
-        0 0 0 5px rgba(138, 180, 248, 0.10),
         0 10px 22px rgba(0, 0, 0, 0.32);
 }
 
@@ -1753,23 +1696,138 @@ body {
     min-width: 0;
 }
 
-.public-ribbon-text strong {
+.public-ribbon-text strong,
+.public-ribbon-text span {
     overflow: hidden;
 
-    color: var(--color-text);
-    font-size: 13px;
-    line-height: 1.1;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
-.public-ribbon-text span {
-    overflow: hidden;
+.public-ribbon-text strong {
+    color: var(--color-text);
+    font-size: 13px;
+    line-height: 1.1;
+}
 
+.public-ribbon-text span {
     color: #b9b0a0;
     font-size: 12px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+}
+
+/* ============================================================
+   Formular: Neue Karte
+   ============================================================ */
+
+.form-error {
+    min-height: 20px;
+    margin: 0 0 16px;
+
+    color: var(--color-danger);
+    font-weight: 700;
+}
+
+.add-creature-form {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+}
+
+.form-group {
+    margin: 0;
+    padding: 16px;
+
+    border: 1px solid rgba(240, 198, 116, 0.16);
+    border-radius: 14px;
+
+    background:
+        linear-gradient(135deg, rgba(31, 31, 36, 0.70), rgba(24, 24, 29, 0.78));
+}
+
+.form-group legend {
+    padding: 0 8px;
+
+    color: var(--color-gold);
+    font-weight: 900;
+}
+
+.form-group-compact {
+    display: flex;
+    align-items: flex-start;
+}
+
+.form-field-medium {
+    width: 100%;
+    max-width: 320px;
+}
+
+.form-grid {
+    display: grid;
+    gap: 16px;
+}
+
+.form-grid-two {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.form-grid-three {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.form-grid-four {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.form-field {
+    display: grid;
+    gap: 6px;
+}
+
+.form-field-wide {
+    grid-column: span 3;
+}
+
+.form-field-wide-four {
+    grid-column: span 4;
+}
+
+.form-field label,
+.checkbox-field {
+    color: var(--color-gold-soft);
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.form-field input[type="file"] {
+    padding: 6px;
+}
+
+.form-hint {
+    margin: 0;
+
+    color: var(--color-text-soft);
+    font-size: 13px;
+}
+
+.checkbox-field {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+
+    cursor: pointer;
+}
+
+.checkbox-field input {
+    width: 18px;
+    height: 18px;
+
+    accent-color: var(--color-gold);
+}
+
+.add-creature-form .add-creature-button {
+    justify-self: start;
+
+    padding: 10px 16px;
 }
 
 /* ============================================================
@@ -1844,7 +1902,7 @@ body.player-view .public-preview-section {
 }
 
 /* ============================================================
-   Animationen
+   Animation
    ============================================================ */
 
 @keyframes publicCardEnter {
@@ -1859,7 +1917,7 @@ body.player-view .public-preview-section {
 }
 
 /* ============================================================
-   Responsive: Tablet
+   Responsive
    ============================================================ */
 
 @media (max-width: 900px) {
@@ -1872,7 +1930,8 @@ body.player-view .public-preview-section {
         width: 360px;
     }
 
-    .dm-workspace {
+    .combat-action-row,
+    .combat-support-row {
         grid-template-columns: 1fr;
     }
 
@@ -1896,30 +1955,11 @@ body.player-view .public-preview-section {
         font-size: 40px;
     }
 
-    .public-preview-help-text {
-        display: none;
-    }
-
     .public-turn-status {
         grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 6px;
 
         margin-bottom: 10px;
-    }
-
-    .public-turn-status-item {
-        padding: 7px 6px;
-    }
-
-    .public-turn-status-item span {
-        margin-bottom: 2px;
-
-        font-size: 10px;
-        letter-spacing: 0.04em;
-    }
-
-    .public-turn-status-item strong {
-        font-size: 13px;
     }
 
     .public-stage-card-row {
@@ -1935,10 +1975,6 @@ body.player-view .public-preview-section {
     }
 }
 
-/* ============================================================
-   Responsive: kleiner als 760px
-   ============================================================ */
-
 @media (max-width: 760px) {
     .section-header-row {
         align-items: flex-start;
@@ -1949,10 +1985,6 @@ body.player-view .public-preview-section {
         max-width: calc(100vw - 48px);
     }
 }
-
-/* ============================================================
-   Responsive: Smartphone
-   ============================================================ */
 
 @media (max-width: 560px) {
     .app {
@@ -2020,28 +2052,39 @@ body.player-view .public-preview-section {
         font-size: 12px;
     }
 
-    .add-creature-section,
+    .public-preview-section > summary,
+    .public-preview-summary,
+    .add-creature-summary {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 12px;
+
+        padding: 18px 16px;
+    }
+
+    .public-preview-section > summary h2,
+    .public-preview-summary > span:first-child,
+    .add-creature-summary > span:first-child {
+        font-size: 22px;
+    }
+
+    .public-preview-summary-hint,
+    .details-toggle-label,
+    .details-toggle-button,
+    .public-preview-toggle-label {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .public-preview-content,
+    .add-creature-body {
+        padding: 0 16px 16px;
+    }
+
     .combat-control-section,
-    .public-preview-section,
     .creature-list-section {
         padding: 16px;
-
         border-radius: 16px;
-    }
-
-    .form-grid-two,
-    .form-grid-three,
-    .form-grid-four {
-        grid-template-columns: 1fr;
-    }
-
-    .form-field-wide,
-    .form-field-wide-four {
-        grid-column: span 1;
-    }
-
-    .turn-top-actions {
-        justify-content: stretch;
     }
 
     .section-header-row {
@@ -2077,28 +2120,42 @@ body.player-view .public-preview-section {
         margin-top: 8px;
     }
 
+    .turn-action-buttons,
+    .selection-actions,
+    .mass-action-buttons {
+        width: 100%;
+    }
+
+    .turn-action-buttons button,
+    .selection-actions button,
+    .mass-action-buttons button {
+        flex: 1 1 140px;
+    }
+
+    .combat-log-header {
+        flex-direction: column;
+    }
+
+    .storage-status {
+        max-width: none;
+        width: 100%;
+    }
+
+    .form-grid-two,
+    .form-grid-three,
+    .form-grid-four {
+        grid-template-columns: 1fr;
+    }
+
+    .form-field-wide,
+    .form-field-wide-four {
+        grid-column: span 1;
+    }
+
     .add-creature-form .add-creature-button {
         width: 100%;
 
         justify-self: stretch;
-    }
-
-    .storage-status {
-        padding: 9px 10px;
-
-        font-size: 12px;
-    }
-
-    .selection-control-panel {
-        align-items: stretch;
-    }
-
-    .selection-actions {
-        width: 100%;
-    }
-
-    .selection-actions button {
-        flex: 1;
     }
 
     .card-row-shell {
@@ -2142,10 +2199,6 @@ body.player-view .public-preview-section {
         height: 200px;
     }
 
-    .deck-card-compact .creature-image-box {
-        height: 200px;
-    }
-
     .public-three-card-stage {
         padding: 10px;
     }
@@ -2156,13 +2209,11 @@ body.player-view .public-preview-section {
 
     .public-stage-card-inner {
         gap: 6px;
-
         padding: 7px;
     }
 
     .public-stage-title {
         padding: 7px 8px;
-
         font-size: 18px;
     }
 
@@ -2174,13 +2225,8 @@ body.player-view .public-preview-section {
         padding: 6px;
     }
 
-    .public-preview-section-box h4 {
-        margin-bottom: 4px;
-    }
-
     .public-initiative-title {
         margin: 10px 0 4px;
-
         font-size: 12px;
     }
 
@@ -2223,17 +2269,6 @@ body.player-view .public-preview-section {
         min-height: 48px;
     }
 
-    .public-ribbon-text {
-        min-width: 0;
-    }
-
-    .public-ribbon-text strong,
-    .public-ribbon-text span {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-
     .app-footer {
         margin-top: 28px;
         padding-top: 18px;
@@ -2253,10 +2288,6 @@ body.player-view .public-preview-section {
         font-size: 13px;
     }
 }
-
-/* ============================================================
-   Responsive: sehr kleine Smartphones
-   ============================================================ */
 
 @media (max-width: 380px) {
     .public-initiative-shell {
