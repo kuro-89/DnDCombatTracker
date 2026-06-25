@@ -2492,24 +2492,10 @@ body.player-view .public-preview-section {
         0 16px 32px rgba(0, 0, 0, 0.38);
 }
 
-.creature-card.selected-deck-card {
-    border-color: var(--color-blue);
-
-    box-shadow:
-        0 0 0 3px rgba(138, 180, 248, 0.22),
-        0 16px 32px rgba(0, 0, 0, 0.38);
-}
-
 .creature-card.selected-deck-card .creature-card-inner {
     background:
-        radial-gradient(circle at top left, rgba(138, 180, 248, 0.14), transparent 34%),
-        linear-gradient(180deg, rgba(42, 57, 76, 0.92), rgba(31, 31, 36, 0.98));
-}
-
-.selected-deck-label {
-    border-color: rgba(138, 180, 248, 0.38);
-    background: rgba(138, 180, 248, 0.13);
-    color: var(--color-blue-soft);
+        radial-gradient(circle at top left, rgba(240, 198, 116, 0.15), transparent 34%),
+        linear-gradient(180deg, rgba(57, 47, 29, 0.94), rgba(31, 31, 36, 0.98));
 }
 
 .selected-deck-label {
@@ -2578,5 +2564,88 @@ body.player-view .public-preview-section {
 
     .edit-creature-actions button {
         flex: 1 1 160px;
+    }
+}
+
+/* ============================================================
+   Session 47: Bilddarstellung und Kartenlayout stabilisieren
+   ============================================================ */
+
+/*
+   Empfohlenes Kartenbildformat:
+   - Querformat, ungefähr 16:11
+   - Gute Größen: 1200 x 825 px oder 900 x 620 px
+
+   Die Bildbox behält dadurch ein stabiles Verhältnis.
+   Das eigentliche Bild füllt den Rahmen mit object-fit: cover.
+   Das heißt: Die Karte sieht einheitlich aus, aber am Rand kann etwas
+   vom Bild abgeschnitten werden, wenn das Quellbild ein anderes Format hat.
+*/
+.creature-image-box {
+    height: auto;
+    aspect-ratio: 16 / 11;
+}
+
+.public-stage-card .public-preview-image-box,
+.public-stage-slot.focused .public-preview-image-box {
+    height: auto;
+    aspect-ratio: 16 / 11;
+}
+
+.creature-image,
+.public-preview-image {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+
+    object-fit: cover;
+    object-position: center center;
+}
+
+.creature-image-placeholder,
+.public-preview-image-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Die kleinen Initiative-Thumbnails bleiben bewusst kompakt und quadratisch. */
+.public-ribbon-image-crop .public-preview-image-box {
+    aspect-ratio: 1 / 1;
+}
+
+/* Deck-Auswahl nutzt dieselbe blaue Auswahlsprache wie Hand-Ziele. */
+.creature-card.selected-deck-card {
+    border-color: var(--color-blue);
+
+    box-shadow:
+        0 0 0 3px rgba(138, 180, 248, 0.22),
+        0 16px 32px rgba(0, 0, 0, 0.38);
+}
+
+.creature-card.selected-deck-card .creature-card-inner {
+    background:
+        radial-gradient(circle at top left, rgba(138, 180, 248, 0.14), transparent 34%),
+        linear-gradient(180deg, rgba(42, 57, 76, 0.92), rgba(31, 31, 36, 0.98));
+}
+
+.selected-deck-label {
+    border-color: rgba(138, 180, 248, 0.38);
+    background: rgba(138, 180, 248, 0.13);
+    color: var(--color-blue-soft);
+}
+
+/* Die aktive Karte wird beim Hover nicht flacher. */
+.creature-card.active.selectable-card:hover {
+    transform: translateY(-8px);
+}
+
+@media (max-width: 560px) {
+    .creature-image-box,
+    .public-stage-card .public-preview-image-box,
+    .public-stage-slot.focused .public-preview-image-box {
+        height: auto;
+        aspect-ratio: 16 / 11;
     }
 }
