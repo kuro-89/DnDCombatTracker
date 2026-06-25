@@ -2999,3 +2999,568 @@ body.player-view .public-preview-section {
         min-height: 44px;
     }
 }
+
+/* ============================================================
+   FIX: Encounter-Steuerung: 
+   Einheitliche Kacheln, ruhige Buttons, keine Zusatzsymbole
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   Encounter-Gesamtbereich
+   ------------------------------------------------------------ */
+
+.combat-control-section {
+    overflow: visible;
+
+    border-color: rgba(216, 179, 106, 0.18);
+
+    background:
+        radial-gradient(circle at 10% 0%, rgba(216, 179, 106, 0.055), transparent 30%),
+        radial-gradient(circle at 82% 8%, rgba(124, 91, 182, 0.115), transparent 38%),
+        linear-gradient(135deg, rgba(24, 19, 29, 0.99), rgba(9, 7, 12, 0.99));
+
+    box-shadow:
+        0 22px 46px rgba(0, 0, 0, 0.46),
+        0 0 42px rgba(124, 91, 182, 0.045),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.028);
+}
+
+.combat-control-section .section-header-row {
+    position: relative;
+    z-index: 100;
+
+    margin-bottom: 18px;
+    padding-bottom: 16px;
+
+    border-bottom-color: rgba(216, 179, 106, 0.16);
+}
+
+.combat-control-section .section-header-row h2 {
+    color: var(--color-gold-soft);
+    font-size: 25px;
+    letter-spacing: -0.035em;
+}
+
+/* Keine automatisch eingefügten Symbole. */
+.combat-control-section .section-header-row h2::before,
+.selection-control-panel h3::before,
+.combat-action-row .control-group:nth-child(2) h3::before,
+.combat-action-row .control-group:nth-child(3) h3::before,
+.combat-support-row .control-group h3::before,
+.combat-log-panel h3::before {
+    content: none !important;
+    display: none !important;
+}
+
+
+/* ------------------------------------------------------------
+   Runden-Anzeige neu
+   ------------------------------------------------------------ */
+
+.turn-control-card {
+    margin-bottom: 18px;
+}
+
+.turn-info {
+    position: relative;
+    z-index: 10;
+
+    display: grid;
+    grid-template-columns: minmax(220px, max-content) max-content;
+    align-items: center;
+    justify-content: start;
+    gap: 18px;
+
+    min-height: 86px;
+    padding: 17px 20px;
+
+    border: 1px solid rgba(216, 179, 106, 0.20);
+    border-radius: 18px;
+
+    background:
+        radial-gradient(circle at 10% 20%, rgba(216, 179, 106, 0.075), transparent 30%),
+        radial-gradient(circle at 78% 10%, rgba(124, 91, 182, 0.10), transparent 36%),
+        linear-gradient(135deg, rgba(20, 15, 20, 0.95), rgba(8, 6, 10, 0.97));
+
+    box-shadow:
+        0 12px 26px rgba(0, 0, 0, 0.24),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.024);
+}
+
+.turn-info::before {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    left: 18px;
+    right: 18px;
+
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(216, 179, 106, 0.38),
+            rgba(124, 91, 182, 0.18),
+            transparent
+        );
+
+    pointer-events: none;
+}
+
+.turn-info-main {
+    display: grid;
+    gap: 4px;
+
+    width: auto;
+    min-width: 0;
+    padding-right: 4px;
+}
+
+.turn-info h2 {
+    margin: 0;
+
+    color: var(--color-gold-soft);
+    font-size: 30px;
+    line-height: 1;
+    letter-spacing: -0.05em;
+}
+
+.turn-info p {
+    margin: 0;
+
+    color: var(--color-text-muted);
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.active-creature-name {
+    color: #ffffff;
+    font-size: 17px;
+    font-weight: 900;
+
+    text-shadow:
+        0 0 14px rgba(128, 183, 255, 0.26);
+}
+
+/* Button-Gruppe neben der Rundenanzeige */
+.turn-actions-inline {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 5px;
+
+    border: 1px solid rgba(124, 91, 182, 0.22);
+    border-radius: 999px;
+
+    background:
+        linear-gradient(135deg, rgba(10, 7, 13, 0.78), rgba(23, 17, 30, 0.64));
+
+    box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.018);
+}
+
+.turn-actions-inline button {
+    min-height: 34px;
+    padding: 7px 14px;
+
+    border-color: rgba(124, 91, 182, 0.38);
+
+    background:
+        radial-gradient(circle at top left, rgba(124, 91, 182, 0.12), transparent 42%),
+        linear-gradient(135deg, rgba(42, 32, 56, 0.88), rgba(18, 14, 24, 0.94));
+
+    color: var(--color-purple-soft);
+
+    font-size: 14px;
+    font-weight: 900;
+    white-space: nowrap;
+
+    box-shadow:
+        0 6px 14px rgba(0, 0, 0, 0.16),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.024);
+}
+
+.turn-actions-inline button:hover {
+    border-color: rgba(128, 183, 255, 0.50);
+
+    background:
+        radial-gradient(circle at top left, rgba(128, 183, 255, 0.10), transparent 42%),
+        linear-gradient(135deg, rgba(35, 55, 82, 0.82), rgba(18, 14, 24, 0.96));
+
+    color: var(--color-blue-soft);
+}
+
+
+/* ------------------------------------------------------------
+   Alle Encounter-Kacheln vereinheitlichen
+   ------------------------------------------------------------ */
+
+.combat-action-row {
+    display: grid;
+    grid-template-columns:
+        minmax(280px, 0.9fr)
+        minmax(320px, 1fr)
+        minmax(320px, 1fr);
+    gap: 16px;
+
+    margin-bottom: 16px;
+}
+
+.combat-support-row {
+    display: grid;
+    grid-template-columns:
+        minmax(380px, 0.75fr)
+        minmax(460px, 1.25fr);
+    gap: 16px;
+}
+
+.control-group,
+.combat-log-panel {
+    position: relative;
+    overflow: hidden;
+
+    padding: 18px;
+
+    border: 1px solid rgba(216, 179, 106, 0.15);
+    border-radius: 17px;
+
+    background:
+        radial-gradient(circle at 12% 0%, rgba(216, 179, 106, 0.042), transparent 30%),
+        radial-gradient(circle at 100% 0%, rgba(124, 91, 182, 0.06), transparent 34%),
+        linear-gradient(135deg, rgba(18, 13, 19, 0.96), rgba(8, 6, 10, 0.98));
+
+    box-shadow:
+        0 12px 26px rgba(0, 0, 0, 0.22),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.024);
+}
+
+.control-group::before,
+.combat-log-panel::before {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    left: 16px;
+    right: 16px;
+
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(216, 179, 106, 0.28),
+            rgba(124, 91, 182, 0.16),
+            transparent
+        );
+
+    pointer-events: none;
+}
+
+.control-group h3,
+.combat-log-panel h3 {
+    margin: 0 0 14px;
+
+    color: var(--color-gold-soft);
+    font-size: 17px;
+    font-weight: 900;
+    letter-spacing: -0.025em;
+}
+
+
+/* ------------------------------------------------------------
+   Ziele-Kachel: kein Sonderhintergrund mehr
+   ------------------------------------------------------------ */
+
+/*
+   Wichtig:
+   Falls .selection-control-panel auf derselben Box wie .control-group liegt,
+   darf sie keine eigene Extra-Box erzeugen.
+*/
+.selection-control-panel {
+    display: grid;
+    gap: 10px;
+
+    padding: 18px !important;
+
+    border: 1px solid rgba(216, 179, 106, 0.15) !important;
+    border-radius: 17px !important;
+
+    background:
+        radial-gradient(circle at 12% 0%, rgba(216, 179, 106, 0.042), transparent 30%),
+        radial-gradient(circle at 100% 0%, rgba(124, 91, 182, 0.06), transparent 34%),
+        linear-gradient(135deg, rgba(18, 13, 19, 0.96), rgba(8, 6, 10, 0.98)) !important;
+
+    box-shadow:
+        0 12px 26px rgba(0, 0, 0, 0.22),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.024) !important;
+}
+
+.selection-status {
+    margin: 0 !important;
+    padding: 0 !important;
+
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+
+    color: var(--color-gold);
+    font-size: 21px;
+    font-weight: 900;
+    line-height: 1.15;
+    letter-spacing: -0.035em;
+
+    text-shadow:
+        0 0 12px rgba(216, 179, 106, 0.10);
+}
+
+.selection-target-names {
+    margin: 0;
+
+    color: var(--color-text-muted);
+    font-size: 14px;
+    line-height: 1.45;
+}
+
+
+/* ------------------------------------------------------------
+   Einheitliches Button-System
+   ------------------------------------------------------------ */
+
+.selection-actions,
+.mass-action-buttons,
+.cleanup-action-buttons {
+    display: flex;
+    gap: 9px;
+    flex-wrap: wrap;
+}
+
+/*
+   Ziel-Buttons NICHT mehr gelb.
+   Sie sind normale violette Interface-Buttons.
+   Gold bleibt nur für den Text "3 Ziele ausgewählt".
+*/
+.selection-actions button,
+.mass-action-buttons button,
+.cleanup-action-buttons button,
+.combat-action-row .control-group button {
+    min-height: 38px;
+    padding: 8px 14px;
+
+    border-color: rgba(124, 91, 182, 0.38);
+
+    background:
+        radial-gradient(circle at top left, rgba(124, 91, 182, 0.12), transparent 42%),
+        linear-gradient(135deg, rgba(42, 32, 56, 0.88), rgba(18, 14, 24, 0.94));
+
+    color: var(--color-purple-soft);
+
+    font-weight: 900;
+
+    box-shadow:
+        0 8px 16px rgba(0, 0, 0, 0.18),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.024);
+}
+
+.selection-actions button:hover,
+.mass-action-buttons button:hover,
+.cleanup-action-buttons button:hover,
+.combat-action-row .control-group button:hover {
+    transform: translateY(-1px);
+
+    border-color: rgba(216, 179, 106, 0.42);
+
+    background:
+        radial-gradient(circle at top left, rgba(216, 179, 106, 0.09), transparent 42%),
+        linear-gradient(135deg, rgba(52, 40, 64, 0.96), rgba(28, 22, 36, 0.98));
+
+    color: var(--color-gold-soft);
+}
+
+/* Dezente Rollenfarben nur als Rand, nicht als kompletter Stilbruch. */
+.mass-action-buttons button:nth-child(1) {
+    border-color: rgba(255, 143, 154, 0.36);
+}
+
+.mass-action-buttons button:nth-child(1):hover {
+    border-color: rgba(255, 143, 154, 0.58);
+    color: #ffd0d5;
+}
+
+.mass-action-buttons button:nth-child(2) {
+    border-color: rgba(216, 179, 106, 0.34);
+}
+
+.mass-action-buttons button:nth-child(2):hover {
+    border-color: rgba(216, 179, 106, 0.58);
+    color: var(--color-gold-soft);
+}
+
+.mass-action-buttons button:nth-child(3) {
+    border-color: rgba(128, 183, 255, 0.34);
+}
+
+.mass-action-buttons button:nth-child(3):hover {
+    border-color: rgba(128, 183, 255, 0.58);
+    color: var(--color-blue-soft);
+}
+
+/* Gefährliche Aktion bleibt klar rot. */
+.end-combat-button {
+    border-color: rgba(255, 143, 154, 0.42) !important;
+
+    background:
+        linear-gradient(135deg, rgba(92, 35, 49, 0.94), rgba(48, 22, 31, 0.98)) !important;
+
+    color: #ffc7cd !important;
+}
+
+.end-combat-button:hover {
+    border-color: var(--color-danger) !important;
+
+    background:
+        linear-gradient(135deg, rgba(116, 45, 62, 0.98), rgba(62, 27, 39, 0.98)) !important;
+
+    color: #ffe2e5 !important;
+}
+
+
+/* ------------------------------------------------------------
+   Eingabefelder: HP-Feld und Condition-Dropdown gleich hoch
+   ------------------------------------------------------------ */
+
+.mass-action-field input,
+.mass-action-field select,
+.control-group select {
+    height: 44px !important;
+    min-height: 44px !important;
+    padding: 9px 12px;
+
+    border-color: rgba(124, 91, 182, 0.30);
+    border-radius: 12px;
+
+    background:
+        radial-gradient(circle at top left, rgba(124, 91, 182, 0.06), transparent 42%),
+        linear-gradient(135deg, rgba(8, 6, 11, 0.96), rgba(16, 12, 20, 0.96));
+
+    color: var(--color-text);
+
+    font: inherit;
+    line-height: 1.2;
+
+    box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.020);
+}
+
+.mass-action-field input:focus,
+.mass-action-field select:focus,
+.control-group select:focus {
+    border-color: rgba(124, 91, 182, 0.62);
+
+    box-shadow:
+        0 0 0 3px rgba(124, 91, 182, 0.16),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.026);
+}
+
+
+/* ------------------------------------------------------------
+   Encounter-Log etwas sauberer
+   ------------------------------------------------------------ */
+
+.combat-log-panel {
+    border-color: rgba(124, 91, 182, 0.18);
+
+    background:
+        radial-gradient(circle at top right, rgba(124, 91, 182, 0.08), transparent 34%),
+        linear-gradient(135deg, rgba(14, 10, 18, 0.97), rgba(6, 5, 8, 0.98));
+}
+
+.combat-log-header {
+    align-items: center;
+}
+
+.storage-status {
+    border-color: rgba(128, 183, 255, 0.24);
+
+    background:
+        radial-gradient(circle at top left, rgba(128, 183, 255, 0.08), transparent 42%),
+        linear-gradient(135deg, rgba(25, 33, 47, 0.84), rgba(12, 10, 16, 0.90));
+
+    color: var(--color-blue-soft);
+}
+
+.combat-log-entry {
+    border-color: rgba(124, 91, 182, 0.20);
+
+    background:
+        linear-gradient(135deg, rgba(28, 22, 36, 0.68), rgba(10, 8, 12, 0.78));
+}
+
+.combat-log-time {
+    color: var(--color-purple-soft);
+}
+
+.combat-log-text {
+    color: var(--color-text-muted);
+}
+
+
+/* ------------------------------------------------------------
+   Responsive
+   ------------------------------------------------------------ */
+
+@media (max-width: 900px) {
+    .combat-action-row,
+    .combat-support-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 760px) {
+    .turn-info {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .turn-actions-inline {
+        width: 100%;
+        justify-content: stretch;
+    }
+
+    .turn-actions-inline button {
+        flex: 1 1 150px;
+    }
+}
+
+@media (max-width: 560px) {
+    .turn-info {
+        padding: 16px;
+    }
+
+    .turn-info h2 {
+        font-size: 28px;
+    }
+
+    .control-group,
+    .combat-log-panel,
+    .selection-control-panel {
+        padding: 16px !important;
+    }
+
+    .turn-actions-inline {
+        padding: 0;
+        border: 0;
+        background: transparent;
+        box-shadow: none;
+    }
+
+    .turn-actions-inline button,
+    .selection-actions button,
+    .mass-action-buttons button,
+    .cleanup-action-buttons button {
+        transform: none;
+    }
+}
