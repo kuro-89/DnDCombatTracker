@@ -951,7 +951,7 @@ select:focus {
 }
 
 .creature-card.active.selectable-card:hover {
-    transform: translateY(-4px);
+    transform: translateY(-8px);
 }
 
 .creature-card.selected-target-card {
@@ -2315,5 +2315,268 @@ body.player-view .public-preview-section {
         width: 34px;
         height: 44px;
         min-height: 44px;
+    }
+}
+/* ============================================================
+   Session 45: Kurzanleitung als Header-Aktion
+   ============================================================ */
+
+.app-header-help {
+    border-radius: var(--radius-large);
+}
+
+.app-header-help-summary {
+    display: block;
+
+    cursor: default;
+    list-style: none;
+}
+
+.app-header-help-summary::-webkit-details-marker {
+    display: none;
+}
+
+.app-header-help-summary::after {
+    content: none;
+    display: none;
+}
+
+.app-header-help .app-header-card {
+    margin-bottom: 0;
+}
+
+.app-help-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    min-height: 34px;
+    padding: 8px 12px;
+
+    border: 1px solid rgba(138, 180, 248, 0.36);
+    border-radius: 999px;
+
+    background: rgba(38, 50, 65, 0.84);
+    color: var(--color-blue-soft);
+
+    cursor: pointer;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.app-header-help:not([open]) .app-help-button::before {
+    content: "Kurzanleitung";
+}
+
+.app-header-help[open] .app-help-button::before {
+    content: "Anleitung schließen";
+}
+
+.app-header-help:not([open]) .app-help-button::after {
+    content: "▾";
+}
+
+.app-header-help[open] .app-help-button::after {
+    content: "▴";
+}
+
+.app-help-button:hover {
+    border-color: var(--color-blue);
+
+    background: rgba(48, 63, 82, 0.94);
+    color: #ffffff;
+}
+
+.app-help-content {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+
+    margin-top: 16px;
+    padding: 18px 20px 20px;
+
+    border: 1px solid rgba(240, 198, 116, 0.22);
+    border-radius: var(--radius-large);
+
+    background:
+        radial-gradient(circle at top left, rgba(240, 198, 116, 0.08), transparent 34%),
+        linear-gradient(135deg, rgba(37, 37, 44, 0.92), rgba(31, 31, 36, 0.96));
+
+    box-shadow:
+        0 12px 26px rgba(0, 0, 0, 0.24),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.025);
+}
+
+.app-help-card {
+    padding: 16px;
+
+    border: 1px solid rgba(240, 198, 116, 0.16);
+    border-radius: 14px;
+
+    background:
+        linear-gradient(135deg, rgba(18, 18, 22, 0.42), rgba(31, 31, 36, 0.72));
+}
+
+.app-help-card h2 {
+    margin: 0 0 10px;
+
+    color: var(--color-gold);
+    font-size: 17px;
+}
+
+.app-help-card p {
+    margin: 0;
+
+    color: var(--color-text-muted);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.app-help-card p + p {
+    margin-top: 10px;
+}
+
+@media (max-width: 760px) {
+    .app-help-content {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 560px) {
+    .app-help-content {
+        padding: 16px;
+    }
+
+    .app-help-button {
+        width: 100%;
+    }
+}
+
+/* ============================================================
+   Session 46: Karten bearbeiten + Deck-Auswahl
+   ============================================================ */
+
+.deck-selection-panel {
+    display: grid;
+    gap: 6px;
+
+    margin: 0 0 14px;
+    padding: 12px 14px;
+
+    border: 1px solid rgba(138, 180, 248, 0.20);
+    border-radius: 14px;
+
+    background:
+        linear-gradient(135deg, rgba(38, 50, 65, 0.42), rgba(18, 18, 22, 0.52));
+}
+
+.deck-selection-status {
+    color: var(--color-blue);
+    font-size: 16px;
+    font-weight: 900;
+}
+
+.deck-selection-names {
+    color: var(--color-text-muted);
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+.creature-card.selected-deck-card {
+    border-color: var(--color-gold);
+
+    box-shadow:
+        0 0 0 3px rgba(240, 198, 116, 0.22),
+        0 16px 32px rgba(0, 0, 0, 0.38);
+}
+
+.creature-card.selected-deck-card {
+    border-color: var(--color-blue);
+
+    box-shadow:
+        0 0 0 3px rgba(138, 180, 248, 0.22),
+        0 16px 32px rgba(0, 0, 0, 0.38);
+}
+
+.creature-card.selected-deck-card .creature-card-inner {
+    background:
+        radial-gradient(circle at top left, rgba(138, 180, 248, 0.14), transparent 34%),
+        linear-gradient(180deg, rgba(42, 57, 76, 0.92), rgba(31, 31, 36, 0.98));
+}
+
+.selected-deck-label {
+    border-color: rgba(138, 180, 248, 0.38);
+    background: rgba(138, 180, 248, 0.13);
+    color: var(--color-blue-soft);
+}
+
+.selected-deck-label {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 4px 8px;
+
+    border: 1px solid rgba(240, 198, 116, 0.38);
+    border-radius: 999px;
+
+    background: rgba(240, 198, 116, 0.13);
+    color: var(--color-gold);
+
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.edit-creature-section {
+    margin-bottom: 32px;
+    padding: 24px;
+
+    border: 1px solid rgba(138, 180, 248, 0.26);
+    border-radius: var(--radius-large);
+
+    background:
+        radial-gradient(circle at top left, rgba(138, 180, 248, 0.12), transparent 34%),
+        radial-gradient(circle at top right, rgba(240, 198, 116, 0.08), transparent 34%),
+        linear-gradient(135deg, rgba(38, 50, 65, 0.86), rgba(31, 31, 36, 0.98));
+
+    box-shadow: var(--shadow-panel);
+}
+
+.edit-creature-section-hidden {
+    display: none;
+}
+
+.edit-creature-header h2 {
+    color: var(--color-blue);
+}
+
+.edit-creature-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.edit-creature-actions button:first-child {
+    border-color: rgba(138, 180, 248, 0.38);
+    background: rgba(38, 50, 65, 0.84);
+    color: var(--color-blue-soft);
+}
+
+.edit-creature-actions button:first-child:hover {
+    border-color: var(--color-blue);
+    background: rgba(48, 63, 82, 0.94);
+}
+
+@media (max-width: 560px) {
+    .edit-creature-section {
+        padding: 16px;
+        border-radius: 16px;
+    }
+
+    .edit-creature-actions button {
+        flex: 1 1 160px;
     }
 }

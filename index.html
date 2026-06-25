@@ -10,46 +10,118 @@
 <body>
     <main class="app">
         <header class="app-header">
-            <div class="app-header-card">
-                <div class="app-header-text">
-                    <p id="app-view-kicker" class="app-kicker">DM-Ansicht</p>
+            <details class="app-header-help">
+                <summary class="app-header-help-summary">
+                    <div class="app-header-card">
+                        <div class="app-header-text">
+                            <p id="app-view-kicker" class="app-kicker">DM-Ansicht</p>
 
-                    <h1>Miriel’s Deck of Encounters</h1>
+                            <h1>Miriel’s Deck of Encounters</h1>
 
-                    <p class="app-tagline">
-                        A card-based encounter &amp; initiative tracker
-                    </p>
+                            <p class="app-tagline">
+                                A card-based encounter &amp; initiative tracker
+                            </p>
 
-                    <p class="app-build-info">
-                        v0.4.1 build 2026-06-25 by kuro
-                    </p>
+                            <p class="app-build-info">
+                                v0.4.3 build 2026-06-25 by kuro
+                            </p>
 
-                    <div class="app-view-actions" aria-label="Ansicht wechseln">
-                        <button
-                            id="open-dm-view-button"
-                            type="button"
-                            onclick="openAppView('dm')"
-                        >
-                            DM-Ansicht öffnen
-                        </button>
+                            <div class="app-view-actions" aria-label="Ansicht wechseln">
+                                <button
+                                    id="open-dm-view-button"
+                                    type="button"
+                                    onclick="openAppView('dm')"
+                                >
+                                    DM-Ansicht öffnen
+                                </button>
 
-                        <button
-                            id="open-player-view-button"
-                            type="button"
-                            onclick="openAppView('player')"
-                        >
-                            Spieler-Ansicht öffnen
-                        </button>
+                                <button
+                                    id="open-player-view-button"
+                                    type="button"
+                                    onclick="openAppView('player')"
+                                >
+                                    Spieler-Ansicht öffnen
+                                </button>
+
+                                <span class="app-help-button"></span>
+                            </div>
+                        </div>
+
+                        <div class="app-header-art" aria-hidden="true">
+                            <img
+                                src="Images/Miriel_header_d.png"
+                                alt=""
+                            >
+                        </div>
                     </div>
-                </div>
+                </summary>
 
-                <div class="app-header-art" aria-hidden="true">
-                    <img
-                        src="Images/miriel_header.png"
-                        alt=""
-                    >
+                <div class="app-help-content">
+                    <article class="app-help-card">
+                        <h2>Grundidee</h2>
+
+                        <p>
+                            Miriel's Deck of Encounters soll den Spielleiter bei der Verwaltung von Encountern unterstützen.
+                            Die App ist für Fantasy-Tabletop-Runden gedacht, die mit einem klassischen Initiative-System arbeiten.  
+                            Miriel’s Deck unterscheidet zwischen vorbereiteten Karten und aktiven Kampfkarten.
+                            Das Kartendeck ist dein Vorrat. Karten auf der Hand sind die
+                            Kreaturen, die gerade am aktuellen Encounter teilnehmen.
+                        </p>
+
+                        <p>
+                            Die DM-Ansicht enthält alle internen Werte. Die Spieleransicht
+                            zeigt nur öffentliche Informationen wie öffentlichen Namen,
+                            sichtbare HP-Anzeige und Conditions. Aktell ist diese für einen externen Monitor gedacht.
+                            Später soll die Spieleransicht auch auf einem zweiten Gerät geöffnet werden können.
+                        </p>
+                    </article>
+
+                    <article class="app-help-card">
+                        <h2>Vorbereitung</h2>
+
+                        <p>
+                            Lege neue Karten an oder nutze Demo-Karten als Startpunkt.
+                            Karten im Deck nehmen noch nicht am Kampf teil.
+                        </p>
+
+                        <p>
+                            Nimm nur die Karten auf die Hand, die im aktuellen Encounter
+                            beteiligt sind. So bleibt die Initiative übersichtlich.
+                        </p>
+                    </article>
+
+                    <article class="app-help-card">
+                        <h2>Kampf leiten</h2>
+
+                        <p>
+                            Karten auf der Hand werden nach Initiative sortiert. Die aktive
+                            Karte wird hervorgehoben. Mit den Turn-Buttons wechselst du zur
+                            vorherigen oder nächsten Kreatur.
+                        </p>
+
+                        <p>
+                            Klicke Handkarten an, um sie als Ziele auszuwählen. Danach kannst
+                            du in der Kampfsteuerung Schaden, Heilung, Temp HP oder Conditions
+                            auf alle ausgewählten Ziele anwenden.
+                        </p>
+                    </article>
+
+                    <article class="app-help-card">
+                        <h2>Speichern &amp; Spieleransicht</h2>
+
+                        <p>
+                            Der Browser speichert den aktuellen Zustand lokal. Dadurch können
+                            DM-Ansicht und Spieleransicht auf demselben Gerät synchron bleiben.
+                        </p>
+
+                        <p>
+                            Für eine langfristige Sicherung solltest du den Encounter als
+                            JSON-Datei exportieren. Die Spieler-Vorschau kann eingeklappt
+                            werden, wenn du mehr Platz für die DM-Steuerung brauchst.
+                        </p>
+                    </article>
                 </div>
-            </div>
+            </details>
         </header>
 
         <details open class="public-preview-section">
@@ -339,6 +411,18 @@
                                 </summary>
 
                                 <div class="section-menu-panel">
+                                    <button onclick="moveSelectedDeckCardsToHand()">
+                                        Ausgewählte Deck-Karten auf die Hand nehmen
+                                    </button>
+
+                                    <button onclick="selectAllDeckCards()">
+                                        Alle Deck-Karten auswählen
+                                    </button>
+
+                                    <button onclick="clearDeckSelection()">
+                                        Deck-Auswahl leeren
+                                    </button>
+
                                     <button onclick="moveAllDeckCardsToHand()">
                                         Alle Deck-Karten auf die Hand nehmen
                                     </button>
@@ -356,6 +440,16 @@
                                     </button>
                                 </div>
                             </details>
+                        </div>
+                    </div>
+
+                    <div class="deck-selection-panel">
+                        <div id="deck-selection-status" class="deck-selection-status">
+                            0 Deck-Karten ausgewählt
+                        </div>
+
+                        <div id="deck-selection-names" class="deck-selection-names">
+                            Keine Deck-Karten ausgewählt.
                         </div>
                     </div>
 
@@ -379,6 +473,142 @@
                         >
                             ›
                         </button>
+                    </div>
+                </section>
+
+                <section id="edit-creature-section" class="edit-creature-section edit-creature-section-hidden">
+                    <div class="section-header-row edit-creature-header">
+                        <h2 id="edit-creature-title">Karte bearbeiten</h2>
+
+                        <button onclick="closeEditCreatureForm()">
+                            Bearbeiten abbrechen
+                        </button>
+                    </div>
+
+                    <p id="edit-creature-error" class="form-error"></p>
+
+                    <div class="add-creature-form edit-creature-form">
+                        <fieldset class="form-group">
+                            <legend>Basisdaten</legend>
+
+                            <div class="form-grid form-grid-four">
+                                <div class="form-field">
+                                    <label for="edit-creature-name">Interner Name</label>
+                                    <input id="edit-creature-name" type="text">
+                                </div>
+
+                                <div class="form-field">
+                                    <label for="edit-creature-public-name">Öffentlicher Name</label>
+                                    <input id="edit-creature-public-name" type="text">
+                                </div>
+
+                                <div class="form-field">
+                                    <label for="edit-creature-type">Typ</label>
+                                    <select id="edit-creature-type">
+                                        <option value="player">Player</option>
+                                        <option value="npc">NPC</option>
+                                        <option value="monster">Monster</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-field">
+                                    <label for="edit-creature-hp-visibility">Spieler-HP-Anzeige</label>
+                                    <select id="edit-creature-hp-visibility">
+                                        <option value="full">HP vollständig anzeigen</option>
+                                        <option value="bar">Nur HP-Balken anzeigen</option>
+                                        <option value="descriptive">Nur Beschreibung anzeigen</option>
+                                        <option value="hidden">HP verbergen</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-field form-field-wide-four">
+                                    <label for="edit-creature-image-path">Bildpfad oder gespeicherte Bilddaten</label>
+                                    <input
+                                        id="edit-creature-image-path"
+                                        type="text"
+                                        placeholder="Images/beispiel.png"
+                                    >
+
+                                    <p class="form-hint">
+                                        Für Projektbilder kannst du hier einen Pfad wie
+                                        <strong>Images/monster.png</strong> eintragen.
+                                        Wenn du unten eine neue Bilddatei auswählst, ersetzt sie diesen Wert.
+                                    </p>
+                                </div>
+
+                                <div class="form-field form-field-wide-four">
+                                    <label for="edit-creature-image">Neues Bild auswählen</label>
+                                    <input
+                                        id="edit-creature-image"
+                                        type="file"
+                                        accept="image/*"
+                                    >
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset class="form-group">
+                            <legend>Kampfwerte</legend>
+
+                            <div class="form-grid form-grid-four">
+                                <div class="form-field">
+                                    <label for="edit-creature-initiative">Initiative</label>
+                                    <input id="edit-creature-initiative" type="number">
+                                </div>
+
+                                <div class="form-field">
+                                    <label for="edit-creature-hp">HP</label>
+                                    <input id="edit-creature-hp" type="number" min="0">
+                                </div>
+
+                                <div class="form-field">
+                                    <label for="edit-creature-max-hp">Max HP</label>
+                                    <input id="edit-creature-max-hp" type="number" min="1">
+                                </div>
+
+                                <div class="form-field">
+                                    <label for="edit-creature-temp-hp">Temp HP</label>
+                                    <input id="edit-creature-temp-hp" type="number" min="0">
+                                </div>
+
+                                <div class="form-field">
+                                    <label for="edit-creature-ac">AC</label>
+                                    <input id="edit-creature-ac" type="number" min="0">
+                                </div>
+
+                                <div class="form-field">
+                                    <label for="edit-creature-passive-perception">Passive Perception</label>
+                                    <input id="edit-creature-passive-perception" type="number" min="0">
+                                </div>
+
+                                <div class="form-field">
+                                    <label for="edit-creature-passive-insight">Passive Insight</label>
+                                    <input id="edit-creature-passive-insight" type="number" min="0">
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset class="form-group form-group-compact">
+                            <legend>Kartenstatus</legend>
+
+                            <label class="checkbox-field" for="edit-creature-is-in-combat">
+                                <input
+                                    id="edit-creature-is-in-combat"
+                                    type="checkbox"
+                                >
+                                <span>Karte ist auf der Hand</span>
+                            </label>
+                        </fieldset>
+
+                        <div class="edit-creature-actions">
+                            <button onclick="handleEditCreatureSaveButtonClick()">
+                                Änderungen speichern
+                            </button>
+
+                            <button onclick="closeEditCreatureForm()">
+                                Abbrechen
+                            </button>
+                        </div>
                     </div>
                 </section>
 

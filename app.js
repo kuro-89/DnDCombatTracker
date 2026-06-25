@@ -49,7 +49,7 @@ function createDemoCreatures() {
             hpVisibility: "full",
             imageData: "Images/liora_img.png",
             conditions: [],
-            isInCombat: true,
+            isInCombat: false,
             isSelected: false
         },
         {
@@ -57,7 +57,7 @@ function createDemoCreatures() {
             name: "Suica",
             publicName: "Suica",
             type: "player",
-            initiative: 13,
+            initiative: 11,
             hp: 20,
             maxHp: 20,
             tempHp: 5,
@@ -67,6 +67,24 @@ function createDemoCreatures() {
             hpVisibility: "full",
             imageData: "Images/suica_img.png",
             conditions: [],
+            isInCombat: true,
+            isSelected: false
+        },       
+        {
+            id: 4,
+            name: "Animierter Besen",
+            publicName: "Borstibald der Aufmüpfige",
+            type: "monster",
+            initiative: 13,
+            hp: 22,
+            maxHp: 22,
+            tempHp: 0,
+            armorClass: 14,
+            passivePerception: 9,
+            passiveInsight: 6,
+            hpVisibility: "bar",
+            imageData: "Images/borstibald_img.png",
+            conditions: ["prone", "frightened"],
             isInCombat: true,
             isSelected: false
         }
@@ -107,6 +125,10 @@ let publicPreviewWheelIsCoolingDown = false;
 
 // Kurzes Kampf-Log für sichtbare DM-Aktionen.
 let combatLogMessages = [];
+
+// null bedeutet: Es wird gerade keine Karte bearbeitet.
+// Eine Zahl bedeutet: Diese Karten-ID ist im Bearbeitungsformular geöffnet.
+let editingCreatureId = null;
 
 
 // ============================================================
@@ -476,18 +498,24 @@ function getSelectedHandCards() {
     });
 }
 
+function getSelectedDeckCards() {
+    return getDeckCards().filter(function(creature) {
+        return creature.isSelected === true;
+    });
+}
+
 function getSelectedHandCardCount() {
     return getSelectedHandCards().length;
+}
+
+function getSelectedDeckCardCount() {
+    return getSelectedDeckCards().length;
 }
 
 function toggleCreatureSelection(creatureId) {
     const creature = findCreatureById(creatureId);
 
     if (creature === null) {
-        return;
-    }
-
-    if (creature.isInCombat !== true) {
         return;
     }
 
@@ -504,9 +532,29 @@ function clearCardSelection() {
     renderCards();
 }
 
+function clearDeckSelection() {
+    for (const creature of creatures) {
+        if (creature.isInCombat === false) {
+            creature.isSelected = false;
+        }
+    }
+
+    renderCards();
+}
+
 function selectAllHandCards() {
     for (const creature of creatures) {
         if (creature.isInCombat === true) {
+            creature.isSelected = true;
+        }
+    }
+
+    renderCards();
+}
+
+function selectAllDeckCards() {
+    for (const creature of creatures) {
+        if (creature.isInCombat === false) {
             creature.isSelected = true;
         }
     }
@@ -526,9 +574,9 @@ function updateSelectionStatus() {
     const selectedCount = selectedTargets.length;
 
     if (selectedCount === 1) {
-        selectionStatusElement.textContent = "1 Karte ausgewählt";
+        selectionStatusElement.textContent = "1 Ziel ausgewählt";
     } else {
-        selectionStatusElement.textContent = `${selectedCount} Karten ausgewählt`;
+        selectionStatusElement.textContent = `${selectedCount} Ziele ausgewählt`;
     }
 
     if (selectionTargetNamesElement === null) {
@@ -541,6 +589,35 @@ function updateSelectionStatus() {
     }
 
     selectionTargetNamesElement.textContent = createTargetNamesText(selectedTargets);
+}
+
+function updateDeckSelectionStatus() {
+    const deckSelectionStatusElement = document.querySelector("#deck-selection-status");
+    const deckSelectionNamesElement = document.querySelector("#deck-selection-names");
+
+    if (deckSelectionStatusElement === null) {
+        return;
+    }
+
+    const selectedDeckCards = getSelectedDeckCards();
+    const selectedCount = selectedDeckCards.length;
+
+    if (selectedCount === 1) {
+        deckSelectionStatusElement.textContent = "1 Deck-Karte ausgewählt";
+    } else {
+        deckSelectionStatusElement.textContent = `${selectedCount} Deck-Karten ausgewählt`;
+    }
+
+    if (deckSelectionNamesElement === null) {
+        return;
+    }
+
+    if (selectedCount === 0) {
+        deckSelectionNamesElement.textContent = "Keine Deck-Karten ausgewählt.";
+        return;
+    }
+
+    deckSelectionNamesElement.textContent = createTargetNamesText(selectedDeckCards);
 }
 
 
@@ -889,6 +966,7 @@ function moveCardToHand(creatureId) {
     }
 
     creature.isInCombat = true;
+    creature.isSelected = false;
 
     const handCards = getHandCards();
     ensureCurrentTurnIndexIsValid(handCards);
@@ -935,12 +1013,35 @@ function moveAllDeckCardsToHand() {
     for (const creature of creatures) {
         if (creature.isInCombat === false) {
             creature.isInCombat = true;
+            creature.isSelected = false;
         }
     }
 
     const handCards = getHandCards();
     ensureCurrentTurnIndexIsValid(handCards);
 
+    renderCards();
+}
+
+function moveSelectedDeckCardsToHand() {
+    const selectedDeckCards = getSelectedDeckCards();
+
+    if (selectedDeckCards.length === 0) {
+        alert("Bitte wähle zuerst mindestens eine Deck-Karte aus.");
+        return;
+    }
+
+    const selectedNamesText = createTargetNamesText(selectedDeckCards);
+
+    for (const creature of selectedDeckCards) {
+        creature.isInCombat = true;
+        creature.isSelected = false;
+    }
+
+    const handCards = getHandCards();
+    ensureCurrentTurnIndexIsValid(handCards);
+
+    addCombatLogMessage(`${selectedDeckCards.length} Deck-Karte(n) auf die Hand genommen: ${selectedNamesText}.`);
     renderCards();
 }
 
@@ -964,6 +1065,7 @@ function moveDeckCardsOfTypeToHand(type) {
     for (const creature of creatures) {
         if (creature.isInCombat === false && creature.type === type) {
             creature.isInCombat = true;
+            creature.isSelected = false;
         }
     }
 
@@ -2401,6 +2503,10 @@ function createCardMenuHtml(creature) {
             </summary>
 
             <div class="card-menu-panel">
+                <button onclick="openEditCreatureForm(${creature.id})">
+                    Karte bearbeiten
+                </button>
+
                 <button
                     class="card-menu-danger"
                     onclick="removeCreatureById(${creature.id})"
@@ -2429,21 +2535,27 @@ function createCardMenuHtml(creature) {
 function createCreatureCardHtml(creature, isActive) {
     const isCompactDeckCard = creature.isInCombat === false;
 
-    const selectableCardClass = creature.isInCombat === true
-        ? "selectable-card"
-        : "";
+    const selectableCardClass = "selectable-card";
 
     const selectedTargetCardClass = creature.isInCombat === true && creature.isSelected === true
         ? "selected-target-card"
         : "";
 
-    const selectionClickAttribute = creature.isInCombat === true
-        ? `onclick="toggleCreatureSelection(${creature.id})"`
+    const selectedDeckCardClass = creature.isInCombat === false && creature.isSelected === true
+        ? "selected-deck-card"
         : "";
 
-    const selectedTargetLabelHtml = creature.isInCombat === true && creature.isSelected === true
-        ? `<span class="selected-target-label">ausgewählt</span>`
-        : "";
+    const selectionClickAttribute = `onclick="toggleCreatureSelection(${creature.id})"`;
+
+    let selectedTargetLabelHtml = "";
+
+    if (creature.isInCombat === true && creature.isSelected === true) {
+        selectedTargetLabelHtml = `<span class="selected-target-label">Ziel</span>`;
+    }
+
+    if (creature.isInCombat === false && creature.isSelected === true) {
+        selectedTargetLabelHtml = `<span class="selected-deck-label">Deck-Auswahl</span>`;
+    }
 
     const conditionsSectionHtml = creature.isInCombat === true
         ? `
@@ -2459,7 +2571,7 @@ function createCreatureCardHtml(creature, isActive) {
 
     return `
         <article
-            class="creature-card ${isActive ? "active" : ""} ${isCompactDeckCard ? "deck-card-compact" : ""} ${selectableCardClass} ${selectedTargetCardClass}"
+            class="creature-card ${isActive ? "active" : ""} ${isCompactDeckCard ? "deck-card-compact" : ""} ${selectableCardClass} ${selectedTargetCardClass} ${selectedDeckCardClass}"
             ${selectionClickAttribute}
         >
             <div class="creature-card-inner">
@@ -2523,7 +2635,253 @@ function createCreatureCardHtml(creature, isActive) {
 }
 
 // ============================================================
-// 15. Formular: Neue Karte hinzufügen
+// 15. Formular: Karte bearbeiten
+// ============================================================
+
+function showEditCreatureError(message) {
+    const errorElement = document.querySelector("#edit-creature-error");
+
+    if (errorElement === null) {
+        return;
+    }
+
+    errorElement.textContent = message;
+}
+
+function clearEditCreatureError() {
+    showEditCreatureError("");
+}
+
+function setInputValue(elementId, value) {
+    const inputElement = document.querySelector(`#${elementId}`);
+
+    if (inputElement !== null) {
+        inputElement.value = value;
+    }
+}
+
+function setCheckboxValue(elementId, value) {
+    const inputElement = document.querySelector(`#${elementId}`);
+
+    if (inputElement !== null) {
+        inputElement.checked = value;
+    }
+}
+
+function getEditFormCreature() {
+    if (editingCreatureId === null) {
+        return null;
+    }
+
+    return findCreatureById(editingCreatureId);
+}
+
+function openEditCreatureForm(creatureId) {
+    const creature = findCreatureById(creatureId);
+    const editSectionElement = document.querySelector("#edit-creature-section");
+    const editTitleElement = document.querySelector("#edit-creature-title");
+    const imageInputElement = document.querySelector("#edit-creature-image");
+
+    if (creature === null || editSectionElement === null) {
+        return;
+    }
+
+    editingCreatureId = creatureId;
+    clearEditCreatureError();
+
+    if (editTitleElement !== null) {
+        editTitleElement.textContent = `Karte bearbeiten: ${creature.name}`;
+    }
+
+    setInputValue("edit-creature-name", creature.name);
+    setInputValue("edit-creature-public-name", creature.publicName);
+    setInputValue("edit-creature-type", creature.type);
+    setInputValue("edit-creature-image-path", creature.imageData);
+    setInputValue("edit-creature-initiative", creature.initiative);
+    setInputValue("edit-creature-hp", creature.hp);
+    setInputValue("edit-creature-max-hp", creature.maxHp);
+    setInputValue("edit-creature-temp-hp", creature.tempHp);
+    setInputValue("edit-creature-ac", creature.armorClass);
+    setInputValue("edit-creature-passive-perception", creature.passivePerception);
+    setInputValue("edit-creature-passive-insight", creature.passiveInsight);
+    setInputValue("edit-creature-hp-visibility", creature.hpVisibility);
+    setCheckboxValue("edit-creature-is-in-combat", creature.isInCombat === true);
+
+    if (imageInputElement !== null) {
+        imageInputElement.value = "";
+    }
+
+    editSectionElement.classList.remove("edit-creature-section-hidden");
+    editSectionElement.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function closeEditCreatureForm() {
+    const editSectionElement = document.querySelector("#edit-creature-section");
+    const imageInputElement = document.querySelector("#edit-creature-image");
+
+    editingCreatureId = null;
+    clearEditCreatureError();
+
+    if (imageInputElement !== null) {
+        imageInputElement.value = "";
+    }
+
+    if (editSectionElement !== null) {
+        editSectionElement.classList.add("edit-creature-section-hidden");
+    }
+}
+
+async function handleEditCreatureSaveButtonClick() {
+    clearEditCreatureError();
+
+    const creature = getEditFormCreature();
+
+    if (creature === null) {
+        showEditCreatureError("Es ist keine Karte zum Bearbeiten geöffnet.");
+        return;
+    }
+
+    const nameInputElement = document.querySelector("#edit-creature-name");
+    const publicNameInputElement = document.querySelector("#edit-creature-public-name");
+    const typeSelectElement = document.querySelector("#edit-creature-type");
+    const imagePathInputElement = document.querySelector("#edit-creature-image-path");
+    const imageInputElement = document.querySelector("#edit-creature-image");
+    const initiativeInputElement = document.querySelector("#edit-creature-initiative");
+    const hpInputElement = document.querySelector("#edit-creature-hp");
+    const maxHpInputElement = document.querySelector("#edit-creature-max-hp");
+    const tempHpInputElement = document.querySelector("#edit-creature-temp-hp");
+    const acInputElement = document.querySelector("#edit-creature-ac");
+    const passivePerceptionInputElement = document.querySelector("#edit-creature-passive-perception");
+    const passiveInsightInputElement = document.querySelector("#edit-creature-passive-insight");
+    const hpVisibilitySelectElement = document.querySelector("#edit-creature-hp-visibility");
+    const isInCombatInputElement = document.querySelector("#edit-creature-is-in-combat");
+
+    if (
+        nameInputElement === null ||
+        publicNameInputElement === null ||
+        typeSelectElement === null ||
+        imagePathInputElement === null ||
+        imageInputElement === null ||
+        initiativeInputElement === null ||
+        hpInputElement === null ||
+        maxHpInputElement === null ||
+        tempHpInputElement === null ||
+        acInputElement === null ||
+        passivePerceptionInputElement === null ||
+        passiveInsightInputElement === null ||
+        hpVisibilitySelectElement === null ||
+        isInCombatInputElement === null
+    ) {
+        showEditCreatureError("Ein Bearbeitungsfeld wurde nicht gefunden. Bitte prüfe die IDs in index.html.");
+        return;
+    }
+
+    const name = nameInputElement.value.trim();
+    const publicName = publicNameInputElement.value.trim();
+
+    const initiative = Number(initiativeInputElement.value);
+    const hp = Number(hpInputElement.value);
+    const maxHp = Number(maxHpInputElement.value);
+    const tempHp = Number(tempHpInputElement.value);
+    const armorClass = Number(acInputElement.value);
+    const passivePerception = Number(passivePerceptionInputElement.value);
+    const passiveInsight = Number(passiveInsightInputElement.value);
+
+    if (name === "") {
+        showEditCreatureError("Bitte gib einen internen Namen ein.");
+        return;
+    }
+
+    if (publicName === "") {
+        showEditCreatureError("Bitte gib einen öffentlichen Namen ein.");
+        return;
+    }
+
+    if (Number.isFinite(initiative) === false) {
+        showEditCreatureError("Initiative muss eine Zahl sein.");
+        return;
+    }
+
+    if (Number.isFinite(hp) === false || hp < 0) {
+        showEditCreatureError("HP müssen eine Zahl ab 0 sein.");
+        return;
+    }
+
+    if (Number.isFinite(maxHp) === false || maxHp <= 0) {
+        showEditCreatureError("Max HP müssen größer als 0 sein.");
+        return;
+    }
+
+    if (hp > maxHp) {
+        showEditCreatureError("Aktuelle HP dürfen nicht größer als Max HP sein.");
+        return;
+    }
+
+    if (Number.isFinite(tempHp) === false || tempHp < 0) {
+        showEditCreatureError("Temp HP müssen eine Zahl ab 0 sein.");
+        return;
+    }
+
+    if (Number.isFinite(armorClass) === false || armorClass < 0) {
+        showEditCreatureError("AC muss eine Zahl ab 0 sein.");
+        return;
+    }
+
+    if (Number.isFinite(passivePerception) === false || passivePerception < 0) {
+        showEditCreatureError("Passive Perception muss eine Zahl ab 0 sein.");
+        return;
+    }
+
+    if (Number.isFinite(passiveInsight) === false || passiveInsight < 0) {
+        showEditCreatureError("Passive Insight muss eine Zahl ab 0 sein.");
+        return;
+    }
+
+    let imageData = imagePathInputElement.value.trim();
+
+    if (imageInputElement.files.length > 0) {
+        const imageFile = imageInputElement.files[0];
+
+        try {
+            imageData = await readImageFileAsDataUrl(imageFile);
+        } catch (error) {
+            showEditCreatureError("Das Bild konnte nicht gelesen werden.");
+            return;
+        }
+    }
+
+    const oldName = creature.name;
+
+    creature.name = name;
+    creature.publicName = publicName;
+    creature.type = typeSelectElement.value;
+    creature.initiative = Math.floor(initiative);
+    creature.hp = Math.floor(hp);
+    creature.maxHp = Math.floor(maxHp);
+    creature.tempHp = Math.floor(tempHp);
+    creature.armorClass = Math.floor(armorClass);
+    creature.passivePerception = Math.floor(passivePerception);
+    creature.passiveInsight = Math.floor(passiveInsight);
+    creature.hpVisibility = hpVisibilitySelectElement.value;
+    creature.imageData = imageData;
+    creature.isInCombat = isInCombatInputElement.checked;
+    creature.isSelected = false;
+
+    if (manuallySelectedPublicCardId === creature.id && creature.isInCombat === false) {
+        clearManualPublicSelection();
+    }
+
+    const handCards = getHandCards();
+    ensureCurrentTurnIndexIsValid(handCards);
+
+    addCombatLogMessage(`Karte bearbeitet: ${oldName} → ${creature.name}.`);
+    closeEditCreatureForm();
+    renderCards();
+}
+
+
+// ============================================================
+// 16. Formular: Neue Karte hinzufügen
 // ============================================================
 
 function showAddCreatureError(message) {
@@ -2830,6 +3188,7 @@ function renderCards() {
         renderCardList("#hand-card-list", handCards, activeCard);
         renderCardList("#deck-card-list", deckCards, activeCard);
         updateSelectionStatus();
+        updateDeckSelectionStatus();
         renderCombatLog();
     }
 
