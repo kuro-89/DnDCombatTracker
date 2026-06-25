@@ -3717,3 +3717,92 @@ select:focus {
         font-size: 30px;
     }
 }
+
+/* ============================================================
+   Fix 2026-06-25: Header-Überblendung + Symbole entfernen
+   ============================================================ */
+
+/* Headerbild über die gesamte Header-Fläche legen, damit keine harte
+   Kante zwischen Textbereich und Bildbereich entstehen kann. */
+.app-header-art {
+    left: 0;
+    right: 0;
+    width: auto;
+}
+
+.app-header-text,
+.app-view-actions {
+    position: relative;
+    z-index: 5;
+}
+
+.app-header-art::before {
+    background:
+        linear-gradient(
+            90deg,
+            rgba(42, 32, 29, 0.98) 0%,
+            rgba(31, 25, 31, 0.96) 24%,
+            rgba(25, 21, 29, 0.78) 42%,
+            rgba(25, 21, 29, 0.42) 58%,
+            rgba(25, 21, 29, 0.16) 76%,
+            rgba(25, 21, 29, 0.06) 100%
+        ),
+        radial-gradient(circle at 72% 48%, rgba(124, 91, 182, 0.14), transparent 36%),
+        linear-gradient(
+            180deg,
+            rgba(16, 13, 20, 0.08),
+            rgba(16, 13, 20, 0.46)
+        );
+}
+
+.app-header-art::after {
+    background:
+        radial-gradient(circle at 72% 48%, rgba(124, 91, 182, 0.12), transparent 34%),
+        radial-gradient(circle at 84% 25%, rgba(216, 179, 106, 0.055), transparent 24%),
+        linear-gradient(90deg, rgba(25, 21, 29, 0.20), transparent 58%);
+}
+
+/* Die CSS-Symbole in der Encounter-Steuerung wieder entfernen. */
+.combat-control-section .section-header-row h2::before,
+.selection-control-panel h3::before,
+.combat-action-row .control-group:nth-child(2) h3::before,
+.combat-action-row .control-group:nth-child(3) h3::before,
+.combat-support-row .control-group h3::before,
+.combat-log-panel h3::before {
+    content: none;
+    display: none;
+}
+
+.control-group h3,
+.combat-log-panel h3,
+.combat-control-section .section-header-row h2 {
+    gap: 0;
+}
+
+@media (max-width: 900px) {
+    .app-header-art {
+        left: 0;
+        right: 0;
+        width: auto;
+    }
+}
+
+@media (max-width: 560px) {
+    .app-header-art {
+        left: 0;
+        right: 0;
+        width: auto;
+        opacity: 0.42;
+    }
+
+    .app-header-art::before {
+        background:
+            linear-gradient(
+                90deg,
+                rgba(25, 21, 29, 0.96) 0%,
+                rgba(25, 21, 29, 0.82) 54%,
+                rgba(25, 21, 29, 0.42) 100%
+            ),
+            linear-gradient(180deg, rgba(16, 13, 20, 0.24), rgba(16, 13, 20, 0.82));
+    }
+}
