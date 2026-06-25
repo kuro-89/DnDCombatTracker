@@ -3806,3 +3806,32 @@ select:focus {
             linear-gradient(180deg, rgba(16, 13, 20, 0.24), rgba(16, 13, 20, 0.82));
     }
 }
+
+/* ============================================================
+   Fix: Encounter-Daten-Menü über der Runden-Box anzeigen
+   ============================================================ */
+
+/* Menüs dürfen aus dem Encounter-Panel herausragen. */
+.combat-control-section {
+    overflow: visible;
+}
+
+/* Die Header-Zeile mit dem Menü bekommt eine höhere Ebene. */
+.combat-control-section .section-header-row,
+.combat-control-section .section-toolbar,
+.combat-control-section .section-menu {
+    position: relative;
+    z-index: 100;
+}
+
+/* Das ausgeklappte Menü muss ganz klar über den anderen Boxen liegen. */
+.combat-control-section .section-menu-panel {
+    z-index: 200;
+}
+
+/* Die Runden-Box bleibt darunter. */
+.turn-control-card,
+.turn-info {
+    position: relative;
+    z-index: 10;
+}
