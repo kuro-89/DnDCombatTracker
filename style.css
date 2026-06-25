@@ -2729,3 +2729,110 @@ body.player-view .public-preview-section {
 
     color: #ffd0d0;
 }
+
+/* ============================================================
+   Farblogik vereinheitlichen
+   Blau = aktiv / am Zug
+   Gold = ausgewählt / manuell fokussiert
+   ============================================================ */
+
+/* DM-Ansicht: Aktive Handkarte ist blau. */
+.creature-card.active {
+    border-color: var(--color-blue);
+
+    box-shadow:
+        0 0 0 3px rgba(138, 180, 248, 0.26),
+        0 16px 34px rgba(0, 0, 0, 0.40);
+
+    transform: translateY(-8px);
+}
+
+.creature-card.active .creature-card-inner {
+    background:
+        radial-gradient(circle at top left, rgba(138, 180, 248, 0.16), transparent 34%),
+        linear-gradient(180deg, rgba(42, 57, 76, 0.96), rgba(31, 31, 36, 0.98));
+}
+
+/* DM-Ansicht: Ausgewählte Handkarten sind gold. */
+.creature-card.selected-target-card {
+    border-color: var(--color-gold);
+
+    box-shadow:
+        0 0 0 3px rgba(240, 198, 116, 0.30),
+        0 16px 32px rgba(0, 0, 0, 0.38);
+}
+
+.creature-card.selected-target-card .creature-card-inner {
+    background:
+        radial-gradient(circle at top left, rgba(240, 198, 116, 0.18), transparent 34%),
+        linear-gradient(180deg, rgba(57, 47, 29, 0.96), rgba(31, 31, 36, 0.98));
+}
+
+.selected-target-label {
+    border-color: rgba(240, 198, 116, 0.48);
+    background: rgba(240, 198, 116, 0.18);
+    color: var(--color-gold);
+}
+
+/* DM-Ansicht: Ausgewählte Deckkarten sind ebenfalls gold. */
+.creature-card.selected-deck-card {
+    border-color: var(--color-gold);
+
+    box-shadow:
+        0 0 0 3px rgba(240, 198, 116, 0.30),
+        0 16px 32px rgba(0, 0, 0, 0.38);
+}
+
+.creature-card.selected-deck-card .creature-card-inner {
+    background:
+        radial-gradient(circle at top left, rgba(240, 198, 116, 0.18), transparent 34%),
+        linear-gradient(180deg, rgba(57, 47, 29, 0.96), rgba(31, 31, 36, 0.98));
+}
+
+.selected-deck-label {
+    border-color: rgba(240, 198, 116, 0.48);
+    background: rgba(240, 198, 116, 0.18);
+    color: var(--color-gold);
+}
+
+/*
+   Sonderfall:
+   Eine Karte kann aktiv UND ausgewählt sein.
+   Dann soll "aktiv" wichtiger bleiben: blauer Außenrahmen,
+   aber mit goldener Zusatzmarkierung.
+*/
+.creature-card.active.selected-target-card {
+    border-color: var(--color-blue);
+
+    box-shadow:
+        0 0 0 3px rgba(138, 180, 248, 0.30),
+        0 0 0 7px rgba(240, 198, 116, 0.18),
+        0 18px 38px rgba(0, 0, 0, 0.45);
+}
+
+.creature-card.active.selected-target-card .creature-card-inner {
+    background:
+        radial-gradient(circle at top left, rgba(138, 180, 248, 0.16), transparent 30%),
+        radial-gradient(circle at bottom right, rgba(240, 198, 116, 0.12), transparent 34%),
+        linear-gradient(180deg, rgba(42, 57, 76, 0.96), rgba(31, 31, 36, 0.98));
+}
+
+/* Spieleransicht bleibt bei derselben Logik:
+   aktiv = blau, manuell ausgewählt = gold.
+   Wir verstärken Gold nur etwas, damit es sichtbarer ist.
+*/
+.public-stage-slot.focused.manual-selected-focus .public-stage-card {
+    border-color: var(--color-gold);
+
+    box-shadow:
+        0 0 0 3px rgba(240, 198, 116, 0.34),
+        0 18px 38px rgba(0, 0, 0, 0.45);
+}
+
+.public-ribbon-card.selected-card {
+    border-color: var(--color-gold);
+
+    box-shadow:
+        0 0 0 2px rgba(240, 198, 116, 0.30),
+        0 10px 22px rgba(0, 0, 0, 0.32);
+}
