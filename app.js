@@ -1512,6 +1512,56 @@ function createConditionOptionsHtml() {
     return html;
 }
 
+function createEditConditionCheckboxesHtml() {
+    let html = "";
+
+    for (const condition of availableConditions) {
+        html += `
+            <label class="condition-checkbox-field ${getConditionClassName(condition)}">
+                <input
+                    class="edit-condition-checkbox"
+                    type="checkbox"
+                    value="${condition}"
+                >
+                <span>${condition}</span>
+            </label>
+        `;
+    }
+
+    return html;
+}
+
+function renderEditConditionCheckboxes() {
+    const conditionListElement = document.querySelector("#edit-creature-condition-list");
+
+    if (conditionListElement === null) {
+        return;
+    }
+
+    conditionListElement.innerHTML = createEditConditionCheckboxesHtml();
+}
+
+function setEditConditionCheckboxes(creature) {
+    const checkboxElements = document.querySelectorAll(".edit-condition-checkbox");
+
+    for (const checkboxElement of checkboxElements) {
+        checkboxElement.checked = creature.conditions.includes(checkboxElement.value);
+    }
+}
+
+function getEditConditionValues() {
+    const selectedConditions = [];
+    const checkboxElements = document.querySelectorAll(".edit-condition-checkbox");
+
+    for (const checkboxElement of checkboxElements) {
+        if (checkboxElement.checked === true) {
+            selectedConditions.push(checkboxElement.value);
+        }
+    }
+
+    return selectedConditions;
+}
+
 function getSelectedCondition(creatureId) {
     const selectElement = document.querySelector(`#condition-select-${creatureId}`);
 
@@ -2707,6 +2757,9 @@ function openEditCreatureForm(creatureId) {
     setInputValue("edit-creature-hp-visibility", creature.hpVisibility);
     setCheckboxValue("edit-creature-is-in-combat", creature.isInCombat === true);
 
+    renderEditConditionCheckboxes();
+    setEditConditionCheckboxes(creature);
+
     if (imageInputElement !== null) {
         imageInputElement.value = "";
     }
@@ -2755,6 +2808,7 @@ async function handleEditCreatureSaveButtonClick() {
     const passiveInsightInputElement = document.querySelector("#edit-creature-passive-insight");
     const hpVisibilitySelectElement = document.querySelector("#edit-creature-hp-visibility");
     const isInCombatInputElement = document.querySelector("#edit-creature-is-in-combat");
+    const conditionListElement = document.querySelector("#edit-creature-condition-list");
 
     if (
         nameInputElement === null ||
@@ -2770,7 +2824,8 @@ async function handleEditCreatureSaveButtonClick() {
         passivePerceptionInputElement === null ||
         passiveInsightInputElement === null ||
         hpVisibilitySelectElement === null ||
-        isInCombatInputElement === null
+        isInCombatInputElement === null ||
+        conditionListElement === null
     ) {
         showEditCreatureError("Ein Bearbeitungsfeld wurde nicht gefunden. Bitte prüfe die IDs in index.html.");
         return;
@@ -2864,6 +2919,7 @@ async function handleEditCreatureSaveButtonClick() {
     creature.passiveInsight = Math.floor(passiveInsight);
     creature.hpVisibility = hpVisibilitySelectElement.value;
     creature.imageData = imageData;
+    creature.conditions = getEditConditionValues();
     creature.isInCombat = isInCombatInputElement.checked;
     creature.isSelected = false;
 
