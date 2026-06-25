@@ -23,7 +23,7 @@
                             </p>
 
                             <p class="app-build-info">
-                                v0.4.3 build 2026-06-25-19:57 by kuro
+                                v0.4.3 build 2026-06-25-20:08 by kuro
                             </p>
 
                             <div class="app-view-actions" aria-label="Ansicht wechseln">
@@ -63,7 +63,7 @@
                         <p>
                             Miriel's Deck of Encounters soll den Spielleiter bei der Verwaltung von Encountern unterstützen.
                             Die App ist für Fantasy-Tabletop-Runden gedacht, die mit einem klassischen Initiative-System arbeiten.  
-                            Miriel’s Deck unterscheidet zwischen vorbereiteten Karten und aktiven Kampfkarten.
+                            Miriel’s Deck unterscheidet zwischen vorbereiteten Karten und aktiven Encounterkarten.
                             Das Kartendeck ist dein Vorrat. Karten auf der Hand sind die
                             Kreaturen, die gerade am aktuellen Encounter teilnehmen.
                         </p>
@@ -325,6 +325,13 @@
 
                                 <button onclick="clearConditionsFromHandCards()">
                                     Conditions der Handkarten entfernen
+                                </button>
+
+                                <button
+                                    class="end-combat-button"
+                                    onclick="endCombat()"
+                                >
+                                    Encounter beenden
                                 </button>
                             </div>
                         </div>

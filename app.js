@@ -1107,6 +1107,51 @@ function clearConditionsFromHandCards() {
     renderCards();
 }
 
+function endCombat() {
+    const shouldEndCombat = confirm(
+        "Kampf beenden? Alle Karten auf der Hand werden ins Deck verschoben. Temp HP und Conditions bleiben erhalten."
+    );
+
+    if (shouldEndCombat === false) {
+        return;
+    }
+
+    const handCardsBeforeEnd = getHandCards();
+    const movedCardCount = handCardsBeforeEnd.length;
+
+    let movedCardNamesText = "keine Karten";
+
+    if (movedCardCount > 0) {
+        movedCardNamesText = createTargetNamesText(handCardsBeforeEnd);
+    }
+
+    for (const creature of creatures) {
+        if (creature.isInCombat === true) {
+            creature.isInCombat = false;
+        }
+
+        creature.isSelected = false;
+    }
+
+    currentTurnIndex = 0;
+    roundNumber = 1;
+    clearManualPublicSelection();
+
+    if (editingCreatureId !== null) {
+        const editedCreature = getEditFormCreature();
+
+        if (editedCreature !== null) {
+            setCheckboxValue("edit-creature-is-in-combat", editedCreature.isInCombat === true);
+        }
+    }
+
+    addCombatLogMessage(
+        `Kampf beendet. ${movedCardCount} Karte(n) ins Deck verschoben: ${movedCardNamesText}.`
+    );
+
+    renderCards();
+}
+
 function deleteAllCards() {
     const shouldDeleteAllCards = confirm("Wirklich alle Karten löschen?");
 

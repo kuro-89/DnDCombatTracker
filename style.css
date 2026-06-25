@@ -2707,3 +2707,25 @@ body.player-view .public-preview-section {
         justify-content: flex-start;
     }
 }
+
+/* ============================================================
+   Session 50: Kampf beenden
+   ============================================================ */
+
+.end-combat-button {
+    border-color: rgba(255, 159, 159, 0.38);
+
+    background:
+        linear-gradient(135deg, rgba(86, 38, 38, 0.88), rgba(48, 31, 31, 0.94));
+
+    color: #ffb7b7;
+}
+
+.end-combat-button:hover {
+    border-color: var(--color-danger);
+
+    background:
+        linear-gradient(135deg, rgba(104, 44, 44, 0.96), rgba(58, 34, 34, 0.96));
+
+    color: #ffd0d0;
+}
