@@ -837,22 +837,11 @@ button:disabled,
 
 .long-rest-button,
 button.long-rest-button {
-    border-color: rgba(193, 176, 255, 0.28) !important;
+    border-color: rgba(127, 185, 255, 0.34) !important;
 
     background:
-        radial-gradient(circle at top left, rgba(140, 107, 232, 0.12), transparent 42%),
-        linear-gradient(135deg, rgba(31, 24, 46, 0.92), rgba(13, 10, 20, 0.98)) !important;
-
-    color: var(--color-arcane-soft) !important;
-}
-
-.long-rest-button:hover,
-button.long-rest-button:hover {
-    border-color: rgba(127, 185, 255, 0.42) !important;
-
-    background:
-        radial-gradient(circle at top left, rgba(127, 185, 255, 0.09), transparent 42%),
-        linear-gradient(135deg, rgba(34, 38, 63, 0.92), rgba(13, 10, 20, 0.98)) !important;
+        radial-gradient(circle at top left, rgba(127, 185, 255, 0.10), transparent 42%),
+        linear-gradient(135deg, rgba(25, 33, 52, 0.88), rgba(12, 10, 18, 0.96)) !important;
 
     color: var(--color-active-soft) !important;
 }
@@ -2808,9 +2797,9 @@ body.player-view .public-preview-section {
         opacity: 1;
     }
 }
-
 /* ============================================================
    20. Responsive
+   Sauber konsolidiert: keine weiteren Hotfix-Blöcke darunter.
    ============================================================ */
 
 @media (max-width: 1100px) {
@@ -2856,7 +2845,6 @@ body.player-view .public-preview-section {
     .public-turn-status {
         grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 6px;
-
         margin-bottom: 10px;
     }
 
@@ -2873,6 +2861,139 @@ body.player-view .public-preview-section {
     }
 }
 
+/* ============================================================
+   21. Konsolidierte Feinschliffe Session 49
+   ============================================================ */
+
+/* Große Abschnitt-Menüs wie Hand-Aktionen / Deck-Aktionen zentrieren. */
+.section-menu-summary {
+    position: relative;
+    justify-content: center;
+    text-align: center;
+    padding-left: 18px;
+    padding-right: 34px;
+}
+
+.section-menu-summary::after {
+    position: absolute;
+    right: 16px;
+    margin-left: 0;
+}
+
+/* Kurzanleitung im Header separat behandeln, weil Text/Pfeil per ::before/::after erzeugt werden. */
+.app-help-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    width: auto;
+    min-width: 0;
+    min-height: 38px;
+    padding: 8px 14px;
+
+    font-size: 0;
+    line-height: 1;
+    text-align: center;
+}
+
+.app-help-button::before {
+    display: inline-block;
+    font-size: 13px;
+    line-height: 1;
+}
+
+.app-help-button::after {
+    position: static;
+    display: inline-block;
+    margin-left: 0;
+    font-size: 12px;
+    line-height: 1;
+}
+
+.app-header .app-help-button {
+    padding-left: 14px;
+    padding-right: 14px;
+}
+
+/* HP- und Condition-Eingaben kompakt halten. */
+.hp-action-control-group .mass-action-field input,
+.condition-action-control-group .mass-action-field select {
+    height: 44px;
+    min-height: 44px;
+    padding: 8px 12px;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 750;
+    line-height: 1.2;
+}
+
+.hp-action-control-group input[type="number"] {
+    appearance: textfield;
+    -moz-appearance: textfield;
+}
+
+.hp-action-control-group input[type="number"]::-webkit-outer-spin-button,
+.hp-action-control-group input[type="number"]::-webkit-inner-spin-button {
+    margin: 0;
+    -webkit-appearance: none;
+}
+
+.hp-action-control-group .mass-action-field {
+    margin-bottom: 16px;
+}
+
+/* Karten dürfen durch aktiven Lift und Schatten nicht abgeschnitten werden. */
+.creature-list-section,
+.card-row-shell,
+.creature-list {
+    overflow-y: visible;
+}
+
+.creature-list {
+    padding-top: 18px;
+    padding-bottom: 36px;
+}
+
+.creature-card {
+    margin-bottom: 8px;
+}
+
+.creature-card.active {
+    transform: translateY(-6px);
+}
+
+.creature-card.active.selectable-card:hover {
+    transform: translateY(-6px);
+}
+
+/* Lange Rast ist eine Verwaltungsaktion, kein aktiver Turn-Button. */
+.long-rest-button,
+button.long-rest-button {
+    border-color: rgba(193, 176, 255, 0.28) !important;
+
+    background:
+        radial-gradient(circle at top left, rgba(140, 107, 232, 0.12), transparent 42%),
+        linear-gradient(135deg, rgba(31, 24, 46, 0.92), rgba(13, 10, 20, 0.98)) !important;
+
+    color: var(--color-arcane-soft) !important;
+}
+
+.long-rest-button:hover,
+button.long-rest-button:hover {
+    border-color: rgba(127, 185, 255, 0.42) !important;
+
+    background:
+        radial-gradient(circle at top left, rgba(127, 185, 255, 0.09), transparent 42%),
+        linear-gradient(135deg, rgba(34, 38, 63, 0.92), rgba(13, 10, 20, 0.98)) !important;
+
+    color: var(--color-active-soft) !important;
+}
+
+/* ============================================================
+   22. Mobile Layout
+   ============================================================ */
+
 @media (max-width: 760px) {
     .app-help-content {
         grid-template-columns: 1fr;
@@ -2887,22 +3008,169 @@ body.player-view .public-preview-section {
         max-width: calc(100vw - 48px);
     }
 
-    .turn-info {
+    .combat-control-section,
+    .creature-list-section,
+    .edit-creature-section {
+        padding: 16px;
+        border-radius: 16px;
+    }
+
+    .section-header-row {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 12px;
+
+        margin-bottom: 16px;
+        padding-bottom: 12px;
+    }
+
+    .section-toolbar {
+        justify-content: stretch;
+
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .section-menu {
+        width: 100%;
+    }
+
+    .section-menu-summary {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .section-menu-panel {
+        position: static;
+
+        width: 100%;
+        max-width: none;
+        margin-top: 8px;
+    }
+
+    /* ------------------------------------------------------------
+       Mobile Encounter-Steuerung
+       Wichtig: kein Grid-Mischlayout in der Turn-Box.
+       ------------------------------------------------------------ */
+
+    .encounter-command-section {
+        overflow: visible;
+    }
+
+    .encounter-command-section .encounter-control-layout {
+        display: grid;
         grid-template-columns: 1fr;
         gap: 14px;
-    }
 
-    .turn-actions-inline {
         width: 100%;
-        justify-content: stretch;
+        max-width: 100%;
+        min-width: 0;
+
+        overflow: visible;
     }
 
-    .turn-actions-inline button {
-        flex: 1 1 150px;
-    }
-}
+    .encounter-command-section .turn-info {
+        display: block;
 
-@media (max-width: 560px) {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        height: auto;
+        min-height: 0;
+
+        padding: 18px;
+
+        overflow: visible;
+    }
+
+    .encounter-command-section .turn-info-main {
+        width: 100%;
+        min-width: 0;
+        margin-bottom: 18px;
+    }
+
+    .encounter-command-section .turn-info h2 {
+        font-size: 30px;
+    }
+
+    .encounter-command-section .turn-actions-inline {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+
+        margin: 0;
+        padding: 5px;
+
+        border: 1px solid rgba(193, 176, 255, 0.14);
+        border-radius: 16px;
+
+        background:
+            linear-gradient(135deg, rgba(8, 7, 12, 0.78), rgba(23, 17, 34, 0.64));
+
+        box-shadow:
+            inset 0 0 0 1px rgba(255, 255, 255, 0.018);
+
+        overflow: visible;
+    }
+
+    .encounter-command-section .turn-actions-inline button {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+
+        min-height: 42px;
+        padding: 8px 8px;
+
+        border-radius: 12px;
+
+        font-size: 13px;
+        font-weight: 900;
+        line-height: 1.15;
+        text-align: center;
+        white-space: normal;
+
+        overflow: visible;
+    }
+
+    .encounter-command-section .turn-command-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 9px;
+
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+
+        padding: 12px;
+
+        overflow: visible;
+    }
+
+    .encounter-command-section .turn-command-actions button {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+
+        min-height: 42px;
+        padding: 9px 10px;
+
+        border-radius: 12px;
+
+        font-size: 14px;
+        font-weight: 900;
+        line-height: 1.15;
+        text-align: center;
+        white-space: normal;
+    }
+
+    /* ------------------------------------------------------------
+       Mobile allgemeines Layout
+       ------------------------------------------------------------ */
+
     .app {
         padding: 16px;
     }
@@ -2989,61 +3257,6 @@ body.player-view .public-preview-section {
     .public-preview-content,
     .add-creature-body {
         padding: 0 16px 16px;
-    }
-
-    .combat-control-section,
-    .creature-list-section,
-    .edit-creature-section {
-        padding: 16px;
-        border-radius: 16px;
-    }
-
-    .section-header-row {
-        align-items: stretch;
-        flex-direction: column;
-        gap: 12px;
-
-        margin-bottom: 16px;
-        padding-bottom: 12px;
-    }
-
-    .section-toolbar {
-        justify-content: stretch;
-
-        width: 100%;
-        margin-left: 0;
-    }
-
-    .section-menu {
-        width: 100%;
-    }
-
-    .section-menu-summary {
-        width: 100%;
-        min-width: 0;
-    }
-
-    .section-menu-panel {
-        position: static;
-
-        width: 100%;
-        max-width: none;
-        margin-top: 8px;
-    }
-
-    .turn-info {
-        padding: 16px;
-    }
-
-    .turn-info h2 {
-        font-size: 28px;
-    }
-
-    .turn-actions-inline {
-        padding: 0;
-        border: 0;
-        background: transparent;
-        box-shadow: none;
     }
 
     .turn-command-actions,
@@ -3237,7 +3450,16 @@ body.player-view .public-preview-section {
     }
 }
 
-@media (max-width: 380px) {
+@media (max-width: 390px) {
+    .encounter-command-section .turn-actions-inline {
+        grid-template-columns: 1fr;
+    }
+
+    .encounter-command-section .turn-actions-inline button,
+    .encounter-command-section .turn-command-actions button {
+        font-size: 14px;
+    }
+
     .public-initiative-shell {
         grid-template-columns: 32px minmax(0, 1fr) 32px;
         gap: 5px;
@@ -3262,237 +3484,5 @@ body.player-view .public-preview-section {
         width: 34px;
         height: 44px;
         min-height: 44px;
-    }
-}
-
-
-/* ============================================================
-   21. Finale Komponenten-Korrekturen
-   ============================================================ */
-
-/* Große Abschnitt-Menüs wie Hand-Aktionen / Deck-Aktionen:
-   Text optisch zentrieren, Pfeil rechts halten. */
-.section-menu-summary {
-    position: relative;
-    justify-content: center;
-    text-align: center;
-    padding-left: 18px;
-    padding-right: 34px;
-}
-
-.section-menu-summary::after {
-    position: absolute;
-    right: 16px;
-    margin-left: 0;
-}
-
-/* Kurzanleitung im Header:
-   eigener Button mit Pseudo-Text, darf nicht wie ein großes Abschnitt-Menü aussehen. */
-.app-help-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-
-    min-width: 0;
-    width: auto;
-    min-height: 38px;
-    padding: 8px 14px;
-
-    border-radius: 999px;
-
-    font-size: 0;
-    line-height: 1;
-    text-align: center;
-}
-
-.app-help-button::before {
-    display: inline-block;
-    font-size: 13px;
-    line-height: 1;
-}
-
-.app-help-button::after {
-    display: inline-block;
-    position: static;
-    right: auto;
-    margin-left: 0;
-    font-size: 12px;
-    line-height: 1;
-}
-
-.app-header .section-menu-summary,
-.app-header .app-help-button {
-    padding-left: 14px;
-    padding-right: 14px;
-}
-
-/* HP- und Condition-Eingaben im DM-Panel:
-   kompakt, gleich hoch, ohne riesiges Number-Input. */
-.hp-action-control-group .mass-action-field input,
-.condition-action-control-group .mass-action-field select {
-    height: 44px;
-    min-height: 44px;
-    padding: 8px 12px;
-
-    border-radius: 12px;
-
-    font-size: 18px;
-    font-weight: 750;
-    line-height: 1.2;
-}
-
-.hp-action-control-group input[type="number"] {
-    appearance: textfield;
-    -moz-appearance: textfield;
-}
-
-.hp-action-control-group input[type="number"]::-webkit-outer-spin-button,
-.hp-action-control-group input[type="number"]::-webkit-inner-spin-button {
-    margin: 0;
-    -webkit-appearance: none;
-}
-
-.hp-action-control-group .mass-action-field {
-    margin-bottom: 16px;
-}
-
-.hp-action-control-group .mass-action-buttons {
-    align-items: center;
-}
-
-/* Kartenbereich:
-   aktive Karten werden nach oben versetzt. Deshalb braucht der horizontale
-   Bereich oben und unten bewusst mehr Luft, damit nichts abgeschnitten wird. */
-.creature-list-section,
-.card-row-shell,
-.creature-list {
-    overflow-y: visible;
-}
-
-.creature-list {
-    padding-top: 18px;
-    padding-bottom: 36px;
-}
-
-.creature-card {
-    margin-bottom: 8px;
-}
-
-/* Aktive Karte bleibt angehoben, aber nicht so stark, dass sie aus dem
-   Kartenbereich herausgeschnitten wirkt. */
-.creature-card.active {
-    transform: translateY(-6px);
-}
-
-.creature-card.active.selectable-card:hover {
-    transform: translateY(-6px);
-}
-
-/* Mobile Anpassung für die zusätzliche Karten-Luft. */
-@media (max-width: 560px) {
-    .creature-list {
-        padding-top: 12px;
-        padding-bottom: 24px;
-    }
-
-    .creature-card {
-        margin-bottom: 4px;
-    }
-}
-
-/* ============================================================
-   Mobile Fix v2: Turn-Buttons vollständig sichtbar machen
-   iPhone / schmale Displays
-   ============================================================ */
-
-@media (max-width: 760px) {
-    .encounter-command-section .encounter-control-layout {
-        display: grid !important;
-        grid-template-columns: 1fr !important;
-        gap: 14px !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        min-width: 0 !important;
-        overflow: hidden !important;
-    }
-
-    .encounter-command-section .turn-info {
-        display: grid !important;
-        grid-template-columns: 1fr !important;
-        gap: 16px !important;
-
-        width: 100% !important;
-        max-width: 100% !important;
-        min-width: 0 !important;
-
-        padding: 16px !important;
-        overflow: hidden !important;
-    }
-
-    .encounter-command-section .turn-info-main {
-        width: 100% !important;
-        max-width: 100% !important;
-        min-width: 0 !important;
-    }
-
-    .encounter-command-section .turn-actions-inline {
-        display: grid !important;
-        grid-template-columns: 1fr !important;
-        gap: 10px !important;
-
-        width: 100% !important;
-        max-width: 100% !important;
-        min-width: 0 !important;
-
-        padding: 0 !important;
-        border: 0 !important;
-        background: transparent !important;
-        box-shadow: none !important;
-        overflow: hidden !important;
-    }
-
-    .encounter-command-section .turn-actions-inline button {
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-
-        width: 100% !important;
-        max-width: 100% !important;
-        min-width: 0 !important;
-
-        padding: 10px 12px !important;
-
-        font-size: 16px !important;
-        line-height: 1.2 !important;
-        text-align: center !important;
-        white-space: normal !important;
-        overflow-wrap: anywhere !important;
-    }
-
-    .encounter-command-section .turn-command-actions {
-        display: grid !important;
-        grid-template-columns: 1fr !important;
-        gap: 10px !important;
-
-        width: 100% !important;
-        max-width: 100% !important;
-        min-width: 0 !important;
-
-        padding: 14px !important;
-        overflow: hidden !important;
-    }
-
-    .encounter-command-section .turn-command-actions button {
-        width: 100% !important;
-        max-width: 100% !important;
-        min-width: 0 !important;
-
-        padding: 10px 12px !important;
-
-        font-size: 16px !important;
-        line-height: 1.2 !important;
-        text-align: center !important;
-        white-space: normal !important;
     }
 }
