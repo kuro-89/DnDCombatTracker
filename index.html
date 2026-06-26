@@ -15,181 +15,176 @@
                     <div class="app-header-card">
                         <div class="app-header-text">
                             <p id="app-view-kicker" class="app-kicker">DM-Ansicht</p>
-
                             <h1>Miriel’s Deck of Encounters</h1>
-
-                            <p class="app-tagline">
-                                A card-based encounter &amp; initiative tracker
-                            </p>
-
-                            <p class="app-build-info">
-                                v0.4.3 build 2026-06-25-22:33 by kuro
-                            </p>
-
+                            <p class="app-tagline">A card-based encounter &amp; initiative tracker</p>
+                            <p class="app-build-info">v0.4.3 build 2026-06-26-16-35 by kuro</p>
                             <div class="app-view-actions" aria-label="Ansicht wechseln">
-                                <button
-                                    id="open-dm-view-button"
-                                    type="button"
-                                    onclick="openAppView('dm')"
-                                >
-                                    DM-Ansicht öffnen
-                                </button>
-
-                                <button
-                                    id="open-player-view-button"
-                                    type="button"
-                                    onclick="openAppView('player')"
-                                >
-                                    Spieler-Ansicht öffnen
-                                </button>
-
+                                <button id="open-dm-view-button" type="button" onclick="openAppView('dm')">DM-Ansicht öffnen</button>
+                                <button id="open-player-view-button" type="button" onclick="openAppView('player')">Spieler-Ansicht öffnen</button>
                                 <span class="app-help-button"></span>
                             </div>
                         </div>
-
                         <div class="app-header-art" aria-hidden="true">
-                            <img
-                                src="assets/miriel_header_banner.png"
-                                alt="Miriel mit ihrem Kartendeck"
-                            >
+                            <img src="assets/miriel_header_banner.png" alt="Miriel mit ihrem Kartendeck">
                         </div>
                     </div>
                 </summary>
 
                 <div class="app-help-content">
-                    <article class="app-help-card">
-                        <h2>Grundidee</h2>
-
-                        <p>
-                            Miriel's Deck of Encounters soll den Spielleiter bei der Verwaltung von Encountern unterstützen.
-                            Die App ist für Fantasy-Tabletop-Runden gedacht, die mit einem klassischen Initiative-System arbeiten.  
-                            Miriel’s Deck unterscheidet zwischen vorbereiteten Karten und aktiven Encounterkarten.
-                            Das Kartendeck ist dein Vorrat. Karten auf der Hand sind die
-                            Kreaturen, die gerade am aktuellen Encounter teilnehmen.
-                        </p>
-
-                        <p>
-                            Die DM-Ansicht enthält alle internen Werte. Die Spieleransicht
-                            zeigt nur öffentliche Informationen wie öffentlichen Namen,
-                            sichtbare HP-Anzeige und Conditions. Aktell ist diese für einen externen Monitor gedacht.
-                            Später soll die Spieleransicht auch auf einem zweiten Gerät geöffnet werden können.
-                        </p>
-                    </article>
-
-                    <article class="app-help-card">
-                        <h2>Vorbereitung</h2>
-
-                        <p>
-                            Lege neue Karten an oder nutze Demo-Karten als Startpunkt.
-                            Karten im Deck nehmen noch nicht am Kampf teil.
-                        </p>
-
-                        <p>
-                            Bilder funktionieren am besten als breites Querformat, ungefähr
-                            im Verhältnis 4:3. Gute Richtwerte sind 1200 × 900 px, 1000 × 750 px oder 800 × 600 px.
-                            Die App füllt den Bildrahmen bewusst aus, damit
-                            alle Karten einheitlich wirken.
-                        </p>
-
-                        <p>
-                            Nimm nur die Karten auf die Hand, die im aktuellen Encounter
-                            beteiligt sind. So bleibt die Initiative übersichtlich.
-                        </p>
-                    </article>
-
-                    <article class="app-help-card">
-                        <h2>Kampf leiten</h2>
-
-                        <p>
-                            Karten auf der Hand werden nach Initiative sortiert. Die aktive
-                            Karte wird hervorgehoben. Mit den Turn-Buttons wechselst du zur
-                            vorherigen oder nächsten Kreatur.
-                        </p>
-
-                        <p>
-                            Klicke Handkarten an, um sie als Ziele auszuwählen. Danach kannst
-                            du in der Kampfsteuerung Schaden, Heilung, Temp HP oder Conditions
-                            auf alle ausgewählten Ziele anwenden.
-                        </p>
-                    </article>
-
-                    <article class="app-help-card">
-                        <h2>Speichern &amp; Spieleransicht</h2>
-
-                        <p>
-                            Der Browser speichert den aktuellen Zustand lokal. Dadurch können
-                            DM-Ansicht und Spieleransicht auf demselben Gerät synchron bleiben.
-                        </p>
-
-                        <p>
-                            Für eine langfristige Sicherung solltest du den Encounter als
-                            JSON-Datei exportieren. Die Spieler-Vorschau kann eingeklappt
-                            werden, wenn du mehr Platz für die DM-Steuerung brauchst.
-                        </p>
-                    </article>
+                    <article class="app-help-card"><h2>Grundidee</h2><p>Miriel's Deck of Encounters soll den Spielleiter bei der Verwaltung von Encountern unterstützen. Das Kartendeck ist dein Vorrat. Karten auf der Hand sind die Kreaturen, die gerade am aktuellen Encounter teilnehmen.</p><p>Die DM-Ansicht enthält alle internen Werte. Die Spieleransicht zeigt nur öffentliche Informationen wie öffentlichen Namen, sichtbare HP-Anzeige und Conditions.</p></article>
+                    <article class="app-help-card"><h2>Vorbereitung</h2><p>Lege neue Karten an oder nutze Demo-Karten als Startpunkt. Karten im Deck nehmen noch nicht am Kampf teil.</p><p>Nimm nur die Karten auf die Hand, die im aktuellen Encounter beteiligt sind. So bleibt die Initiative übersichtlich.</p></article>
+                    <article class="app-help-card"><h2>Kampf leiten</h2><p>Karten auf der Hand werden nach Initiative sortiert. Die aktive Karte wird hervorgehoben. Mit den Turn-Buttons wechselst du zur vorherigen oder nächsten Kreatur.</p><p>Klicke Handkarten an, um sie als Ziele auszuwählen. Danach kannst du Schaden, Heilung, Temp HP oder Conditions auf alle ausgewählten Ziele anwenden.</p></article>
+                    <article class="app-help-card"><h2>Speichern &amp; Spieleransicht</h2><p>Der Browser speichert den aktuellen Zustand lokal. Dadurch können DM-Ansicht und Spieleransicht auf demselben Gerät synchron bleiben.</p><p>Für eine langfristige Sicherung solltest du den Encounter als JSON-Datei exportieren.</p></article>
                 </div>
             </details>
         </header>
 
         <details open class="public-preview-section">
             <summary>
-                <h2>Vorschau der öffentlichen Spieler-Ansicht</h2>
-
+                <h2>Vorschau der Spieler-Ansicht</h2>
                 <span class="public-preview-toggle-label"></span>
             </summary>
-
             <div class="public-preview-content">
                 <div id="public-preview-list" class="public-preview-list"></div>
-
                 <h3 class="public-initiative-title">Initiative</h3>
-
                 <div class="public-initiative-shell">
-                    <button
-                        class="public-initiative-button"
-                        onclick="scrollPublicPreview('left')"
-                        aria-label="Öffentliche Initiative-Leiste nach links scrollen"
-                        title="Nach links scrollen"
-                    >
-                        ‹
-                    </button>
-
+                    <button class="public-initiative-button" onclick="scrollPublicPreview('left')" aria-label="Öffentliche Initiative-Leiste nach links scrollen" title="Nach links scrollen">‹</button>
                     <div id="public-preview-ribbon" class="public-preview-ribbon"></div>
-
-                    <button
-                        class="public-initiative-button"
-                        onclick="scrollPublicPreview('right')"
-                        aria-label="Öffentliche Initiative-Leiste nach rechts scrollen"
-                        title="Nach rechts scrollen"
-                    >
-                        ›
-                    </button>
+                    <button class="public-initiative-button" onclick="scrollPublicPreview('right')" aria-label="Öffentliche Initiative-Leiste nach rechts scrollen" title="Nach rechts scrollen">›</button>
                 </div>
             </div>
         </details>
 
         <div class="dm-dashboard dm-only">
             <section class="dm-dashboard-group current-combat-dashboard">
-                <section class="combat-control-section combat-actions-panel">
+                <section class="combat-control-section encounter-command-section">
                     <div class="section-header-row">
-                        <h2>Encounter-Steuerung</h2>
+                        <div>
+                            <p class="section-eyebrow">Combat Command</p>
+                            <h2>Encounter-Steuerung</h2>
+                        </div>
+                    </div>
 
+                    <div class="encounter-control-layout">
+                        <div id="turn-info" class="turn-info turn-control-card"></div>
+
+                        <div class="turn-command-actions" aria-label="Encounter-Aktionen">
+                            <button onclick="resetCombatTurnCounter()">
+                                Zähler zurücksetzen
+                            </button>
+
+                            <button
+                                class="long-rest-button"
+                                onclick="longRest()"
+                            >
+                                Lange Rast
+                            </button>
+
+                            <button
+                                class="end-combat-button"
+                                onclick="endCombat()"
+                            >
+                                Encounter beenden
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="creature-list-section hand-zone-section">
+                    <div class="section-header-row">
+                        <div><p class="section-eyebrow">Active Encounter</p><h2>Karten auf der Hand</h2></div>
                         <div class="section-toolbar">
-                            <details class="section-menu turn-management-menu">
-                                <summary class="section-menu-summary">
-                                    Encounter-Daten
+                            <details class="section-menu">
+                                <summary class="section-menu-summary">Hand-Aktionen</summary>
+                                <div class="section-menu-panel">
+                                    <button onclick="moveAllHandCardsToDeck()">Alle Karten ins Deck verschieben</button>
+                                    <button onclick="moveHandCardsOfTypeToDeck('player')">Alle Player ins Deck</button>
+                                    <button onclick="moveHandCardsOfTypeToDeck('npc')">Alle NPCs ins Deck</button>
+                                    <button onclick="moveHandCardsOfTypeToDeck('monster')">Alle Monster ins Deck</button>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+                    <div class="card-row-shell">
+                        <button class="card-row-button card-row-button-left" onclick="scrollCardRow('hand-card-list', 'left')" aria-label="Karten auf der Hand nach links scrollen" title="Nach links scrollen">‹</button>
+                        <div id="hand-card-list" class="creature-list"></div>
+                        <button class="card-row-button card-row-button-right" onclick="scrollCardRow('hand-card-list', 'right')" aria-label="Karten auf der Hand nach rechts scrollen" title="Nach rechts scrollen">›</button>
+                    </div>
+                </section>
+
+                <section class="combat-control-section combat-actions-panel dm-action-panel">
+                    <div class="section-header-row">
+                        <div>
+                            <p class="section-eyebrow">DM Panel</p>
+                            <h2>DM-Steuerung</h2>
+                        </div>
+                    </div>
+
+                    <div class="combat-action-row">
+                        <div class="control-group target-control-group">
+                            <h3>Ziele</h3>
+                            <div class="selection-control-panel">
+                                <div id="selection-status" class="selection-status">0 Karten ausgewählt</div>
+                                <div id="selection-target-names" class="selection-target-names">Keine Ziele ausgewählt.</div>
+                                <div class="selection-actions">
+                                    <button onclick="selectAllHandCards()">Hand auswählen</button>
+                                    <button onclick="clearCardSelection()">Auswahl leeren</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group hp-action-control-group">
+                            <h3>HP-Aktion</h3>
+                            <div class="mass-action-field"><label for="group-action-amount">Betrag</label><input id="group-action-amount" type="number" min="0" value="0"></div>
+                            <div class="mass-action-buttons">
+                                <button onclick="applyDamageToSelectedCards()">Schaden</button>
+                                <button onclick="applyHealingToSelectedCards()">Heilung</button>
+                                <button onclick="applyTempHpToSelectedCards()">Temp HP setzen</button>
+                            </div>
+                        </div>
+                        <div class="control-group condition-action-control-group">
+                            <h3>Condition-Aktion</h3>
+                            <div class="mass-action-field">
+                                <label for="group-condition-select">Condition</label>
+                                <select id="group-condition-select">
+                                    <option value="blinded">blinded</option><option value="charmed">charmed</option><option value="deafened">deafened</option><option value="frightened">frightened</option><option value="grappled">grappled</option><option value="incapacitated">incapacitated</option><option value="invisible">invisible</option><option value="paralyzed">paralyzed</option><option value="petrified">petrified</option><option value="poisoned">poisoned</option><option value="prone">prone</option><option value="restrained">restrained</option><option value="stunned">stunned</option><option value="unconscious">unconscious</option><option value="concentrating">concentrating</option>
+                                </select>
+                            </div>
+                            <div class="mass-action-buttons">
+                                <button onclick="addConditionToSelectedCards()">Condition hinzufügen</button>
+                                <button onclick="removeConditionFromSelectedCards()">Condition entfernen</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="combat-management-row">
+                        <div class="control-group management-control-group">
+                            <h3>Verwaltung</h3>
+
+                            <div class="management-button-row">
+                                <button onclick="saveCurrentStateManually()">
+                                    Speichern
+                                </button>
+
+                                <button onclick="exportEncounter()">
+                                    Exportieren
+                                </button>
+
+                                <button onclick="triggerEncounterImport()">
+                                    Importieren
+                                </button>
+                            </div>
+
+                            <details class="inline-details-menu management-more-menu">
+                                <summary>
+                                    Weitere Verwaltungsaktionen
                                 </summary>
 
-                                <div class="section-menu-panel">
-                                    <button onclick="exportEncounter()">
-                                        Encounter exportieren
+                                <div class="inline-details-panel">
+                                    <button onclick="clearAllTempHp()">
+                                        Alle Temp HP entfernen
                                     </button>
 
-                                    <button onclick="triggerEncounterImport()">
-                                        Encounter importieren
-                                    </button>
-
-                                    <button onclick="saveCurrentStateManually()">
-                                        Browser-Zustand speichern
+                                    <button onclick="clearConditionsFromHandCards()">
+                                        Conditions der Handkarten entfernen
                                     </button>
 
                                     <button onclick="reloadDemoCards()">
@@ -206,205 +201,27 @@
                                     >
                                         Alle Karten löschen
                                     </button>
-
-                                    <input
-                                        id="encounter-import-file"
-                                        type="file"
-                                        accept=".json,application/json"
-                                        style="display: none;"
-                                        onchange="handleEncounterImportFileChange(event)"
-                                    >
                                 </div>
                             </details>
-                        </div>
-                    </div>
 
-                    <div id="turn-info" class="turn-info turn-control-card"></div>
-
-                    <div class="combat-action-row">
-                        <div class="control-group target-control-group">
-                            <h3>Ziele</h3>
-
-                            <div class="selection-control-panel">
-                                <div id="selection-status" class="selection-status">
-                                    0 Karten ausgewählt
-                                </div>
-
-                                <div id="selection-target-names" class="selection-target-names">
-                                    Keine Ziele ausgewählt.
-                                </div>
-
-                                <div class="selection-actions">
-                                    <button onclick="selectAllHandCards()">
-                                       Hand auswählen
-                                    </button>
-
-                                    <button onclick="clearCardSelection()">
-                                        Auswahl leeren
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="control-group hp-action-control-group">
-                            <h3>HP-Aktion</h3>
-
-                            <div class="mass-action-field">
-                                <label for="group-action-amount">Betrag</label>
-                                <input
-                                    id="group-action-amount"
-                                    type="number"
-                                    min="0"
-                                    value="0"
-                                >
-                            </div>
-
-                            <div class="mass-action-buttons">
-                                <button onclick="applyDamageToSelectedCards()">
-                                    Schaden
-                                </button>
-
-                                <button onclick="applyHealingToSelectedCards()">
-                                    Heilung
-                                </button>
-
-                                <button onclick="applyTempHpToSelectedCards()">
-                                    Temp HP setzen
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="control-group condition-action-control-group">
-                            <h3>Condition-Aktion</h3>
-
-                            <div class="mass-action-field">
-                                <label for="group-condition-select">Condition</label>
-                                <select id="group-condition-select">
-                                    <option value="blinded">blinded</option>
-                                    <option value="charmed">charmed</option>
-                                    <option value="deafened">deafened</option>
-                                    <option value="frightened">frightened</option>
-                                    <option value="grappled">grappled</option>
-                                    <option value="incapacitated">incapacitated</option>
-                                    <option value="invisible">invisible</option>
-                                    <option value="paralyzed">paralyzed</option>
-                                    <option value="petrified">petrified</option>
-                                    <option value="poisoned">poisoned</option>
-                                    <option value="prone">prone</option>
-                                    <option value="restrained">restrained</option>
-                                    <option value="stunned">stunned</option>
-                                    <option value="unconscious">unconscious</option>
-                                    <option value="concentrating">concentrating</option>
-                                </select>
-                            </div>
-
-                            <div class="mass-action-buttons">
-                                <button onclick="addConditionToSelectedCards()">
-                                    Condition hinzufügen
-                                </button>
-
-                                <button onclick="removeConditionFromSelectedCards()">
-                                    Condition entfernen
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="combat-support-row">
-                        <div class="control-group cleanup-control-group">
-                            <h3>Encounter aufräumen</h3>
-
-                            <div class="mass-action-buttons cleanup-action-buttons">
-                                <button onclick="resetCombatTurnCounter()">
-                                    Zähler zurücksetzen
-                                </button>
-
-                                <button onclick="clearAllTempHp()">
-                                    Alle Temp HP entfernen
-                                </button>
-
-                                <button onclick="clearConditionsFromHandCards()">
-                                    Conditions der Handkarten entfernen
-                                </button>
-
-                                <button
-                                    class="end-combat-button"
-                                    onclick="endCombat()"
-                                >
-                                    Encounter beenden
-                                </button>
-                            </div>
+                            <input
+                                id="encounter-import-file"
+                                type="file"
+                                accept=".json,application/json"
+                                style="display: none;"
+                                onchange="handleEncounterImportFileChange(event)"
+                            >
                         </div>
 
                         <div class="combat-log-panel">
                             <div class="combat-log-header">
                                 <h3>Encounter-Log</h3>
-
-                                <div id="storage-status" class="storage-status">
-                                    Browser-Speicher: wird geprüft …
-                                </div>
+                                <div id="storage-status" class="storage-status">Browser-Speicher: wird geprüft …</div>
                             </div>
-
                             <div id="combat-log-list" class="combat-log-list">
-                                <p class="combat-log-empty">
-                                    Noch keine Aktionen.
-                                </p>
+                                <p class="combat-log-empty">Noch keine Aktionen.</p>
                             </div>
                         </div>
-                    </div>
-                </section>
-
-                <section class="creature-list-section hand-zone-section">
-                    <div class="section-header-row">
-                        <h2>Karten auf der Hand</h2>
-
-                        <div class="section-toolbar">
-                            <details class="section-menu">
-                                <summary class="section-menu-summary">
-                                    Hand-Aktionen
-                                </summary>
-
-                                <div class="section-menu-panel">
-                                    <button onclick="moveAllHandCardsToDeck()">
-                                        Alle Karten ins Deck verschieben
-                                    </button>
-
-                                    <button onclick="moveHandCardsOfTypeToDeck('player')">
-                                        Alle Player ins Deck
-                                    </button>
-
-                                    <button onclick="moveHandCardsOfTypeToDeck('npc')">
-                                        Alle NPCs ins Deck
-                                    </button>
-
-                                    <button onclick="moveHandCardsOfTypeToDeck('monster')">
-                                        Alle Monster ins Deck
-                                    </button>
-                                </div>
-                            </details>
-                        </div>
-                    </div>
-
-                    <div class="card-row-shell">
-                        <button
-                            class="card-row-button card-row-button-left"
-                            onclick="scrollCardRow('hand-card-list', 'left')"
-                            aria-label="Karten auf der Hand nach links scrollen"
-                            title="Nach links scrollen"
-                        >
-                            ‹
-                        </button>
-
-                        <div id="hand-card-list" class="creature-list"></div>
-
-                        <button
-                            class="card-row-button card-row-button-right"
-                            onclick="scrollCardRow('hand-card-list', 'right')"
-                            aria-label="Karten auf der Hand nach rechts scrollen"
-                            title="Nach rechts scrollen"
-                        >
-                            ›
-                        </button>
                     </div>
                 </section>
             </section>
@@ -412,450 +229,64 @@
             <section class="dm-dashboard-group preparation-dashboard">
                 <section class="creature-list-section deck-zone-section">
                     <div class="section-header-row">
-                        <h2>Kartendeck</h2>
-
+                        <div><p class="section-eyebrow">Preparation</p><h2>Kartendeck</h2></div>
                         <div class="section-toolbar">
                             <details class="section-menu">
-                                <summary class="section-menu-summary">
-                                    Deck-Aktionen
-                                </summary>
-
+                                <summary class="section-menu-summary">Deck-Aktionen</summary>
                                 <div class="section-menu-panel">
-                                    <button onclick="moveSelectedDeckCardsToHand()">
-                                        Ausgewählte Deck-Karten auf die Hand nehmen
-                                    </button>
-
-                                    <button onclick="selectAllDeckCards()">
-                                        Alle Deck-Karten auswählen
-                                    </button>
-
-                                    <button onclick="clearDeckSelection()">
-                                        Deck-Auswahl leeren
-                                    </button>
-
-                                    <button onclick="moveAllDeckCardsToHand()">
-                                        Alle Deck-Karten auf die Hand nehmen
-                                    </button>
-
-                                    <button onclick="moveDeckCardsOfTypeToHand('player')">
-                                        Alle Player auf die Hand
-                                    </button>
-
-                                    <button onclick="moveDeckCardsOfTypeToHand('npc')">
-                                        Alle NPCs auf die Hand
-                                    </button>
-
-                                    <button onclick="moveDeckCardsOfTypeToHand('monster')">
-                                        Alle Monster auf die Hand
-                                    </button>
+                                    <button onclick="moveSelectedDeckCardsToHand()">Ausgewählte Deck-Karten auf die Hand nehmen</button>
+                                    <button onclick="selectAllDeckCards()">Alle Deck-Karten auswählen</button>
+                                    <button onclick="clearDeckSelection()">Deck-Auswahl leeren</button>
+                                    <button onclick="moveAllDeckCardsToHand()">Alle Deck-Karten auf die Hand nehmen</button>
+                                    <button onclick="moveDeckCardsOfTypeToHand('player')">Alle Player auf die Hand</button>
+                                    <button onclick="moveDeckCardsOfTypeToHand('npc')">Alle NPCs auf die Hand</button>
+                                    <button onclick="moveDeckCardsOfTypeToHand('monster')">Alle Monster auf die Hand</button>
                                 </div>
                             </details>
                         </div>
                     </div>
-
-                    <div class="deck-selection-panel">
-                        <div id="deck-selection-status" class="deck-selection-status">
-                            0 Deck-Karten ausgewählt
-                        </div>
-
-                        <div id="deck-selection-names" class="deck-selection-names">
-                            Keine Deck-Karten ausgewählt.
-                        </div>
-                    </div>
-
+                    <div class="deck-selection-panel"><div id="deck-selection-status" class="deck-selection-status">0 Deck-Karten ausgewählt</div><div id="deck-selection-names" class="deck-selection-names">Keine Deck-Karten ausgewählt.</div></div>
                     <div class="card-row-shell">
-                        <button
-                            class="card-row-button card-row-button-left"
-                            onclick="scrollCardRow('deck-card-list', 'left')"
-                            aria-label="Kartendeck nach links scrollen"
-                            title="Nach links scrollen"
-                        >
-                            ‹
-                        </button>
-
+                        <button class="card-row-button card-row-button-left" onclick="scrollCardRow('deck-card-list', 'left')" aria-label="Kartendeck nach links scrollen" title="Nach links scrollen">‹</button>
                         <div id="deck-card-list" class="creature-list"></div>
-
-                        <button
-                            class="card-row-button card-row-button-right"
-                            onclick="scrollCardRow('deck-card-list', 'right')"
-                            aria-label="Kartendeck nach rechts scrollen"
-                            title="Nach rechts scrollen"
-                        >
-                            ›
-                        </button>
+                        <button class="card-row-button card-row-button-right" onclick="scrollCardRow('deck-card-list', 'right')" aria-label="Kartendeck nach rechts scrollen" title="Nach rechts scrollen">›</button>
                     </div>
                 </section>
 
                 <section id="edit-creature-section" class="edit-creature-section edit-creature-section-hidden">
-                    <div class="section-header-row edit-creature-header">
-                        <h2 id="edit-creature-title">Karte bearbeiten</h2>
-
-                        <button onclick="closeEditCreatureForm()">
-                            Bearbeiten abbrechen
-                        </button>
-                    </div>
-
+                    <div class="section-header-row edit-creature-header"><h2 id="edit-creature-title">Karte bearbeiten</h2><button onclick="closeEditCreatureForm()">Bearbeiten abbrechen</button></div>
                     <p id="edit-creature-error" class="form-error"></p>
-
                     <div class="add-creature-form edit-creature-form">
-                        <fieldset class="form-group">
-                            <legend>Basisdaten</legend>
-
-                            <div class="form-grid form-grid-four">
-                                <div class="form-field">
-                                    <label for="edit-creature-name">Interner Name</label>
-                                    <input id="edit-creature-name" type="text">
-                                </div>
-
-                                <div class="form-field">
-                                    <label for="edit-creature-public-name">Öffentlicher Name</label>
-                                    <input id="edit-creature-public-name" type="text">
-                                </div>
-
-                                <div class="form-field">
-                                    <label for="edit-creature-type">Typ</label>
-                                    <select id="edit-creature-type">
-                                        <option value="player">Player</option>
-                                        <option value="npc">NPC</option>
-                                        <option value="monster">Monster</option>
-                                    </select>
-                                </div>
-
-                                <div class="form-field">
-                                    <label for="edit-creature-hp-visibility">Spieler-HP-Anzeige</label>
-                                    <select id="edit-creature-hp-visibility">
-                                        <option value="full">HP vollständig anzeigen</option>
-                                        <option value="bar">Nur HP-Balken anzeigen</option>
-                                        <option value="descriptive">Nur Beschreibung anzeigen</option>
-                                        <option value="hidden">HP verbergen</option>
-                                    </select>
-                                </div>
-
-                                <div class="form-field form-field-wide-four">
-                                    <label for="edit-creature-image-path">Bildpfad oder gespeicherte Bilddaten</label>
-                                    <input
-                                        id="edit-creature-image-path"
-                                        type="text"
-                                        placeholder="Images/beispiel.png"
-                                    >
-
-                                    <p class="form-hint">
-                                        Für Projektbilder kannst du hier einen Pfad wie
-                                        <strong>Images/monster.png</strong> eintragen.
-                                        Wenn du unten eine neue Bilddatei auswählst, ersetzt sie diesen Wert.
-                                    </p>
-                                </div>
-
-                                <div class="form-field form-field-wide-four">
-                                    <label for="edit-creature-image">Neues Bild auswählen</label>
-                                    <input
-                                        id="edit-creature-image"
-                                        type="file"
-                                        accept="image/*"
-                                    >
-                                </div>
-                            </div>
-                        </fieldset>
-
-                        <fieldset class="form-group">
-                            <legend>Kampfwerte</legend>
-
-                            <div class="form-grid form-grid-four">
-                                <div class="form-field">
-                                    <label for="edit-creature-initiative">Initiative</label>
-                                    <input id="edit-creature-initiative" type="number">
-                                </div>
-
-                                <div class="form-field">
-                                    <label for="edit-creature-hp">HP</label>
-                                    <input id="edit-creature-hp" type="number" min="0">
-                                </div>
-
-                                <div class="form-field">
-                                    <label for="edit-creature-max-hp">Max HP</label>
-                                    <input id="edit-creature-max-hp" type="number" min="1">
-                                </div>
-
-                                <div class="form-field">
-                                    <label for="edit-creature-temp-hp">Temp HP</label>
-                                    <input id="edit-creature-temp-hp" type="number" min="0">
-                                </div>
-
-                                <div class="form-field">
-                                    <label for="edit-creature-ac">AC</label>
-                                    <input id="edit-creature-ac" type="number" min="0">
-                                </div>
-
-                                <div class="form-field">
-                                    <label for="edit-creature-passive-perception">Passive Perception</label>
-                                    <input id="edit-creature-passive-perception" type="number" min="0">
-                                </div>
-
-                                <div class="form-field">
-                                    <label for="edit-creature-passive-insight">Passive Insight</label>
-                                    <input id="edit-creature-passive-insight" type="number" min="0">
-                                </div>
-                            </div>
-                        </fieldset>
-
-                        <fieldset class="form-group">
-                            <legend>Conditions</legend>
-
-                            <p class="form-hint">
-                                Hake alle Conditions an, die diese Karte aktuell hat.
-                                Beim Speichern wird die Conditions-Liste der Karte daraus neu aufgebaut.
-                            </p>
-
-                            <div
-                                id="edit-creature-condition-list"
-                                class="condition-checkbox-list"
-                            ></div>
-                        </fieldset>
-
-                        <fieldset class="form-group form-group-compact">
-                            <legend>Kartenstatus</legend>
-
-                            <label class="checkbox-field" for="edit-creature-is-in-combat">
-                                <input
-                                    id="edit-creature-is-in-combat"
-                                    type="checkbox"
-                                >
-                                <span>Karte ist auf der Hand</span>
-                            </label>
-                        </fieldset>
-
-                        <div class="edit-creature-actions">
-                            <button onclick="handleEditCreatureSaveButtonClick()">
-                                Änderungen speichern
-                            </button>
-
-                            <button onclick="closeEditCreatureForm()">
-                                Abbrechen
-                            </button>
-                        </div>
+                        <fieldset class="form-group"><legend>Basisdaten</legend><div class="form-grid form-grid-four"><div class="form-field"><label for="edit-creature-name">Interner Name</label><input id="edit-creature-name" type="text"></div><div class="form-field"><label for="edit-creature-public-name">Öffentlicher Name</label><input id="edit-creature-public-name" type="text"></div><div class="form-field"><label for="edit-creature-type">Typ</label><select id="edit-creature-type"><option value="player">Player</option><option value="npc">NPC</option><option value="monster">Monster</option></select></div><div class="form-field"><label for="edit-creature-hp-visibility">Spieler-HP-Anzeige</label><select id="edit-creature-hp-visibility"><option value="full">HP vollständig anzeigen</option><option value="bar">Nur HP-Balken anzeigen</option><option value="descriptive">Nur Beschreibung anzeigen</option><option value="hidden">HP verbergen</option></select></div><div class="form-field form-field-wide-four"><label for="edit-creature-image-path">Bildpfad oder gespeicherte Bilddaten</label><input id="edit-creature-image-path" type="text" placeholder="Images/beispiel.png"><p class="form-hint">Für Projektbilder kannst du hier einen Pfad wie <strong>Images/monster.png</strong> eintragen. Wenn du unten eine neue Bilddatei auswählst, ersetzt sie diesen Wert.</p></div><div class="form-field form-field-wide-four"><label for="edit-creature-image">Neues Bild auswählen</label><input id="edit-creature-image" type="file" accept="image/*"></div></div></fieldset>
+                        <fieldset class="form-group"><legend>Kampfwerte</legend><div class="form-grid form-grid-four"><div class="form-field"><label for="edit-creature-initiative">Initiative</label><input id="edit-creature-initiative" type="number"></div><div class="form-field"><label for="edit-creature-hp">HP</label><input id="edit-creature-hp" type="number" min="0"></div><div class="form-field"><label for="edit-creature-max-hp">Max HP</label><input id="edit-creature-max-hp" type="number" min="1"></div><div class="form-field"><label for="edit-creature-temp-hp">Temp HP</label><input id="edit-creature-temp-hp" type="number" min="0"></div><div class="form-field"><label for="edit-creature-ac">AC</label><input id="edit-creature-ac" type="number" min="0"></div><div class="form-field"><label for="edit-creature-passive-perception">Passive Perception</label><input id="edit-creature-passive-perception" type="number" min="0"></div><div class="form-field"><label for="edit-creature-passive-insight">Passive Insight</label><input id="edit-creature-passive-insight" type="number" min="0"></div></div></fieldset>
+                        <fieldset class="form-group"><legend>Conditions</legend><p class="form-hint">Hake alle Conditions an, die diese Karte aktuell hat. Beim Speichern wird die Conditions-Liste der Karte daraus neu aufgebaut.</p><div id="edit-creature-condition-list" class="condition-checkbox-list"></div></fieldset>
+                        <fieldset class="form-group form-group-compact"><legend>Kartenstatus</legend><label class="checkbox-field" for="edit-creature-is-in-combat"><input id="edit-creature-is-in-combat" type="checkbox"><span>Karte ist auf der Hand</span></label></fieldset>
+                        <div class="edit-creature-actions"><button onclick="handleEditCreatureSaveButtonClick()">Änderungen speichern</button><button onclick="closeEditCreatureForm()">Abbrechen</button></div>
                     </div>
                 </section>
 
                 <details class="add-creature-section add-creature-details">
-                    <summary class="add-creature-summary">
-                        <span>Neue Karte hinzufügen</span>
-
-                        <span class="details-toggle-button"></span>
-                    </summary>
-
-                    <div class="add-creature-body">
-                        <p id="add-creature-error" class="form-error"></p>
-
-                        <div class="add-creature-form">
-                            <fieldset class="form-group">
-                                <legend>Basisdaten</legend>
-
-                                <div class="form-grid form-grid-four">
-                                    <div class="form-field">
-                                        <label for="new-creature-name">Interner Name</label>
-                                        <input
-                                            id="new-creature-name"
-                                            type="text"
-                                            value="Goblin"
-                                        >
-                                    </div>
-
-                                    <div class="form-field">
-                                        <label for="new-creature-public-name">Öffentlicher Name</label>
-                                        <input
-                                            id="new-creature-public-name"
-                                            type="text"
-                                            value="Boblin der Goblin"
-                                        >
-                                    </div>
-
-                                    <div class="form-field">
-                                        <label for="new-creature-type">Typ</label>
-                                        <select id="new-creature-type">
-                                            <option value="player">Player</option>
-                                            <option value="npc">NPC</option>
-                                            <option value="monster" selected>Monster</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="form-field">
-                                        <label for="new-creature-quantity">Anzahl</label>
-                                        <input
-                                            id="new-creature-quantity"
-                                            type="number"
-                                            min="1"
-                                            max="20"
-                                            value="1"
-                                        >
-                                    </div>
-
-                                    <div class="form-field form-field-wide-four">
-                                        <label for="new-creature-image">Bild auswählen</label>
-                                        <input
-                                            id="new-creature-image"
-                                            type="file"
-                                            accept="image/*"
-                                        >
-
-                                        <p class="form-hint">
-                                            Bilder werden lokal im Browser verarbeitet und nicht hochgeladen.
-                                            Verwende nur Bilder, für die du die nötigen Rechte hast.
-                                        </p>
-                                    </div>
-                                </div>
-                            </fieldset>
-
-                            <fieldset class="form-group">
-                                <legend>Kampfwerte</legend>
-
-                                <div class="form-grid form-grid-four">
-                                    <div class="form-field">
-                                        <label for="new-creature-initiative">Initiative</label>
-                                        <input
-                                            id="new-creature-initiative"
-                                            type="number"
-                                            value="10"
-                                        >
-                                    </div>
-
-                                    <div class="form-field">
-                                        <label for="new-creature-hp">HP</label>
-                                        <input
-                                            id="new-creature-hp"
-                                            type="number"
-                                            min="0"
-                                            value="10"
-                                        >
-                                    </div>
-
-                                    <div class="form-field">
-                                        <label for="new-creature-max-hp">Max HP</label>
-                                        <input
-                                            id="new-creature-max-hp"
-                                            type="number"
-                                            min="1"
-                                            value="10"
-                                        >
-                                    </div>
-
-                                    <div class="form-field">
-                                        <label for="new-creature-ac">AC</label>
-                                        <input
-                                            id="new-creature-ac"
-                                            type="number"
-                                            min="0"
-                                            value="10"
-                                        >
-                                    </div>
-                                </div>
-                            </fieldset>
-
-                            <fieldset class="form-group">
-                                <legend>Passive Werte</legend>
-
-                                <div class="form-grid form-grid-two">
-                                    <div class="form-field">
-                                        <label for="new-creature-passive-perception">
-                                            Passive Perception
-                                        </label>
-                                        <input
-                                            id="new-creature-passive-perception"
-                                            type="number"
-                                            min="0"
-                                            value="10"
-                                        >
-                                    </div>
-
-                                    <div class="form-field">
-                                        <label for="new-creature-passive-insight">
-                                            Passive Insight
-                                        </label>
-                                        <input
-                                            id="new-creature-passive-insight"
-                                            type="number"
-                                            min="0"
-                                            value="10"
-                                        >
-                                    </div>
-                                </div>
-                            </fieldset>
-
-                            <fieldset class="form-group form-group-compact">
-                                <legend>Öffentliche Informationen</legend>
-
-                                <div class="form-field form-field-medium">
-                                    <label for="new-creature-hp-visibility">
-                                        Spieler-HP-Anzeige
-                                    </label>
-                                    <select id="new-creature-hp-visibility">
-                                        <option value="full" selected>
-                                            HP vollständig anzeigen
-                                        </option>
-                                        <option value="bar">
-                                            Nur HP-Balken anzeigen
-                                        </option>
-                                        <option value="descriptive">
-                                            Nur Beschreibung anzeigen
-                                        </option>
-                                        <option value="hidden">
-                                            HP verbergen
-                                        </option>
-                                    </select>
-                                </div>
-                            </fieldset>
-
-                            <fieldset class="form-group form-group-compact">
-                                <legend>Kartenstatus</legend>
-
-                                <label class="checkbox-field" for="new-creature-is-in-combat">
-                                    <input
-                                        id="new-creature-is-in-combat"
-                                        type="checkbox"
-                                    >
-                                    <span>Direkt auf die Hand nehmen</span>
-                                </label>
-                            </fieldset>
-
-                            <button
-                                class="add-creature-button"
-                                onclick="handleAddCreatureButtonClick()"
-                            >
-                                Karte hinzufügen
-                            </button>
-                        </div>
-                    </div>
+                    <summary class="add-creature-summary"><span>Neue Karte hinzufügen</span><span class="details-toggle-button"></span></summary>
+                    <div class="add-creature-body"><p id="add-creature-error" class="form-error"></p><div class="add-creature-form">
+                        <fieldset class="form-group"><legend>Basisdaten</legend><div class="form-grid form-grid-four"><div class="form-field"><label for="new-creature-name">Interner Name</label><input id="new-creature-name" type="text" value="Goblin"></div><div class="form-field"><label for="new-creature-public-name">Öffentlicher Name</label><input id="new-creature-public-name" type="text" value="Boblin der Goblin"></div><div class="form-field"><label for="new-creature-type">Typ</label><select id="new-creature-type"><option value="player">Player</option><option value="npc">NPC</option><option value="monster" selected>Monster</option></select></div><div class="form-field"><label for="new-creature-quantity">Anzahl</label><input id="new-creature-quantity" type="number" min="1" max="20" value="1"></div><div class="form-field form-field-wide-four"><label for="new-creature-image">Bild auswählen</label><input id="new-creature-image" type="file" accept="image/*"><p class="form-hint">Bilder werden lokal im Browser verarbeitet und nicht hochgeladen. Verwende nur Bilder, für die du die nötigen Rechte hast.</p></div></div></fieldset>
+                        <fieldset class="form-group"><legend>Kampfwerte</legend><div class="form-grid form-grid-four"><div class="form-field"><label for="new-creature-initiative">Initiative</label><input id="new-creature-initiative" type="number" value="10"></div><div class="form-field"><label for="new-creature-hp">HP</label><input id="new-creature-hp" type="number" min="0" value="10"></div><div class="form-field"><label for="new-creature-max-hp">Max HP</label><input id="new-creature-max-hp" type="number" min="1" value="10"></div><div class="form-field"><label for="new-creature-ac">AC</label><input id="new-creature-ac" type="number" min="0" value="10"></div></div></fieldset>
+                        <fieldset class="form-group"><legend>Passive Werte</legend><div class="form-grid form-grid-two"><div class="form-field"><label for="new-creature-passive-perception">Passive Perception</label><input id="new-creature-passive-perception" type="number" min="0" value="10"></div><div class="form-field"><label for="new-creature-passive-insight">Passive Insight</label><input id="new-creature-passive-insight" type="number" min="0" value="10"></div></div></fieldset>
+                        <fieldset class="form-group form-group-compact"><legend>Öffentliche Informationen</legend><div class="form-field form-field-medium"><label for="new-creature-hp-visibility">Spieler-HP-Anzeige</label><select id="new-creature-hp-visibility"><option value="full" selected>HP vollständig anzeigen</option><option value="bar">Nur HP-Balken anzeigen</option><option value="descriptive">Nur Beschreibung anzeigen</option><option value="hidden">HP verbergen</option></select></div></fieldset>
+                        <fieldset class="form-group form-group-compact"><legend>Kartenstatus</legend><label class="checkbox-field" for="new-creature-is-in-combat"><input id="new-creature-is-in-combat" type="checkbox"><span>Direkt auf die Hand nehmen</span></label></fieldset>
+                        <button class="add-creature-button" onclick="handleAddCreatureButtonClick()">Karte hinzufügen</button>
+                    </div></div>
                 </details>
             </section>
         </div>
 
         <footer class="app-footer">
             <details class="project-notice">
-                <summary>
-                    Projekt- und Nutzungshinweise
-                </summary>
-
+                <summary>Projekt- und Nutzungshinweise</summary>
                 <div class="project-notice-content">
-                    <p>
-                        Miriel’s Deck of Encounters ist ein privates Hobbyprojekt
-                        zur Unterstützung privater Fantasy-Tabletop-Runden.
-                    </p>
-
-                    <p>
-                        Diese Website ist nicht kommerziell. Es gibt keine Werbung,
-                        kein Tracking, keine kostenpflichtigen Dienste und keine
-                        offiziellen Verbindungen zu Rechteinhabern von Rollenspielsystemen.
-                    </p>
-
-                    <p>
-                        Alle Projektdateien, Texte, Designs und Bilder sind nicht zur
-                        Wiederverwendung, Veränderung oder Weiterverbreitung freigegeben,
-                        sofern nicht ausdrücklich etwas anderes angegeben ist.
-                    </p>
-
-                    <p>
-                        Die App speichert Encounter-Daten nur lokal im Browser dieses Geräts.
-                        Es werden durch die App selbst keine Encounter-Daten an einen Server gesendet.
-                    </p>
+                    <p>Miriel’s Deck of Encounters ist ein privates Hobbyprojekt zur Unterstützung privater Fantasy-Tabletop-Runden.</p>
+                    <p>Diese Website ist nicht kommerziell. Es gibt keine Werbung, kein Tracking, keine kostenpflichtigen Dienste und keine offiziellen Verbindungen zu Rechteinhabern von Rollenspielsystemen.</p>
+                    <p>Alle Projektdateien, Texte, Designs und Bilder sind nicht zur Wiederverwendung, Veränderung oder Weiterverbreitung freigegeben, sofern nicht ausdrücklich etwas anderes angegeben ist.</p>
+                    <p>Die App speichert Encounter-Daten nur lokal im Browser dieses Geräts. Es werden durch die App selbst keine Encounter-Daten an einen Server gesendet.</p>
                 </div>
             </details>
         </footer>
@@ -864,4 +295,3 @@
     <script src="app.js"></script>
 </body>
 </html>
-

@@ -1152,6 +1152,42 @@ function endCombat() {
     renderCards();
 }
 
+function longRestPlayerCards() {
+    const playerCards = creatures.filter(function(creature) {
+        return creature.type === "player";
+    });
+
+    if (playerCards.length === 0) {
+        alert("Es gibt keine Player-Karten für eine Lange Rast.");
+        return;
+    }
+
+    const shouldLongRest = confirm(
+        "Lange Rast durchführen? Alle Player-Karten werden auf Max HP gesetzt. Temp HP und Conditions werden entfernt."
+    );
+
+    if (shouldLongRest === false) {
+        return;
+    }
+
+    for (const creature of playerCards) {
+        creature.hp = creature.maxHp;
+        creature.tempHp = 0;
+        creature.conditions = [];
+        creature.isSelected = false;
+    }
+
+    currentTurnIndex = 0;
+    roundNumber = 1;
+    clearManualPublicSelection();
+
+    addCombatLogMessage(
+        `Lange Rast: ${playerCards.length} Player-Karte(n) vollständig erholt: ${createTargetNamesText(playerCards)}.`
+    );
+
+    renderCards();
+}
+
 function deleteAllCards() {
     const shouldDeleteAllCards = confirm("Wirklich alle Karten löschen?");
 
@@ -3297,6 +3333,47 @@ function renderCards() {
 }
 
 
+function longRest() {
+
+    const shouldLongRest = confirm(
+
+        "Lange Rast durchführen?\n\nAlle Player-Karten werden vollständig geheilt, Temp HP und Conditions werden entfernt."
+
+    );
+
+    if (!shouldLongRest) {
+
+        return;
+
+    }
+
+    for (const creature of creatures) {
+
+        if (creature.type === "player") {
+
+            creature.hp = creature.maxHp;
+
+            creature.tempHp = 0;
+
+            creature.conditions = [];
+
+            creature.isSelected = false;
+
+        }
+
+    }
+
+    resetCombatTurnCounter();
+
+    clearCardSelection();
+
+    addCombatLogMessage("Lange Rast: Alle Player-Karten wurden vollständig wiederhergestellt.");
+
+    renderCards();
+
+}
+
+
 // ============================================================
 // 17. Start der App
 // ============================================================
@@ -3314,3 +3391,4 @@ if (wasStateLoaded === false && useDemoData === true) {
 setupPlayerViewPolling();
 setupPublicPreviewNavigation();
 renderCards();
+

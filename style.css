@@ -1,62 +1,122 @@
+
+/* Miriel's Deck of Encounters - Style Sheet */
+
 * {
     box-sizing: border-box;
 }
 
 :root {
-    --color-bg: #19151d;
-    --color-bg-dark: #100d14;
-    --color-panel: #211b27;
-    --color-panel-light: #2a2231;
+    /* Grundfarben */
+    --color-bg-0: #07060b;
+    --color-bg-1: #0e0b16;
+    --color-bg-2: #15111f;
 
-    --color-gold: #d8b36a;
-    --color-gold-soft: #e8d7a8;
+    --color-panel-0: #120f1a;
+    --color-panel-1: #191424;
+    --color-panel-2: #211a30;
+    --color-panel-3: #2b223d;
 
-    --color-blue: #80b7ff;
-    --color-blue-soft: #d8eaff;
+    --color-card-0: #0d0b13;
+    --color-card-1: #161120;
+    --color-card-2: #221a32;
 
-    --color-purple: #7c5bb6;
-    --color-purple-soft: #b9a1e6;
+    /* Text */
+    --color-text: #f4f0fb;
+    --color-text-soft: #d8d0e7;
+    --color-text-muted: #a99ebd;
+    --color-text-faint: #756d82;
 
-    --color-danger: #ff8f9a;
+    /* Funktionsfarben */
+    --color-arcane: #8c6be8;
+    --color-arcane-soft: #c1b0ff;
+    --color-arcane-muted: #5a477e;
 
-    --color-text: #f7f2ff;
-    --color-text-muted: #c9c0d3;
-    --color-text-soft: #9f96aa;
+    --color-active: #7fb9ff;
+    --color-active-soft: #d8eaff;
+    --color-active-muted: #365a83;
 
-    --border-soft: rgba(216, 179, 106, 0.16);
-    --border-medium: rgba(216, 179, 106, 0.26);
-    --border-blue: rgba(128, 183, 255, 0.34);
+    --color-gold: #c8a45f;
+    --color-gold-soft: #ead8a6;
+    --color-gold-muted: #7e6840;
 
+    --color-danger: #ff7b8a;
+    --color-danger-soft: #ffd1d7;
+    --color-danger-muted: #6f2b38;
+
+    --color-success: #7ee0b2;
+    --color-success-muted: #234d3c;
+
+    /* Linien */
+    --border-subtle: rgba(255, 255, 255, 0.055);
+    --border-panel: rgba(193, 176, 255, 0.13);
+    --border-card: rgba(193, 176, 255, 0.18);
+    --border-gold: rgba(200, 164, 95, 0.28);
+    --border-active: rgba(127, 185, 255, 0.44);
+    --border-danger: rgba(255, 123, 138, 0.42);
+
+    /* Formen */
     --radius-small: 8px;
     --radius-medium: 12px;
     --radius-large: 18px;
+    --radius-xl: 24px;
 
+    /* Schatten */
     --shadow-panel:
-        0 18px 38px rgba(0, 0, 0, 0.40),
-        0 0 38px rgba(124, 91, 182, 0.035),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.032);
+        0 22px 48px rgba(0, 0, 0, 0.42),
+        0 0 34px rgba(140, 107, 232, 0.045),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.026);
 
     --shadow-card:
-        0 16px 32px rgba(0, 0, 0, 0.44),
-        0 0 28px rgba(124, 91, 182, 0.045),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.035);
+        0 18px 36px rgba(0, 0, 0, 0.46),
+        0 0 30px rgba(140, 107, 232, 0.06),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.030);
+
+    --shadow-active:
+        0 0 0 2px rgba(127, 185, 255, 0.46),
+        0 0 28px rgba(127, 185, 255, 0.20),
+        0 18px 38px rgba(0, 0, 0, 0.52);
+
+    --shadow-selected:
+        0 0 0 1px rgba(200, 164, 95, 0.28),
+        0 16px 34px rgba(0, 0, 0, 0.48);
 }
 
 /* ============================================================
-   Grundlayout
+   1. Grundlayout
    ============================================================ */
 
+html {
+    min-height: 100%;
+    background: var(--color-bg-0);
+}
+
 body {
+    min-height: 100%;
     margin: 0;
 
     background:
-        radial-gradient(circle at top left, rgba(124, 91, 182, 0.12), transparent 34%),
-        radial-gradient(circle at top right, rgba(216, 179, 106, 0.055), transparent 28%),
-        linear-gradient(180deg, var(--color-bg), var(--color-bg-dark) 74%);
+        radial-gradient(circle at 10% 0%, rgba(140, 107, 232, 0.16), transparent 34%),
+        radial-gradient(circle at 92% 6%, rgba(127, 185, 255, 0.08), transparent 28%),
+        radial-gradient(circle at 50% 120%, rgba(200, 164, 95, 0.035), transparent 34%),
+        linear-gradient(180deg, var(--color-bg-1), var(--color-bg-0) 78%);
 
     color: var(--color-text);
-
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.014) 1px, transparent 1px);
+    background-size: 44px 44px;
+
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.68), transparent 72%);
+    pointer-events: none;
 }
 
 .app {
@@ -66,7 +126,44 @@ body {
 }
 
 /* ============================================================
-   Header
+   2. Typografie
+   ============================================================ */
+
+h1,
+h2,
+h3,
+h4,
+p {
+    overflow-wrap: anywhere;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    color: var(--color-text);
+}
+
+p {
+    color: var(--color-text-muted);
+}
+
+strong {
+    color: var(--color-text-soft);
+}
+
+.section-eyebrow {
+    margin: 0 0 4px;
+
+    color: var(--color-text-faint);
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+/* ============================================================
+   3. Header
    ============================================================ */
 
 .app-header {
@@ -74,12 +171,11 @@ body {
 }
 
 .app-header-help {
-    border-radius: var(--radius-large);
+    border-radius: var(--radius-xl);
 }
 
 .app-header-help-summary {
     display: block;
-
     cursor: default;
     list-style: none;
 }
@@ -88,33 +184,28 @@ body {
     display: none;
 }
 
-.app-header-help-summary::after {
-    content: none;
-    display: none;
-}
-
 .app-header-card {
     position: relative;
 
     min-height: 300px;
     overflow: hidden;
-
     padding: 32px;
 
-    border: 1px solid rgba(216, 179, 106, 0.28);
-    border-radius: var(--radius-large);
+    border: 1px solid rgba(193, 176, 255, 0.18);
+    border-radius: var(--radius-xl);
 
-    background: #19151d;
+    background:
+        radial-gradient(circle at 14% 18%, rgba(140, 107, 232, 0.18), transparent 30%),
+        linear-gradient(135deg, rgba(17, 13, 26, 0.98), rgba(7, 6, 11, 0.98));
 
     box-shadow:
-        0 20px 44px rgba(0, 0, 0, 0.46),
-        0 0 46px rgba(124, 91, 182, 0.08),
+        0 24px 54px rgba(0, 0, 0, 0.52),
+        0 0 44px rgba(140, 107, 232, 0.08),
         inset 0 0 0 1px rgba(255, 255, 255, 0.035);
 }
 
 .app-header-card::before {
     content: "";
-
     position: absolute;
     inset: 0;
     z-index: 2;
@@ -122,18 +213,35 @@ body {
     background:
         linear-gradient(
             90deg,
-            rgba(16, 13, 20, 1) 0%,
-            rgba(16, 13, 20, 0.98) 24%,
-            rgba(16, 13, 20, 0.86) 42%,
-            rgba(16, 13, 20, 0.54) 58%,
-            rgba(16, 13, 20, 0.22) 76%,
-            rgba(16, 13, 20, 0.10) 100%
+            rgba(7, 6, 11, 1) 0%,
+            rgba(7, 6, 11, 0.96) 22%,
+            rgba(7, 6, 11, 0.78) 42%,
+            rgba(7, 6, 11, 0.38) 62%,
+            rgba(7, 6, 11, 0.08) 100%
         ),
-        radial-gradient(circle at 18% 20%, rgba(216, 179, 106, 0.10), transparent 30%),
+        radial-gradient(circle at 18% 22%, rgba(127, 185, 255, 0.06), transparent 26%),
+        linear-gradient(180deg, rgba(7, 6, 11, 0.02), rgba(7, 6, 11, 0.30));
+
+    pointer-events: none;
+}
+
+.app-header-card::after {
+    content: "";
+    position: absolute;
+    left: 32px;
+    right: 32px;
+    bottom: 0;
+    z-index: 4;
+
+    height: 1px;
+
+    background:
         linear-gradient(
-            180deg,
-            rgba(16, 13, 20, 0.06),
-            rgba(16, 13, 20, 0.38)
+            90deg,
+            transparent,
+            rgba(200, 164, 95, 0.30),
+            rgba(127, 185, 255, 0.18),
+            transparent
         );
 
     pointer-events: none;
@@ -164,59 +272,59 @@ body {
     object-position: center center;
 
     filter:
-        saturate(0.82)
-        contrast(1.02)
-        brightness(0.72);
-}
-
-.app-header-art::before,
-.app-header-art::after {
-    content: none;
-    display: none;
+        saturate(0.88)
+        contrast(1.04)
+        brightness(0.82);
 }
 
 .app-kicker {
-    margin: 0 0 8px;
+    margin: 0 0 10px;
 
-    color: var(--color-purple-soft);
+    color: var(--color-active-soft);
     font-size: 13px;
-    font-weight: 800;
-    letter-spacing: 0.12em;
+    font-weight: 850;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
 }
 
 .app-header h1 {
-    max-width: 980px;
+    max-width: 960px;
     margin: 0;
 
     color: #ffffff;
     font-size: clamp(38px, 5vw, 72px);
     line-height: 0.95;
-    letter-spacing: -0.04em;
+    letter-spacing: -0.05em;
+
+    text-shadow:
+        0 0 26px rgba(140, 107, 232, 0.22),
+        0 12px 28px rgba(0, 0, 0, 0.42);
 }
 
 .app-tagline {
     max-width: 720px;
     margin: 14px 0 0;
 
-    color: var(--color-gold-soft);
-    font-size: clamp(17px, 2vw, 24px);
+    color: var(--color-text-soft);
+    font-size: clamp(17px, 2vw, 23px);
     font-weight: 700;
 }
 
 .app-build-info {
     margin: 14px 0 0;
 
-    color: var(--color-text-soft);
+    color: var(--color-text-faint);
     font-size: 14px;
 }
+
+/* Header-Buttons */
 
 .app-view-actions {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
 
-    margin-top: 18px;
+    margin-top: 20px;
 }
 
 .app-view-actions button,
@@ -224,78 +332,69 @@ body {
     min-height: 38px;
     padding: 8px 14px;
 
-    border: 1px solid rgba(124, 91, 182, 0.38);
+    border: 1px solid rgba(193, 176, 255, 0.28);
     border-radius: 999px;
 
     background:
-        radial-gradient(circle at top left, rgba(124, 91, 182, 0.14), transparent 42%),
-        linear-gradient(135deg, rgba(42, 32, 56, 0.88), rgba(18, 14, 24, 0.94));
+        radial-gradient(circle at top left, rgba(140, 107, 232, 0.14), transparent 40%),
+        linear-gradient(135deg, rgba(32, 25, 48, 0.92), rgba(12, 10, 18, 0.96));
 
-    color: var(--color-purple-soft);
+    color: var(--color-arcane-soft);
 
     cursor: pointer;
     font: inherit;
     font-size: 13px;
-    font-weight: 900;
+    font-weight: 850;
 
     box-shadow:
-        0 8px 18px rgba(0, 0, 0, 0.22),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.028);
+        0 8px 18px rgba(0, 0, 0, 0.24),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.024);
 }
 
 .app-view-actions button:hover,
 .app-help-button:hover {
     transform: translateY(-1px);
 
-    border-color: rgba(216, 179, 106, 0.44);
+    border-color: rgba(127, 185, 255, 0.46);
 
     background:
-        radial-gradient(circle at top left, rgba(216, 179, 106, 0.10), transparent 42%),
-        linear-gradient(135deg, rgba(52, 40, 64, 0.96), rgba(28, 22, 36, 0.98));
+        radial-gradient(circle at top left, rgba(127, 185, 255, 0.12), transparent 42%),
+        linear-gradient(135deg, rgba(34, 38, 63, 0.94), rgba(14, 11, 20, 0.98));
 
-    color: var(--color-gold-soft);
-
-    box-shadow:
-        0 12px 24px rgba(0, 0, 0, 0.30),
-        0 0 18px rgba(124, 91, 182, 0.10),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.038);
+    color: var(--color-active-soft);
 }
 
-.app-view-actions button:nth-child(1) {
-    border-color: rgba(128, 183, 255, 0.42);
+.app-view-actions button.active-view-button {
+    border-color: rgba(127, 185, 255, 0.56);
 
     background:
-        radial-gradient(circle at top left, rgba(128, 183, 255, 0.12), transparent 42%),
-        linear-gradient(135deg, rgba(35, 55, 82, 0.84), rgba(16, 14, 22, 0.94));
+        radial-gradient(circle at top left, rgba(127, 185, 255, 0.16), transparent 42%),
+        linear-gradient(135deg, rgba(35, 55, 82, 0.88), rgba(13, 11, 18, 0.98));
 
-    color: var(--color-blue-soft);
-}
-
-.app-view-actions button:nth-child(2) {
-    border-color: rgba(216, 179, 106, 0.42);
-
-    background:
-        radial-gradient(circle at top left, rgba(216, 179, 106, 0.12), transparent 42%),
-        linear-gradient(135deg, rgba(72, 55, 31, 0.82), rgba(24, 19, 24, 0.94));
-
-    color: var(--color-gold-soft);
+    color: var(--color-active-soft);
 }
 
 .app-header-help:not([open]) .app-help-button::before {
     content: "Kurzanleitung";
+    font-size: 13px;
 }
 
 .app-header-help[open] .app-help-button::before {
     content: "Anleitung schließen";
+    font-size: 13px;
 }
 
 .app-header-help:not([open]) .app-help-button::after {
     content: "▾";
+    font-size: 12px;
 }
 
 .app-header-help[open] .app-help-button::after {
     content: "▴";
+    font-size: 12px;
 }
+
+/* Hilfe im Header */
 
 .app-help-content {
     display: grid;
@@ -305,35 +404,33 @@ body {
     margin-top: 16px;
     padding: 18px 20px 20px;
 
-    border: 1px solid rgba(216, 179, 106, 0.16);
-    border-radius: var(--radius-large);
+    border: 1px solid rgba(193, 176, 255, 0.14);
+    border-radius: var(--radius-xl);
 
     background:
-        radial-gradient(circle at top left, rgba(216, 179, 106, 0.045), transparent 30%),
-        radial-gradient(circle at top right, rgba(124, 91, 182, 0.06), transparent 34%),
-        linear-gradient(135deg, rgba(30, 24, 36, 0.92), rgba(16, 13, 20, 0.92));
+        radial-gradient(circle at top left, rgba(140, 107, 232, 0.075), transparent 30%),
+        linear-gradient(135deg, rgba(18, 14, 27, 0.96), rgba(8, 7, 12, 0.98));
 
-    box-shadow:
-        0 12px 26px rgba(0, 0, 0, 0.24),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.025);
+    box-shadow: var(--shadow-panel);
 }
 
 .app-help-card {
     padding: 16px;
 
-    border: 1px solid rgba(216, 179, 106, 0.15);
+    border: 1px solid rgba(193, 176, 255, 0.12);
     border-radius: 14px;
 
     background:
-        radial-gradient(circle at top left, rgba(216, 179, 106, 0.045), transparent 30%),
-        linear-gradient(135deg, rgba(24, 19, 29, 0.78), rgba(13, 10, 16, 0.88));
+        radial-gradient(circle at top left, rgba(127, 185, 255, 0.035), transparent 30%),
+        linear-gradient(135deg, rgba(23, 18, 33, 0.82), rgba(10, 8, 15, 0.92));
 }
 
 .app-help-card h2 {
     margin: 0 0 10px;
 
-    color: var(--color-gold-soft);
+    color: var(--color-text-soft);
     font-size: 17px;
+    letter-spacing: -0.02em;
 }
 
 .app-help-card p {
@@ -341,7 +438,7 @@ body {
 
     color: var(--color-text-muted);
     font-size: 14px;
-    line-height: 1.5;
+    line-height: 1.55;
 }
 
 .app-help-card p + p {
@@ -349,7 +446,7 @@ body {
 }
 
 /* ============================================================
-   Gemeinsame Panels
+   4. Gemeinsame Panels / Sections
    ============================================================ */
 
 .public-preview-section,
@@ -361,13 +458,13 @@ body {
 
     margin-bottom: 32px;
 
-    border: 1px solid rgba(216, 179, 106, 0.18);
-    border-radius: var(--radius-large);
+    border: 1px solid var(--border-panel);
+    border-radius: var(--radius-xl);
 
     background:
-        radial-gradient(circle at top left, rgba(216, 179, 106, 0.055), transparent 28%),
-        radial-gradient(circle at top right, rgba(124, 91, 182, 0.095), transparent 34%),
-        linear-gradient(135deg, rgba(28, 23, 33, 0.98), rgba(15, 12, 18, 0.98));
+        radial-gradient(circle at 12% 0%, rgba(140, 107, 232, 0.07), transparent 30%),
+        radial-gradient(circle at 92% 8%, rgba(127, 185, 255, 0.035), transparent 34%),
+        linear-gradient(135deg, rgba(18, 14, 27, 0.97), rgba(8, 7, 12, 0.99));
 
     box-shadow: var(--shadow-panel);
 }
@@ -393,7 +490,7 @@ body {
     margin-bottom: 18px;
     padding-bottom: 12px;
 
-    border-bottom: 1px solid rgba(216, 179, 106, 0.15);
+    border-bottom: 1px solid rgba(193, 176, 255, 0.12);
 }
 
 .section-header-row h2,
@@ -406,26 +503,53 @@ body {
 .edit-creature-header h2 {
     margin: 0;
 
-    color: var(--color-gold-soft);
-    letter-spacing: -0.02em;
+    color: var(--color-text);
+    letter-spacing: -0.035em;
 
     text-shadow:
-        0 0 16px rgba(216, 179, 106, 0.08);
+        0 0 18px rgba(140, 107, 232, 0.10);
+}
+
+.section-header-row h2 {
+    font-size: 25px;
 }
 
 .dashboard-group-title {
     margin: 0 0 14px;
 
     font-size: 28px;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.04em;
 }
 
 .dm-dashboard-group {
     margin-bottom: 36px;
 }
 
+.current-combat-dashboard > section {
+    margin-bottom: 22px;
+}
+
+.current-combat-dashboard > section:last-child {
+    margin-bottom: 36px;
+}
+
+/* Kleine Oberzeile für die Spieler-Vorschau, ohne HTML ändern zu müssen */
+.public-preview-section > summary h2::before,
+.public-preview-summary > span:first-child::before {
+    content: "PLAYER PREVIEW";
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: var(--color-text-faint);
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
 /* ============================================================
-   Einklapp-Header
+   5. Details-/Einklappbereiche
    ============================================================ */
 
 .public-preview-section > summary,
@@ -438,7 +562,7 @@ body {
 
     padding: 22px 24px;
 
-    border-bottom-color: rgba(216, 179, 106, 0.15);
+    border-bottom: 1px solid rgba(193, 176, 255, 0.12);
 
     cursor: pointer;
     list-style: none;
@@ -450,20 +574,13 @@ body {
     display: none;
 }
 
-.public-preview-section > summary::after,
-.public-preview-summary::after,
-.add-creature-summary::after {
-    content: none;
-    display: none;
-}
-
 .public-preview-section > summary h2,
 .public-preview-summary > span:first-child,
 .add-creature-summary > span:first-child {
     font-size: 26px;
     font-weight: 900;
     line-height: 1.1;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.04em;
 }
 
 .public-preview-summary-hint,
@@ -475,28 +592,23 @@ body {
     justify-content: center;
     gap: 8px;
 
-    min-width: 190px;
+    min-width: 170px;
     min-height: 40px;
     padding: 9px 14px;
 
-    border: 1px solid rgba(124, 91, 182, 0.42);
+    border: 1px solid rgba(193, 176, 255, 0.30);
     border-radius: 999px;
 
     background:
-        radial-gradient(circle at top left, rgba(124, 91, 182, 0.18), transparent 38%),
-        linear-gradient(135deg, rgba(44, 33, 58, 0.96), rgba(20, 16, 27, 0.98));
+        radial-gradient(circle at top left, rgba(140, 107, 232, 0.14), transparent 38%),
+        linear-gradient(135deg, rgba(31, 24, 46, 0.94), rgba(13, 10, 20, 0.98));
 
-    color: var(--color-purple-soft);
+    color: var(--color-arcane-soft);
 
     cursor: pointer;
     font: inherit;
     font-size: 0;
-    font-weight: 800;
-    letter-spacing: 0.01em;
-
-    box-shadow:
-        0 8px 18px rgba(0, 0, 0, 0.22),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.035);
+    font-weight: 850;
 }
 
 .public-preview-section[open] .public-preview-summary-hint::before,
@@ -538,13 +650,9 @@ body {
 .add-creature-summary:hover .details-toggle-button {
     transform: translateY(-1px);
 
-    border-color: rgba(216, 179, 106, 0.42);
+    border-color: rgba(127, 185, 255, 0.48);
 
-    background:
-        radial-gradient(circle at top left, rgba(216, 179, 106, 0.12), transparent 38%),
-        linear-gradient(135deg, rgba(50, 40, 61, 0.98), rgba(33, 27, 40, 0.98));
-
-    color: var(--color-gold-soft);
+    color: var(--color-active-soft);
 }
 
 .public-preview-content,
@@ -553,7 +661,7 @@ body {
 }
 
 /* ============================================================
-   Menüs, Buttons, Inputs
+   6. Buttons, Menüs, Eingaben
    ============================================================ */
 
 .section-toolbar {
@@ -578,33 +686,30 @@ body {
 
     min-width: 180px;
     min-height: 38px;
-    padding: 8px 12px;
+    padding: 8px 13px;
 
-    border: 1px solid rgba(124, 91, 182, 0.36);
+    border: 1px solid rgba(193, 176, 255, 0.28);
     border-radius: 999px;
 
     background:
-        radial-gradient(circle at top left, rgba(124, 91, 182, 0.12), transparent 40%),
-        linear-gradient(135deg, rgba(42, 32, 56, 0.92), rgba(23, 18, 30, 0.96));
+        radial-gradient(circle at top left, rgba(140, 107, 232, 0.12), transparent 40%),
+        linear-gradient(135deg, rgba(31, 24, 46, 0.92), rgba(13, 10, 20, 0.98));
 
-    color: var(--color-purple-soft);
+    color: var(--color-arcane-soft);
 
     cursor: pointer;
     font: inherit;
-    font-weight: 900;
+    font-size: 13px;
+    font-weight: 850;
 
     list-style: none;
-
-    box-shadow:
-        0 8px 16px rgba(0, 0, 0, 0.16),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.026);
 }
 
 .section-menu-summary::after {
     content: "▾";
 
-    color: var(--color-purple-soft);
-    font-size: 13px;
+    color: var(--color-arcane-soft);
+    font-size: 12px;
 }
 
 .section-menu[open] .section-menu-summary::after {
@@ -613,6 +718,11 @@ body {
 
 .section-menu-summary::-webkit-details-marker {
     display: none;
+}
+
+.section-menu-summary:hover {
+    border-color: rgba(127, 185, 255, 0.48);
+    color: var(--color-active-soft);
 }
 
 .section-menu-panel {
@@ -624,22 +734,23 @@ body {
     display: grid;
     gap: 8px;
 
-    width: min(320px, 86vw);
+    width: min(330px, 86vw);
     padding: 12px;
 
-    border: 1px solid rgba(216, 179, 106, 0.20);
-    border-radius: 14px;
+    border: 1px solid rgba(193, 176, 255, 0.16);
+    border-radius: 16px;
 
     background:
-        radial-gradient(circle at top left, rgba(124, 91, 182, 0.08), transparent 34%),
-        linear-gradient(135deg, rgba(32, 26, 39, 0.98), rgba(16, 13, 20, 0.98));
+        radial-gradient(circle at top left, rgba(140, 107, 232, 0.08), transparent 34%),
+        linear-gradient(135deg, rgba(22, 17, 32, 0.98), rgba(8, 7, 12, 0.99));
 
     box-shadow:
-        0 16px 32px rgba(0, 0, 0, 0.45),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.035);
+        0 18px 36px rgba(0, 0, 0, 0.50),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.030);
 }
 
-.section-menu-panel button {
+.section-menu-panel button,
+.card-menu-panel button {
     width: 100%;
     text-align: left;
 }
@@ -652,24 +763,25 @@ button,
 .section-menu-panel button,
 .card-menu-panel button,
 .public-focus-reset-button {
-    padding: 8px 12px;
+    min-height: 38px;
+    padding: 8px 13px;
 
-    border: 1px solid rgba(124, 91, 182, 0.36);
+    border: 1px solid rgba(193, 176, 255, 0.26);
     border-radius: 999px;
 
     background:
-        radial-gradient(circle at top left, rgba(124, 91, 182, 0.12), transparent 40%),
-        linear-gradient(135deg, rgba(42, 32, 56, 0.92), rgba(23, 18, 30, 0.96));
+        radial-gradient(circle at top left, rgba(140, 107, 232, 0.12), transparent 42%),
+        linear-gradient(135deg, rgba(31, 24, 46, 0.92), rgba(13, 10, 20, 0.98));
 
-    color: var(--color-purple-soft);
+    color: var(--color-arcane-soft);
 
     cursor: pointer;
     font: inherit;
     font-weight: 800;
 
     box-shadow:
-        0 8px 16px rgba(0, 0, 0, 0.16),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.026);
+        0 8px 16px rgba(0, 0, 0, 0.20),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.022);
 }
 
 button:hover,
@@ -679,151 +791,182 @@ button:hover,
 .cleanup-action-buttons button:hover,
 .section-menu-panel button:hover,
 .card-menu-panel button:hover,
-.public-focus-reset-button:hover,
-.section-menu-summary:hover {
+.public-focus-reset-button:hover {
     transform: translateY(-1px);
 
-    border-color: rgba(216, 179, 106, 0.42);
+    border-color: rgba(127, 185, 255, 0.46);
 
     background:
-        radial-gradient(circle at top left, rgba(216, 179, 106, 0.10), transparent 40%),
-        linear-gradient(135deg, rgba(52, 40, 64, 0.98), rgba(32, 25, 40, 0.98));
+        radial-gradient(circle at top left, rgba(127, 185, 255, 0.11), transparent 42%),
+        linear-gradient(135deg, rgba(34, 38, 63, 0.94), rgba(13, 10, 20, 0.98));
 
-    color: var(--color-gold-soft);
+    color: var(--color-active-soft);
 }
 
 button:disabled,
 .card-menu-panel button:disabled,
 .section-menu-panel button:disabled {
-    opacity: 0.45;
+    opacity: 0.42;
     cursor: not-allowed;
+    transform: none;
 }
 
 .card-menu-danger,
 .section-menu-panel .card-menu-danger,
 .end-combat-button {
-    border-color: rgba(255, 143, 154, 0.42) !important;
+    border-color: var(--border-danger) !important;
 
     background:
-        linear-gradient(135deg, rgba(92, 35, 49, 0.94), rgba(48, 22, 31, 0.98)) !important;
+        radial-gradient(circle at top left, rgba(255, 123, 138, 0.12), transparent 42%),
+        linear-gradient(135deg, rgba(92, 35, 49, 0.94), rgba(37, 16, 25, 0.98)) !important;
 
-    color: #ffc7cd !important;
+    color: var(--color-danger-soft) !important;
 }
 
 .card-menu-danger:hover,
 .section-menu-panel .card-menu-danger:hover,
 .end-combat-button:hover {
-    border-color: var(--color-danger) !important;
+    border-color: rgba(255, 123, 138, 0.70) !important;
 
     background:
-        linear-gradient(135deg, rgba(116, 45, 62, 0.98), rgba(62, 27, 39, 0.98)) !important;
+        radial-gradient(circle at top left, rgba(255, 123, 138, 0.18), transparent 42%),
+        linear-gradient(135deg, rgba(116, 45, 62, 0.98), rgba(48, 18, 31, 0.98)) !important;
 
-    color: #ffe2e5 !important;
+    color: #ffffff !important;
+}
+
+.long-rest-button,
+button.long-rest-button {
+    border-color: rgba(127, 185, 255, 0.34) !important;
+
+    background:
+        radial-gradient(circle at top left, rgba(127, 185, 255, 0.10), transparent 42%),
+        linear-gradient(135deg, rgba(25, 33, 52, 0.88), rgba(12, 10, 18, 0.96)) !important;
+
+    color: var(--color-active-soft) !important;
+}
+
+.long-rest-button:hover,
+button.long-rest-button:hover {
+    border-color: rgba(127, 185, 255, 0.58) !important;
+
+    background:
+        radial-gradient(circle at top left, rgba(127, 185, 255, 0.16), transparent 42%),
+        linear-gradient(135deg, rgba(34, 50, 78, 0.92), rgba(12, 10, 18, 0.98)) !important;
+
+    color: #ffffff !important;
 }
 
 input,
 select {
     width: 100%;
-    min-height: 42px;
-    padding: 8px;
+    min-height: 44px;
+    padding: 9px 12px;
 
-    border: 1px solid rgba(124, 91, 182, 0.28);
+    border: 1px solid rgba(193, 176, 255, 0.20);
     border-radius: 12px;
 
     background:
-        radial-gradient(circle at top left, rgba(124, 91, 182, 0.06), transparent 40%),
-        linear-gradient(135deg, rgba(9, 7, 12, 0.96), rgba(17, 13, 22, 0.96));
+        radial-gradient(circle at top left, rgba(140, 107, 232, 0.055), transparent 42%),
+        linear-gradient(135deg, rgba(8, 7, 12, 0.96), rgba(16, 12, 24, 0.96));
 
     color: var(--color-text);
 
     font: inherit;
+    line-height: 1.2;
 
     box-shadow:
-        inset 0 0 0 1px rgba(255, 255, 255, 0.020);
+        inset 0 0 0 1px rgba(255, 255, 255, 0.018);
 }
 
 input:focus,
 select:focus {
     outline: none;
 
-    border-color: rgba(124, 91, 182, 0.64);
+    border-color: rgba(127, 185, 255, 0.56);
 
     box-shadow:
-        0 0 0 3px rgba(124, 91, 182, 0.16),
+        0 0 0 3px rgba(127, 185, 255, 0.13),
         inset 0 0 0 1px rgba(255, 255, 255, 0.026);
 }
 
+label {
+    color: var(--color-text-muted);
+}
+
 /* ============================================================
-   Encounter-Steuerung
+   7. Encounter-Steuerung
    ============================================================ */
 
 .combat-control-section {
     overflow: visible;
 
+    border-color: rgba(193, 176, 255, 0.16);
+
     background:
-        radial-gradient(circle at 12% 0%, rgba(216, 179, 106, 0.07), transparent 28%),
-        radial-gradient(circle at 84% 8%, rgba(124, 91, 182, 0.12), transparent 36%),
-        linear-gradient(135deg, rgba(26, 21, 31, 0.99), rgba(11, 9, 14, 0.99));
+        radial-gradient(circle at 12% 0%, rgba(140, 107, 232, 0.10), transparent 30%),
+        radial-gradient(circle at 88% 8%, rgba(127, 185, 255, 0.045), transparent 34%),
+        linear-gradient(135deg, rgba(16, 12, 24, 0.99), rgba(7, 6, 11, 0.99));
 
     box-shadow:
-        0 22px 46px rgba(0, 0, 0, 0.46),
-        0 0 42px rgba(124, 91, 182, 0.045),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+        0 24px 52px rgba(0, 0, 0, 0.48),
+        0 0 40px rgba(140, 107, 232, 0.055),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.028);
 }
 
-.combat-control-section .section-header-row {
-    position: relative;
-    z-index: 100;
-
-    margin-bottom: 20px;
-    padding-bottom: 16px;
-
-    border-bottom-color: rgba(216, 179, 106, 0.16);
+.encounter-command-section {
+    overflow: visible;
+    margin-bottom: 22px;
 }
 
-.combat-control-section .section-header-row h2 {
-    font-size: 25px;
-    letter-spacing: -0.035em;
+.encounter-command-section .section-header-row,
+.dm-action-panel .section-header-row {
+    margin-bottom: 14px;
 }
 
-.combat-actions-panel {
-    margin-bottom: 24px;
+.encounter-control-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) max-content;
+    gap: 14px;
+    align-items: stretch;
 }
 
-.turn-control-card {
-    position: relative;
-    z-index: 10;
-
-    margin-bottom: 18px;
-}
-
-.turn-info {
+/* WICHTIG:
+   Die Turn-Info ist jetzt neutral.
+   Kein blauer Rahmen, kein blaues Flächenmodul.
+   Blau bleibt bei aktiver Karte und Turn-Buttons. */
+.turn-info,
+.encounter-command-section .turn-info,
+.turn-overview-section .turn-info {
     position: relative;
     z-index: 10;
 
     display: grid;
-    grid-template-columns: minmax(240px, auto) auto;
+    grid-template-columns: minmax(240px, max-content) max-content;
     align-items: center;
     justify-content: start;
     gap: 18px;
 
-    min-height: 92px;
-    padding: 18px 20px;
+    min-height: 78px;
+    margin-bottom: 0;
+    padding: 17px 20px;
 
-    border: 1px solid rgba(216, 179, 106, 0.22);
+    border: 1px solid rgba(193, 176, 255, 0.14);
     border-radius: 18px;
 
     background:
-        radial-gradient(circle at 14% 20%, rgba(216, 179, 106, 0.08), transparent 28%),
-        radial-gradient(circle at 82% 10%, rgba(124, 91, 182, 0.11), transparent 34%),
-        linear-gradient(135deg, rgba(26, 20, 25, 0.94), rgba(10, 8, 12, 0.96));
+        radial-gradient(circle at 14% 0%, rgba(140, 107, 232, 0.060), transparent 34%),
+        radial-gradient(circle at 92% 10%, rgba(127, 185, 255, 0.014), transparent 34%),
+        linear-gradient(135deg, rgba(12, 10, 18, 0.97), rgba(6, 5, 10, 0.99));
 
     box-shadow:
-        0 12px 26px rgba(0, 0, 0, 0.26),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.028);
+        0 12px 26px rgba(0, 0, 0, 0.24),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.022);
 }
 
-.turn-info::before {
+.turn-info::before,
+.encounter-command-section .turn-info::before,
+.turn-overview-section .turn-info::before {
     content: "";
 
     position: absolute;
@@ -837,8 +980,8 @@ select:focus {
         linear-gradient(
             90deg,
             transparent,
-            rgba(216, 179, 106, 0.46),
-            rgba(128, 183, 255, 0.22),
+            rgba(193, 176, 255, 0.18),
+            rgba(140, 107, 232, 0.14),
             transparent
         );
 
@@ -851,14 +994,13 @@ select:focus {
 
     width: auto;
     min-width: 0;
-    padding-right: 4px;
 }
 
 .turn-info h2 {
     margin: 0;
 
-    color: var(--color-gold-soft);
-    font-size: 31px;
+    color: var(--color-text);
+    font-size: 30px;
     line-height: 1;
     letter-spacing: -0.05em;
 }
@@ -875,13 +1017,12 @@ select:focus {
     color: var(--color-text-muted);
 }
 
-.active-creature-name {
-    color: #ffffff;
+.active-creature-name,
+.turn-overview-section .active-creature-name {
+    color: var(--color-text-soft);
     font-size: 17px;
     font-weight: 900;
-
-    text-shadow:
-        0 0 14px rgba(128, 183, 255, 0.28);
+    text-shadow: none;
 }
 
 .turn-action-buttons {
@@ -897,13 +1038,13 @@ select:focus {
     align-items: center;
     gap: 8px;
 
-    padding: 6px;
+    padding: 5px;
 
-    border: 1px solid rgba(124, 91, 182, 0.20);
+    border: 1px solid rgba(193, 176, 255, 0.15);
     border-radius: 999px;
 
     background:
-        linear-gradient(135deg, rgba(12, 9, 16, 0.72), rgba(24, 18, 31, 0.62));
+        linear-gradient(135deg, rgba(8, 7, 12, 0.78), rgba(23, 17, 34, 0.64));
 
     box-shadow:
         inset 0 0 0 1px rgba(255, 255, 255, 0.018);
@@ -911,49 +1052,100 @@ select:focus {
 
 .turn-actions-inline button {
     min-height: 34px;
-    padding: 7px 13px;
+    padding: 7px 14px;
 
     white-space: nowrap;
 
-    border-color: rgba(124, 91, 182, 0.38);
+    border-color: rgba(127, 185, 255, 0.30);
 
     background:
-        radial-gradient(circle at top left, rgba(124, 91, 182, 0.12), transparent 42%),
-        linear-gradient(135deg, rgba(42, 32, 56, 0.88), rgba(18, 14, 24, 0.94));
+        radial-gradient(circle at top left, rgba(127, 185, 255, 0.10), transparent 42%),
+        linear-gradient(135deg, rgba(25, 33, 52, 0.88), rgba(12, 10, 18, 0.96));
 
-    color: var(--color-purple-soft);
+    color: var(--color-active-soft);
 
     font-size: 14px;
     font-weight: 900;
 }
 
 .turn-actions-inline button:hover {
-    border-color: rgba(128, 183, 255, 0.50);
+    border-color: rgba(127, 185, 255, 0.58);
 
     background:
-        radial-gradient(circle at top left, rgba(128, 183, 255, 0.10), transparent 42%),
-        linear-gradient(135deg, rgba(35, 55, 82, 0.82), rgba(18, 14, 24, 0.96));
+        radial-gradient(circle at top left, rgba(127, 185, 255, 0.17), transparent 42%),
+        linear-gradient(135deg, rgba(34, 50, 78, 0.92), rgba(12, 10, 18, 0.98));
 
-    color: var(--color-blue-soft);
+    color: #ffffff;
+}
+
+.turn-command-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 9px;
+    flex-wrap: wrap;
+
+    min-width: min(420px, 100%);
+    padding: 14px;
+
+    border: 1px solid rgba(193, 176, 255, 0.12);
+    border-radius: 18px;
+
+    background:
+        radial-gradient(circle at top left, rgba(140, 107, 232, 0.050), transparent 34%),
+        linear-gradient(135deg, rgba(13, 10, 19, 0.86), rgba(6, 5, 10, 0.96));
+
+    box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.018);
+}
+
+.turn-command-actions button {
+    min-height: 36px;
+    padding: 7px 13px;
+
+    font-weight: 900;
+
+    box-shadow:
+        0 6px 12px rgba(0, 0, 0, 0.16),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.018);
+}
+
+/* ============================================================
+   8. DM-Aktionen / Management / Log
+   ============================================================ */
+
+.combat-actions-panel {
+    margin-bottom: 24px;
+}
+
+.dm-action-panel {
+    margin-bottom: 32px;
+
+    border-color: rgba(193, 176, 255, 0.13);
+
+    background:
+        radial-gradient(circle at 12% 0%, rgba(140, 107, 232, 0.075), transparent 30%),
+        radial-gradient(circle at 88% 8%, rgba(127, 185, 255, 0.035), transparent 34%),
+        linear-gradient(135deg, rgba(14, 11, 21, 0.98), rgba(6, 5, 10, 0.99));
 }
 
 .combat-action-row {
     display: grid;
     grid-template-columns:
-        minmax(270px, 0.9fr)
-        minmax(300px, 1fr)
-        minmax(300px, 1fr);
+        minmax(280px, 0.90fr)
+        minmax(320px, 1fr)
+        minmax(320px, 1fr);
     gap: 16px;
 
-    margin-bottom: 16px;
+    margin-bottom: 14px;
 }
 
-.combat-support-row {
+.combat-support-row,
+.combat-management-row {
     display: grid;
-    grid-template-columns:
-        minmax(360px, 0.75fr)
-        minmax(420px, 1.25fr);
+    grid-template-columns: minmax(320px, 0.75fr) minmax(460px, 1.25fr);
     gap: 16px;
+    align-items: stretch;
 }
 
 .control-group,
@@ -963,17 +1155,17 @@ select:focus {
 
     padding: 18px;
 
-    border: 1px solid rgba(216, 179, 106, 0.16);
+    border: 1px solid rgba(193, 176, 255, 0.13);
     border-radius: 17px;
 
     background:
-        radial-gradient(circle at 16% 0%, rgba(216, 179, 106, 0.045), transparent 30%),
-        radial-gradient(circle at 100% 0%, rgba(124, 91, 182, 0.06), transparent 34%),
-        linear-gradient(135deg, rgba(21, 16, 22, 0.94), rgba(9, 7, 11, 0.96));
+        radial-gradient(circle at 12% 0%, rgba(140, 107, 232, 0.055), transparent 30%),
+        radial-gradient(circle at 100% 0%, rgba(127, 185, 255, 0.030), transparent 34%),
+        linear-gradient(135deg, rgba(14, 11, 20, 0.96), rgba(7, 6, 10, 0.98));
 
     box-shadow:
-        0 12px 26px rgba(0, 0, 0, 0.22),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.026);
+        0 12px 26px rgba(0, 0, 0, 0.24),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.024);
 }
 
 .control-group::before,
@@ -991,8 +1183,8 @@ select:focus {
         linear-gradient(
             90deg,
             transparent,
-            rgba(216, 179, 106, 0.34),
-            rgba(124, 91, 182, 0.18),
+            rgba(193, 176, 255, 0.22),
+            rgba(140, 107, 232, 0.12),
             transparent
         );
 
@@ -1003,30 +1195,29 @@ select:focus {
 .combat-log-panel h3 {
     margin: 0 0 14px;
 
-    color: var(--color-gold-soft);
+    color: var(--color-text-soft);
     font-size: 17px;
     font-weight: 900;
     letter-spacing: -0.025em;
 }
 
-/* Zusatz-Symbole sicher entfernen */
-.combat-control-section .section-header-row h2::before,
-.selection-control-panel h3::before,
-.combat-action-row .control-group:nth-child(2) h3::before,
-.combat-action-row .control-group:nth-child(3) h3::before,
-.combat-support-row .control-group h3::before,
-.combat-log-panel h3::before {
-    content: none;
-    display: none;
+.target-control-group {
+    display: grid;
 }
 
-/* Ziele */
 .selection-control-panel {
     display: grid;
     gap: 10px;
+
+    padding: 0;
+
+    border: 0;
+    background: transparent;
+    box-shadow: none;
 }
 
-.selection-status {
+.selection-status,
+.deck-selection-status {
     margin: 0;
     padding: 0;
 
@@ -1034,17 +1225,25 @@ select:focus {
     background: transparent;
     box-shadow: none;
 
-    color: var(--color-gold);
-    font-size: 21px;
+    color: var(--color-active-soft);
     font-weight: 900;
     line-height: 1.15;
     letter-spacing: -0.035em;
 
     text-shadow:
-        0 0 12px rgba(216, 179, 106, 0.10);
+        0 0 12px rgba(127, 185, 255, 0.18);
+}
+
+.selection-status {
+    font-size: 21px;
+}
+
+.deck-selection-status {
+    font-size: 16px;
 }
 
 .selection-target-names {
+    min-height: 40px;
     margin: 0;
 
     color: var(--color-text-muted);
@@ -1054,33 +1253,28 @@ select:focus {
 
 .selection-actions,
 .mass-action-buttons,
-.cleanup-action-buttons {
+.cleanup-action-buttons,
+.management-button-row,
+.inline-details-panel {
     display: flex;
-    gap: 9px;
+    gap: 8px;
     flex-wrap: wrap;
 }
 
-.selection-actions button {
-    min-height: 38px;
-    padding: 8px 14px;
+.selection-actions button,
+.mass-action-buttons button,
+.cleanup-action-buttons button,
+.management-button-row button,
+.inline-details-panel button,
+.dm-action-panel button {
+    min-height: 36px;
+    padding: 7px 13px;
 
-    border-color: rgba(216, 179, 106, 0.34);
+    font-weight: 900;
 
-    background:
-        radial-gradient(circle at top left, rgba(216, 179, 106, 0.10), transparent 42%),
-        linear-gradient(135deg, rgba(58, 44, 28, 0.78), rgba(23, 18, 22, 0.92));
-
-    color: var(--color-gold-soft);
-}
-
-.selection-actions button:hover {
-    border-color: rgba(216, 179, 106, 0.56);
-
-    background:
-        radial-gradient(circle at top left, rgba(216, 179, 106, 0.16), transparent 42%),
-        linear-gradient(135deg, rgba(70, 54, 34, 0.86), rgba(30, 22, 24, 0.96));
-
-    color: #fff0c7;
+    box-shadow:
+        0 6px 12px rgba(0, 0, 0, 0.16),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.018);
 }
 
 .mass-action-field {
@@ -1093,49 +1287,105 @@ select:focus {
 .mass-action-field label {
     color: var(--color-text-muted);
     font-size: 13px;
-    font-weight: 800;
+    font-weight: 850;
 }
 
-.mass-action-buttons button,
-.cleanup-action-buttons button {
-    min-height: 38px;
-    padding: 8px 14px;
+/* HP-Aktionsrollen */
+.hp-action-control-group .mass-action-buttons button:nth-child(1) {
+    border-color: rgba(255, 123, 138, 0.34);
 }
 
-.mass-action-buttons button:nth-child(1) {
-    border-color: rgba(255, 143, 154, 0.34);
+.hp-action-control-group .mass-action-buttons button:nth-child(1):hover {
+    border-color: rgba(255, 123, 138, 0.58);
+    color: var(--color-danger-soft);
 }
 
-.mass-action-buttons button:nth-child(1):hover {
-    border-color: rgba(255, 143, 154, 0.56);
-    color: #ffd0d5;
+.hp-action-control-group .mass-action-buttons button:nth-child(2) {
+    border-color: rgba(193, 176, 255, 0.30);
 }
 
-.mass-action-buttons button:nth-child(2) {
-    border-color: rgba(216, 179, 106, 0.34);
+.hp-action-control-group .mass-action-buttons button:nth-child(2):hover {
+    border-color: rgba(127, 185, 255, 0.46);
+    color: var(--color-active-soft);
 }
 
-.mass-action-buttons button:nth-child(2):hover {
-    border-color: rgba(216, 179, 106, 0.58);
-    color: var(--color-gold-soft);
+.hp-action-control-group .mass-action-buttons button:nth-child(3) {
+    border-color: rgba(127, 185, 255, 0.34);
 }
 
-.mass-action-buttons button:nth-child(3) {
-    border-color: rgba(128, 183, 255, 0.34);
+.hp-action-control-group .mass-action-buttons button:nth-child(3):hover {
+    border-color: rgba(127, 185, 255, 0.58);
+    color: var(--color-active-soft);
 }
 
-.mass-action-buttons button:nth-child(3):hover {
-    border-color: rgba(128, 183, 255, 0.58);
-    color: var(--color-blue-soft);
+/* Management */
+
+.management-control-group {
+    display: grid;
+    align-content: start;
+    gap: 10px;
 }
 
-/* Combat Log */
-.combat-log-panel {
-    border-color: rgba(124, 91, 182, 0.18);
+.management-hint {
+    margin: 0;
+
+    color: var(--color-text-faint);
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.inline-details-menu {
+    display: grid;
+    gap: 10px;
+
+    margin-top: 4px;
+}
+
+.inline-details-menu > summary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+
+    width: fit-content;
+    min-height: 36px;
+    padding: 7px 12px;
+
+    border: 1px solid rgba(193, 176, 255, 0.22);
+    border-radius: 999px;
 
     background:
-        radial-gradient(circle at top right, rgba(124, 91, 182, 0.08), transparent 34%),
-        linear-gradient(135deg, rgba(15, 12, 19, 0.96), rgba(7, 6, 9, 0.98));
+        radial-gradient(circle at top left, rgba(140, 107, 232, 0.10), transparent 42%),
+        linear-gradient(135deg, rgba(31, 24, 46, 0.78), rgba(13, 10, 20, 0.92));
+
+    color: var(--color-arcane-soft);
+    cursor: pointer;
+    font-weight: 850;
+    list-style: none;
+}
+
+.inline-details-menu > summary::-webkit-details-marker {
+    display: none;
+}
+
+.inline-details-menu > summary::after {
+    content: "▾";
+    margin-left: 4px;
+    font-size: 12px;
+}
+
+.inline-details-menu[open] > summary::after {
+    content: "▴";
+}
+
+/* Encounter-Log */
+
+.combat-log-panel {
+    border-color: rgba(193, 176, 255, 0.13);
+
+    background:
+        radial-gradient(circle at top right, rgba(140, 107, 232, 0.07), transparent 34%),
+        linear-gradient(135deg, rgba(12, 9, 18, 0.97), rgba(5, 5, 8, 0.99));
 }
 
 .combat-log-header {
@@ -1148,32 +1398,32 @@ select:focus {
 }
 
 .storage-status {
-    max-width: 320px;
+    max-width: 340px;
     padding: 7px 11px;
 
-    border: 1px solid rgba(128, 183, 255, 0.24);
+    border: 1px solid rgba(127, 185, 255, 0.24);
     border-radius: 999px;
 
     background:
-        radial-gradient(circle at top left, rgba(128, 183, 255, 0.08), transparent 42%),
-        linear-gradient(135deg, rgba(25, 33, 47, 0.84), rgba(12, 10, 16, 0.90));
+        radial-gradient(circle at top left, rgba(127, 185, 255, 0.08), transparent 42%),
+        linear-gradient(135deg, rgba(20, 28, 43, 0.84), rgba(10, 8, 15, 0.94));
 
-    color: var(--color-blue-soft);
+    color: var(--color-active-soft);
 
     font-size: 12px;
-    font-weight: 700;
+    font-weight: 750;
 }
 
 .storage-status.storage-status-warning {
-    border-color: rgba(216, 179, 106, 0.34);
-    background: rgba(58, 51, 34, 0.72);
-    color: var(--color-gold);
+    border-color: rgba(200, 164, 95, 0.34);
+    background: rgba(52, 42, 26, 0.72);
+    color: var(--color-gold-soft);
 }
 
 .storage-status.storage-status-danger {
-    border-color: rgba(255, 143, 154, 0.34);
+    border-color: rgba(255, 123, 138, 0.34);
     background: rgba(107, 47, 47, 0.48);
-    color: #ffb7b7;
+    color: var(--color-danger-soft);
 }
 
 .combat-log-list {
@@ -1192,17 +1442,17 @@ select:focus {
 
     padding: 8px 10px;
 
-    border: 1px solid rgba(124, 91, 182, 0.20);
+    border: 1px solid rgba(193, 176, 255, 0.13);
     border-radius: 11px;
 
     background:
-        linear-gradient(135deg, rgba(28, 22, 36, 0.68), rgba(10, 8, 12, 0.78));
+        linear-gradient(135deg, rgba(22, 17, 32, 0.76), rgba(8, 7, 12, 0.84));
 }
 
 .combat-log-time {
-    color: var(--color-purple-soft);
+    color: var(--color-active-soft);
     font-size: 12px;
-    font-weight: 800;
+    font-weight: 850;
 }
 
 .combat-log-text {
@@ -1214,12 +1464,12 @@ select:focus {
 .combat-log-empty {
     margin: 0;
 
-    color: var(--color-text-soft);
+    color: var(--color-text-faint);
     font-size: 13px;
 }
 
 /* ============================================================
-   Kartenreihen und Scrollbuttons
+   9. Kartenreihen und Scrollbuttons
    ============================================================ */
 
 .card-row-shell {
@@ -1237,15 +1487,14 @@ select:focus {
     align-items: center;
     justify-content: center;
 
-    border: 1px solid rgba(216, 179, 106, 0.26);
+    border: 1px solid rgba(193, 176, 255, 0.16);
     border-radius: 18px;
 
     background:
-        radial-gradient(circle at center, rgba(216, 179, 106, 0.08), transparent 52%),
-        radial-gradient(circle at top, rgba(124, 91, 182, 0.10), transparent 44%),
-        linear-gradient(180deg, rgba(34, 25, 22, 0.88), rgba(13, 10, 12, 0.96));
+        radial-gradient(circle at center, rgba(140, 107, 232, 0.11), transparent 52%),
+        linear-gradient(180deg, rgba(20, 15, 30, 0.90), rgba(7, 6, 11, 0.98));
 
-    color: rgba(232, 215, 168, 0.78);
+    color: rgba(193, 176, 255, 0.82);
 
     cursor: pointer;
     font: inherit;
@@ -1253,27 +1502,24 @@ select:focus {
     line-height: 1;
 
     text-shadow:
-        0 0 12px rgba(216, 179, 106, 0.14),
-        0 0 20px rgba(124, 91, 182, 0.10);
+        0 0 18px rgba(140, 107, 232, 0.18);
 
     box-shadow:
-        0 12px 24px rgba(0, 0, 0, 0.26),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.026),
-        inset 0 0 24px rgba(216, 179, 106, 0.045);
+        0 12px 24px rgba(0, 0, 0, 0.28),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.024);
 }
 
 .card-row-button:hover,
 .public-initiative-button:hover {
     transform: translateY(-1px);
 
-    border-color: rgba(216, 179, 106, 0.44);
+    border-color: rgba(127, 185, 255, 0.44);
 
     background:
-        radial-gradient(circle at center, rgba(216, 179, 106, 0.13), transparent 54%),
-        radial-gradient(circle at top, rgba(124, 91, 182, 0.12), transparent 44%),
-        linear-gradient(180deg, rgba(45, 33, 27, 0.94), rgba(16, 12, 14, 0.98));
+        radial-gradient(circle at center, rgba(127, 185, 255, 0.12), transparent 54%),
+        linear-gradient(180deg, rgba(25, 31, 50, 0.94), rgba(8, 7, 12, 0.98));
 
-    color: var(--color-gold-soft);
+    color: var(--color-active-soft);
 }
 
 .card-row-button {
@@ -1312,24 +1558,25 @@ select:focus {
 .public-preview-ribbon::-webkit-scrollbar-track,
 .combat-log-list::-webkit-scrollbar-track {
     border-radius: 999px;
-    background: var(--color-panel);
+    background: rgba(255, 255, 255, 0.045);
 }
 
 .creature-list::-webkit-scrollbar-thumb,
 .public-preview-ribbon::-webkit-scrollbar-thumb,
 .combat-log-list::-webkit-scrollbar-thumb {
+    border: 2px solid rgba(0, 0, 0, 0.25);
     border-radius: 999px;
-    background: #555560;
+    background: rgba(193, 176, 255, 0.34);
 }
 
 .creature-list::-webkit-scrollbar-thumb:hover,
 .public-preview-ribbon::-webkit-scrollbar-thumb:hover,
 .combat-log-list::-webkit-scrollbar-thumb:hover {
-    background: #696976;
+    background: rgba(127, 185, 255, 0.46);
 }
 
 /* ============================================================
-   DM-Karten
+   10. DM-Karten
    ============================================================ */
 
 .creature-card {
@@ -1340,15 +1587,28 @@ select:focus {
     min-height: 570px;
     padding: 10px;
 
-    border: 2px solid rgba(216, 179, 106, 0.34);
-    border-radius: var(--radius-large);
+    border: 1px solid rgba(193, 176, 255, 0.20);
+    border-radius: var(--radius-xl);
 
     background:
-        linear-gradient(135deg, rgba(95, 70, 48, 0.92), rgba(43, 33, 26, 0.98) 48%, rgba(19, 15, 13, 0.98));
+        radial-gradient(circle at 18% 0%, rgba(140, 107, 232, 0.18), transparent 34%),
+        linear-gradient(135deg, rgba(22, 17, 34, 0.98), rgba(6, 5, 10, 0.99));
 
     box-shadow: var(--shadow-card);
 
     scroll-snap-align: start;
+}
+
+.creature-card::before {
+    content: "";
+
+    position: absolute;
+    inset: 5px;
+
+    border: 1px solid rgba(200, 164, 95, 0.14);
+    border-radius: 15px;
+
+    pointer-events: none;
 }
 
 .creature-card.deck-card-compact {
@@ -1364,11 +1624,9 @@ select:focus {
 }
 
 .creature-card.active {
-    border-color: var(--color-blue);
+    border-color: rgba(127, 185, 255, 0.72);
 
-    box-shadow:
-        0 0 0 3px rgba(128, 183, 255, 0.30),
-        0 18px 38px rgba(0, 0, 0, 0.46);
+    box-shadow: var(--shadow-active);
 
     transform: translateY(-8px);
 }
@@ -1379,20 +1637,18 @@ select:focus {
 
 .creature-card.selected-target-card,
 .creature-card.selected-deck-card {
-    border-color: var(--color-gold);
-
-    box-shadow:
-        0 0 0 3px rgba(216, 179, 106, 0.30),
-        0 18px 38px rgba(0, 0, 0, 0.46);
+    border-color: rgba(200, 164, 95, 0.44);
+    box-shadow: var(--shadow-selected);
 }
 
 .creature-card.active.selected-target-card {
-    border-color: var(--color-blue);
+    border-color: rgba(127, 185, 255, 0.76);
 
     box-shadow:
-        0 0 0 3px rgba(128, 183, 255, 0.30),
-        0 0 0 7px rgba(216, 179, 106, 0.14),
-        0 18px 38px rgba(0, 0, 0, 0.46);
+        0 0 0 2px rgba(127, 185, 255, 0.48),
+        0 0 0 5px rgba(200, 164, 95, 0.10),
+        0 0 30px rgba(127, 185, 255, 0.20),
+        0 18px 38px rgba(0, 0, 0, 0.52);
 }
 
 .creature-card-inner {
@@ -1403,32 +1659,33 @@ select:focus {
     min-height: 100%;
     padding: 10px;
 
-    border: 1px solid rgba(216, 179, 106, 0.26);
+    border: 1px solid rgba(193, 176, 255, 0.14);
     border-radius: 14px;
 
     background:
-        radial-gradient(circle at top left, rgba(216, 179, 106, 0.075), transparent 28%),
-        linear-gradient(180deg, rgba(42, 32, 25, 0.96), rgba(21, 17, 15, 0.98));
+        radial-gradient(circle at top left, rgba(140, 107, 232, 0.09), transparent 28%),
+        linear-gradient(180deg, rgba(16, 12, 24, 0.96), rgba(7, 6, 11, 0.99));
 
     box-shadow:
-        inset 0 0 0 1px rgba(124, 91, 182, 0.075);
+        inset 0 0 0 1px rgba(255, 255, 255, 0.020);
 }
 
 .creature-card.active .creature-card-inner {
-    border-color: rgba(128, 183, 255, 0.34);
+    border-color: rgba(127, 185, 255, 0.30);
 
     background:
-        radial-gradient(circle at top left, rgba(128, 183, 255, 0.13), transparent 28%),
-        linear-gradient(180deg, rgba(38, 48, 64, 0.96), rgba(20, 18, 22, 0.98));
+        radial-gradient(circle at top left, rgba(127, 185, 255, 0.12), transparent 28%),
+        linear-gradient(180deg, rgba(17, 19, 31, 0.98), rgba(7, 6, 11, 0.99));
 }
 
 .creature-card.selected-target-card .creature-card-inner,
 .creature-card.selected-deck-card .creature-card-inner {
-    border-color: rgba(216, 179, 106, 0.38);
+    border-color: rgba(200, 164, 95, 0.28);
 
     background:
-        radial-gradient(circle at top left, rgba(216, 179, 106, 0.09), transparent 26%),
-        linear-gradient(180deg, rgba(42, 32, 25, 0.96), rgba(21, 17, 15, 0.98));
+        radial-gradient(circle at top left, rgba(200, 164, 95, 0.055), transparent 28%),
+        radial-gradient(circle at top right, rgba(140, 107, 232, 0.08), transparent 30%),
+        linear-gradient(180deg, rgba(16, 12, 24, 0.96), rgba(7, 6, 11, 0.99));
 }
 
 .creature-card-title-row {
@@ -1440,11 +1697,12 @@ select:focus {
     min-height: 44px;
     padding: 8px;
 
-    border: 1px solid rgba(216, 179, 106, 0.22);
+    border: 1px solid rgba(193, 176, 255, 0.13);
     border-radius: var(--radius-small);
 
     background:
-        linear-gradient(135deg, rgba(34, 25, 21, 0.94), rgba(18, 14, 13, 0.94));
+        radial-gradient(circle at top left, rgba(140, 107, 232, 0.08), transparent 40%),
+        linear-gradient(135deg, rgba(20, 15, 31, 0.94), rgba(7, 6, 11, 0.96));
 }
 
 .creature-card-header {
@@ -1454,7 +1712,7 @@ select:focus {
 .creature-card-header h3 {
     margin: 0;
 
-    color: var(--color-gold-soft);
+    color: var(--color-text);
     font-size: 18px;
     line-height: 1.15;
 }
@@ -1466,9 +1724,11 @@ select:focus {
 
     color: var(--color-text-muted);
     font-size: 13px;
-    font-weight: 400;
+    font-weight: 500;
     line-height: 1.2;
 }
+
+/* Kartenmenü */
 
 .card-menu {
     position: relative;
@@ -1483,11 +1743,13 @@ select:focus {
     width: 32px;
     height: 32px;
 
-    border: 1px solid rgba(216, 179, 106, 0.24);
+    border: 1px solid rgba(193, 176, 255, 0.18);
     border-radius: 999px;
 
-    background: rgba(22, 17, 15, 0.86);
-    color: var(--color-gold-soft);
+    background:
+        linear-gradient(135deg, rgba(31, 24, 46, 0.86), rgba(8, 7, 12, 0.96));
+
+    color: var(--color-arcane-soft);
 
     cursor: pointer;
     font-size: 20px;
@@ -1497,9 +1759,8 @@ select:focus {
 }
 
 .card-menu-summary:hover {
-    border-color: rgba(124, 91, 182, 0.46);
-    background: rgba(37, 29, 44, 0.92);
-    color: #ffffff;
+    border-color: rgba(127, 185, 255, 0.42);
+    color: var(--color-active-soft);
 }
 
 .card-menu-summary::-webkit-details-marker {
@@ -1515,26 +1776,21 @@ select:focus {
     display: grid;
     gap: 8px;
 
-    min-width: 230px;
+    min-width: 235px;
     padding: 8px;
 
-    border: 1px solid rgba(216, 179, 106, 0.20);
+    border: 1px solid rgba(193, 176, 255, 0.15);
     border-radius: var(--radius-medium);
 
     background:
-        radial-gradient(circle at top left, rgba(124, 91, 182, 0.08), transparent 34%),
-        linear-gradient(135deg, rgba(32, 26, 39, 0.98), rgba(16, 13, 20, 0.98));
+        radial-gradient(circle at top left, rgba(140, 107, 232, 0.08), transparent 34%),
+        linear-gradient(135deg, rgba(22, 17, 32, 0.98), rgba(8, 7, 12, 0.99));
 
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
-}
-
-.card-menu-panel button {
-    width: 100%;
-    text-align: left;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.42);
 }
 
 /* ============================================================
-   Bilder
+   11. Bilder
    ============================================================ */
 
 .creature-image-box,
@@ -1543,30 +1799,27 @@ select:focus {
     align-items: center;
     justify-content: center;
 
-    border: 1px solid rgba(216, 179, 106, 0.28);
+    border: 1px solid rgba(193, 176, 255, 0.16);
 
     background:
-        radial-gradient(circle at center, rgba(124, 91, 182, 0.08), transparent 42%),
-        linear-gradient(135deg, rgba(13, 10, 12, 0.90), rgba(31, 23, 20, 0.94));
+        radial-gradient(circle at center, rgba(140, 107, 232, 0.09), transparent 42%),
+        linear-gradient(135deg, rgba(7, 6, 11, 0.92), rgba(16, 12, 24, 0.96));
 
     overflow: hidden;
 
     box-shadow:
-        inset 0 0 0 1px rgba(124, 91, 182, 0.08);
+        inset 0 0 0 1px rgba(255, 255, 255, 0.020);
 }
 
 .creature-image-box {
     width: 100%;
     height: auto;
-
     aspect-ratio: 4 / 3;
-
     border-radius: 10px;
 }
 
 .public-preview-image-box {
     width: 100%;
-
     border-radius: 9px;
 }
 
@@ -1595,8 +1848,8 @@ select:focus {
     width: 100%;
     height: 100%;
 
-    color: var(--color-text-soft);
-    font-weight: 700;
+    color: var(--color-text-faint);
+    font-weight: 750;
     text-align: center;
 }
 
@@ -1614,7 +1867,7 @@ select:focus {
 }
 
 /* ============================================================
-   Karteninhalt
+   12. Karteninhalt
    ============================================================ */
 
 .creature-type-line {
@@ -1625,15 +1878,15 @@ select:focus {
 
     padding: 7px 9px;
 
-    border: 1px solid rgba(216, 179, 106, 0.14);
+    border: 1px solid rgba(193, 176, 255, 0.12);
     border-radius: var(--radius-small);
 
     background:
-        linear-gradient(135deg, rgba(27, 21, 18, 0.86), rgba(16, 13, 12, 0.90));
+        linear-gradient(135deg, rgba(17, 13, 25, 0.88), rgba(8, 7, 12, 0.94));
 
     color: var(--color-text-muted);
     font-size: 14px;
-    font-weight: 700;
+    font-weight: 750;
 }
 
 .creature-type-line p {
@@ -1647,10 +1900,10 @@ select:focus {
 
     padding: 4px 8px;
 
-    border: 1px solid rgba(216, 179, 106, 0.44);
+    border: 1px solid rgba(200, 164, 95, 0.42);
     border-radius: 999px;
 
-    background: rgba(216, 179, 106, 0.13);
+    background: rgba(200, 164, 95, 0.12);
     color: var(--color-gold-soft);
 
     font-size: 11px;
@@ -1662,18 +1915,23 @@ select:focus {
 .creature-card-section {
     padding: 9px;
 
-    border: 1px solid rgba(216, 179, 106, 0.14);
+    border: 1px solid rgba(193, 176, 255, 0.10);
     border-radius: var(--radius-medium);
 
     background:
-        linear-gradient(135deg, rgba(27, 21, 18, 0.86), rgba(16, 13, 12, 0.90));
+        radial-gradient(circle at top left, rgba(140, 107, 232, 0.045), transparent 34%),
+        linear-gradient(135deg, rgba(14, 11, 20, 0.90), rgba(7, 6, 11, 0.96));
 }
 
-.creature-card-section h4 {
+.creature-card-section h4,
+.public-preview-section-box h4 {
     margin: 0 0 8px;
 
-    color: var(--color-gold-soft);
-    font-size: 14px;
+    color: var(--color-text-muted);
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
 }
 
 .creature-stat-grid {
@@ -1685,7 +1943,7 @@ select:focus {
 .creature-stat-grid p {
     margin: 0;
 
-    color: #d0d0d0;
+    color: var(--color-text-muted);
     font-size: 13px;
 }
 
@@ -1707,32 +1965,33 @@ select:focus {
     position: relative;
 
     width: 100%;
-
     border-radius: 999px;
-
-    background:
-        linear-gradient(180deg, rgba(7, 6, 9, 0.96), rgba(18, 13, 14, 0.96));
 
     overflow: hidden;
 
     box-shadow:
         inset 0 0 0 1px rgba(255, 255, 255, 0.035),
-        inset 0 0 10px rgba(0, 0, 0, 0.55),
-        0 0 0 1px rgba(216, 179, 106, 0.13);
+        inset 0 0 10px rgba(0, 0, 0, 0.55);
 }
 
 .hp-bar-outer {
-    height: 14px;
+    height: 12px;
     margin-top: 8px;
 
-    border: 1px solid rgba(216, 179, 106, 0.22);
+    border: 1px solid rgba(145, 67, 80, 0.34);
+
+    background:
+        linear-gradient(180deg, rgba(5, 5, 8, 0.98), rgba(15, 10, 15, 0.98));
 }
 
 .temp-hp-bar-outer {
-    height: 9px;
+    height: 7px;
     margin-top: 6px;
 
-    border: 1px solid rgba(128, 183, 255, 0.20);
+    border: 1px solid rgba(127, 185, 255, 0.24);
+
+    background:
+        linear-gradient(180deg, rgba(5, 5, 8, 0.98), rgba(10, 13, 20, 0.98));
 }
 
 .hp-bar-outer::after,
@@ -1747,8 +2006,8 @@ select:focus {
     background:
         linear-gradient(
             180deg,
-            rgba(255, 255, 255, 0.16),
-            rgba(255, 255, 255, 0.02) 45%,
+            rgba(255, 255, 255, 0.10),
+            rgba(255, 255, 255, 0.015) 45%,
             transparent 46%
         );
 
@@ -1757,50 +2016,48 @@ select:focus {
 
 .hp-bar-inner {
     height: 100%;
-
     border-radius: inherit;
 
     background:
         linear-gradient(
             90deg,
-            #8f6736 0%,
-            #d8b36a 42%,
-            #f0d991 72%,
-            #b88944 100%
+            #3f1620 0%,
+            #7d2636 42%,
+            #b84a5a 76%,
+            #5a1c29 100%
         );
 
     box-shadow:
-        0 0 12px rgba(216, 179, 106, 0.26),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+        0 0 8px rgba(184, 74, 90, 0.20),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.07);
 }
 
 .temp-hp-bar-inner {
     height: 100%;
-
     border-radius: inherit;
 
     background:
         linear-gradient(
             90deg,
-            #496cc4 0%,
-            #80b7ff 48%,
-            #b9a1e6 100%
+            #1f3d66 0%,
+            #5f9fe6 52%,
+            #9f93df 100%
         );
 
     box-shadow:
-        0 0 12px rgba(128, 183, 255, 0.28),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+        0 0 8px rgba(127, 185, 255, 0.22),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.08);
 }
 
 .public-temp-hp-text {
     margin-top: 4px !important;
 
-    color: var(--color-blue-soft) !important;
-    font-weight: 700;
+    color: var(--color-active-soft) !important;
+    font-weight: 750;
 }
 
 /* ============================================================
-   Conditions
+   13. Conditions
    ============================================================ */
 
 .condition-chip-list {
@@ -1818,12 +2075,12 @@ select:focus {
 
     padding: 5px 7px 5px 9px;
 
-    border: 1px solid rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.22);
     border-radius: 999px;
 
     color: #ffffff;
     font-size: 12px;
-    font-weight: 700;
+    font-weight: 750;
 }
 
 .condition-chip-name {
@@ -1861,43 +2118,45 @@ select:focus {
     font-size: 13px;
 }
 
-.condition-blinded { background: #4b5563; }
-.condition-charmed { background: #be185d; }
-.condition-deafened { background: #64748b; }
+.condition-blinded { background: #374151; }
+.condition-charmed { background: #9d174d; }
+.condition-deafened { background: #475569; }
 .condition-frightened { background: #7c2d12; }
-.condition-grappled { background: #92400e; }
-.condition-incapacitated { background: #991b1b; }
+.condition-grappled { background: #854d0e; }
+.condition-incapacitated { background: #7f1d1d; }
 .condition-invisible { background: #0f766e; }
-.condition-paralyzed { background: #6d28d9; }
+.condition-paralyzed { background: #5b21b6; }
 .condition-petrified { background: #57534e; }
-.condition-poisoned { background: #15803d; }
-.condition-prone { background: #0369a1; }
-.condition-restrained { background: #a16207; }
-.condition-stunned { background: #b45309; }
-.condition-unconscious { background: #1f2937; }
-.condition-concentrating { background: #2563eb; }
+.condition-poisoned { background: #166534; }
+.condition-prone { background: #075985; }
+.condition-restrained { background: #92400e; }
+.condition-stunned { background: #a16207; }
+.condition-unconscious { background: #111827; }
+.condition-concentrating { background: #1d4ed8; }
 
 /* ============================================================
-   Öffentliche Spieler-Vorschau
+   14. Öffentliche Spieler-Vorschau
    ============================================================ */
 
 .public-preview-list {
     min-width: 0;
     margin-top: 0;
-
     touch-action: pan-y;
 }
 
 .public-three-card-stage {
-    padding: 18px;
+    display: grid;
+    gap: 18px;
 
-    border: 1px solid rgba(216, 179, 106, 0.17);
-    border-radius: var(--radius-large);
+    padding: 20px 22px 22px;
+
+    border: 1px solid rgba(193, 176, 255, 0.13);
+    border-radius: var(--radius-xl);
 
     background:
-        radial-gradient(circle at top left, rgba(216, 179, 106, 0.045), transparent 30%),
-        radial-gradient(circle at top right, rgba(124, 91, 182, 0.08), transparent 34%),
-        linear-gradient(135deg, rgba(20, 16, 25, 0.90), rgba(10, 8, 12, 0.96));
+        radial-gradient(circle at top left, rgba(140, 107, 232, 0.070), transparent 30%),
+        radial-gradient(circle at top right, rgba(127, 185, 255, 0.045), transparent 34%),
+        linear-gradient(135deg, rgba(13, 10, 20, 0.92), rgba(6, 5, 10, 0.98));
 
     box-shadow:
         inset 0 0 0 1px rgba(255, 255, 255, 0.022);
@@ -1908,18 +2167,18 @@ select:focus {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 12px;
 
-    margin-bottom: 16px;
+    margin-bottom: 4px;
 }
 
 .public-turn-status-item {
     padding: 10px 12px;
 
-    border: 1px solid rgba(216, 179, 106, 0.14);
+    border: 1px solid rgba(193, 176, 255, 0.11);
     border-radius: var(--radius-medium);
 
     background:
-        radial-gradient(circle at top left, rgba(216, 179, 106, 0.04), transparent 36%),
-        linear-gradient(135deg, rgba(28, 22, 34, 0.88), rgba(14, 11, 18, 0.94));
+        radial-gradient(circle at top left, rgba(140, 107, 232, 0.045), transparent 36%),
+        linear-gradient(135deg, rgba(20, 15, 30, 0.88), rgba(8, 7, 12, 0.94));
 
     text-align: center;
 }
@@ -1929,28 +2188,28 @@ select:focus {
 
     margin-bottom: 4px;
 
-    color: #b9b0a0;
+    color: var(--color-text-faint);
     font-size: 12px;
-    font-weight: 800;
+    font-weight: 850;
     letter-spacing: 0.08em;
     text-transform: uppercase;
 }
 
 .public-turn-status-item strong {
-    color: var(--color-gold-soft);
+    color: var(--color-text-soft);
     font-size: 18px;
 }
 
 .public-turn-status-active {
-    border-color: rgba(128, 183, 255, 0.34);
+    border-color: rgba(127, 185, 255, 0.34);
 
     background:
-        radial-gradient(circle at top left, rgba(128, 183, 255, 0.10), transparent 36%),
-        linear-gradient(135deg, rgba(35, 55, 82, 0.88), rgba(14, 11, 18, 0.94));
+        radial-gradient(circle at top left, rgba(127, 185, 255, 0.12), transparent 36%),
+        linear-gradient(135deg, rgba(24, 33, 52, 0.88), rgba(8, 7, 12, 0.94));
 }
 
 .public-turn-status-active strong {
-    color: var(--color-blue-soft);
+    color: var(--color-active-soft);
 }
 
 .public-stage-card-row {
@@ -1959,6 +2218,9 @@ select:focus {
     gap: 16px;
     align-items: center;
     justify-content: center;
+
+    margin-top: 4px;
+    margin-bottom: 0;
 }
 
 .public-stage-slot {
@@ -1970,7 +2232,7 @@ select:focus {
 
     color: var(--color-text-muted);
     font-size: 12px;
-    font-weight: 800;
+    font-weight: 850;
     letter-spacing: 0.08em;
     text-align: center;
     text-transform: uppercase;
@@ -1982,16 +2244,17 @@ select:focus {
     margin: 0 auto;
     padding: 8px;
 
-    border: 2px solid rgba(216, 179, 106, 0.34);
-    border-radius: var(--radius-large);
+    border: 1px solid rgba(193, 176, 255, 0.20);
+    border-radius: var(--radius-xl);
 
     background:
-        linear-gradient(135deg, rgba(95, 70, 48, 0.92), rgba(43, 33, 26, 0.98) 48%, rgba(19, 15, 13, 0.98));
+        radial-gradient(circle at 18% 0%, rgba(140, 107, 232, 0.16), transparent 34%),
+        linear-gradient(135deg, rgba(22, 17, 34, 0.98), rgba(6, 5, 10, 0.99));
 
     opacity: 0.78;
     transform: translateY(14px) scale(0.92);
 
-    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.34);
 
     cursor: pointer;
     animation: publicCardEnter 180ms ease-out;
@@ -1999,25 +2262,27 @@ select:focus {
 
 .public-stage-slot.focused .public-stage-card {
     max-width: 300px;
-
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translateY(0) scale(1.02);
+}
+
+.public-stage-slot.side .public-stage-card {
+    opacity: 0.46;
+    filter: saturate(0.72) brightness(0.72);
 }
 
 .public-stage-slot.focused.auto-active-focus .public-stage-card {
-    border-color: var(--color-blue);
-
-    box-shadow:
-        0 0 0 3px rgba(128, 183, 255, 0.30),
-        0 18px 38px rgba(0, 0, 0, 0.46);
+    border-color: rgba(127, 185, 255, 0.72);
+    box-shadow: var(--shadow-active);
 }
 
 .public-stage-slot.focused.manual-selected-focus .public-stage-card {
-    border-color: var(--color-gold);
+    border-color: rgba(200, 164, 95, 0.48);
 
     box-shadow:
-        0 0 0 3px rgba(216, 179, 106, 0.30),
-        0 18px 38px rgba(0, 0, 0, 0.46);
+        0 0 0 1px rgba(200, 164, 95, 0.32),
+        0 0 18px rgba(200, 164, 95, 0.10),
+        0 18px 38px rgba(0, 0, 0, 0.48);
 }
 
 .public-stage-card-inner {
@@ -2027,28 +2292,26 @@ select:focus {
 
     padding: 9px;
 
-    border: 1px solid rgba(216, 179, 106, 0.26);
+    border: 1px solid rgba(193, 176, 255, 0.14);
     border-radius: 13px;
 
     background:
-        radial-gradient(circle at top left, rgba(216, 179, 106, 0.075), transparent 28%),
-        linear-gradient(180deg, rgba(42, 32, 25, 0.96), rgba(21, 17, 15, 0.98));
-
-    box-shadow:
-        inset 0 0 0 1px rgba(124, 91, 182, 0.075);
+        radial-gradient(circle at top left, rgba(140, 107, 232, 0.09), transparent 28%),
+        linear-gradient(180deg, rgba(16, 12, 24, 0.96), rgba(7, 6, 11, 0.99));
 }
 
 .public-stage-title {
     margin: 0;
     padding: 8px 9px;
 
-    border: 1px solid rgba(216, 179, 106, 0.22);
+    border: 1px solid rgba(193, 176, 255, 0.13);
     border-radius: var(--radius-small);
 
     background:
-        linear-gradient(135deg, rgba(34, 25, 21, 0.94), rgba(18, 14, 13, 0.94));
+        radial-gradient(circle at top left, rgba(140, 107, 232, 0.08), transparent 40%),
+        linear-gradient(135deg, rgba(20, 15, 31, 0.94), rgba(7, 6, 11, 0.96));
 
-    color: var(--color-gold-soft);
+    color: var(--color-text);
 
     font-size: 17px;
     line-height: 1.1;
@@ -2061,11 +2324,12 @@ select:focus {
 
 .public-preview-type,
 .public-preview-section-box {
-    border: 1px solid rgba(216, 179, 106, 0.14);
+    border: 1px solid rgba(193, 176, 255, 0.10);
     border-radius: var(--radius-small);
 
     background:
-        linear-gradient(135deg, rgba(27, 21, 18, 0.86), rgba(16, 13, 12, 0.90));
+        radial-gradient(circle at top left, rgba(140, 107, 232, 0.045), transparent 34%),
+        linear-gradient(135deg, rgba(14, 11, 20, 0.90), rgba(7, 6, 11, 0.96));
 
     color: var(--color-text-muted);
 }
@@ -2075,7 +2339,7 @@ select:focus {
     padding: 7px 9px;
 
     font-size: 12px;
-    font-weight: 700;
+    font-weight: 800;
     letter-spacing: 0.04em;
     text-transform: uppercase;
 }
@@ -2084,17 +2348,10 @@ select:focus {
     padding: 8px;
 }
 
-.public-preview-section-box h4 {
-    margin: 0 0 6px;
-
-    color: var(--color-gold-soft);
-    font-size: 12px;
-}
-
 .public-preview-section-box p {
     margin: 0;
 
-    color: #d0d0d0;
+    color: var(--color-text-muted);
     font-size: 12px;
 }
 
@@ -2104,22 +2361,21 @@ select:focus {
 
 .public-stage-card .condition-chip {
     padding: 4px 7px;
-
     font-size: 10px;
 }
 
 .public-focus-reset-button {
     display: block;
 
-    margin: 16px auto 0;
+    margin: 18px auto 0;
 
-    border-color: rgba(128, 183, 255, 0.36);
+    border-color: rgba(127, 185, 255, 0.34);
 
     background:
-        radial-gradient(circle at top left, rgba(128, 183, 255, 0.10), transparent 40%),
-        linear-gradient(135deg, rgba(35, 55, 82, 0.86), rgba(14, 11, 18, 0.94));
+        radial-gradient(circle at top left, rgba(127, 185, 255, 0.10), transparent 40%),
+        linear-gradient(135deg, rgba(25, 33, 52, 0.86), rgba(8, 7, 12, 0.96));
 
-    color: var(--color-blue-soft);
+    color: var(--color-active-soft);
 
     font-size: 13px;
 }
@@ -2127,9 +2383,9 @@ select:focus {
 .public-initiative-title {
     margin: 14px 0 6px;
 
-    color: var(--color-gold-soft);
+    color: var(--color-text-soft);
     font-size: 14px;
-    font-weight: 800;
+    font-weight: 850;
     letter-spacing: 0.08em;
     text-transform: uppercase;
 }
@@ -2169,12 +2425,12 @@ select:focus {
     flex: 0 0 190px;
     padding: 8px;
 
-    border: 1px solid rgba(216, 179, 106, 0.14);
+    border: 1px solid rgba(193, 176, 255, 0.12);
     border-radius: 14px;
 
     background:
-        radial-gradient(circle at top left, rgba(216, 179, 106, 0.04), transparent 36%),
-        linear-gradient(135deg, rgba(28, 22, 34, 0.88), rgba(14, 11, 18, 0.94));
+        radial-gradient(circle at top left, rgba(140, 107, 232, 0.045), transparent 36%),
+        linear-gradient(135deg, rgba(20, 15, 30, 0.88), rgba(8, 7, 12, 0.94));
 
     opacity: 0.72;
 
@@ -2184,25 +2440,28 @@ select:focus {
 
 .public-ribbon-card.active-turn-card {
     opacity: 1;
-    border-color: var(--color-blue);
+    border-color: rgba(127, 185, 255, 0.50);
 
     background:
-        radial-gradient(circle at top left, rgba(128, 183, 255, 0.10), transparent 36%),
-        linear-gradient(135deg, rgba(35, 55, 82, 0.88), rgba(14, 11, 18, 0.94));
+        radial-gradient(circle at top left, rgba(127, 185, 255, 0.12), transparent 36%),
+        linear-gradient(135deg, rgba(24, 33, 52, 0.90), rgba(8, 7, 12, 0.94));
 
     box-shadow:
-        0 0 0 2px rgba(128, 183, 255, 0.22),
-        0 10px 22px rgba(0, 0, 0, 0.32);
+        0 0 0 2px rgba(127, 185, 255, 0.18),
+        0 10px 22px rgba(0, 0, 0, 0.34);
 }
 
 .public-ribbon-card.selected-card {
     opacity: 1;
-    border-color: var(--color-gold);
-    background: rgba(52, 40, 34, 0.86);
+    border-color: rgba(200, 164, 95, 0.42);
+
+    background:
+        radial-gradient(circle at top left, rgba(200, 164, 95, 0.09), transparent 36%),
+        linear-gradient(135deg, rgba(26, 21, 30, 0.90), rgba(8, 7, 12, 0.94));
 
     box-shadow:
-        0 0 0 2px rgba(216, 179, 106, 0.30),
-        0 10px 22px rgba(0, 0, 0, 0.32);
+        0 0 0 1px rgba(200, 164, 95, 0.22),
+        0 10px 22px rgba(0, 0, 0, 0.30);
 }
 
 .public-ribbon-marker {
@@ -2218,11 +2477,11 @@ select:focus {
 }
 
 .public-ribbon-card.active-turn-card .public-ribbon-marker {
-    background: var(--color-blue);
+    background: var(--color-active);
 }
 
 .public-ribbon-card.selected-card .public-ribbon-marker {
-    background: var(--color-gold);
+    background: rgba(200, 164, 95, 0.78);
 }
 
 .public-ribbon-text {
@@ -2247,12 +2506,12 @@ select:focus {
 }
 
 .public-ribbon-text span {
-    color: #b9b0a0;
+    color: var(--color-text-faint);
     font-size: 12px;
 }
 
 /* ============================================================
-   Deck-Auswahl
+   15. Deck-Auswahl
    ============================================================ */
 
 .deck-selection-panel {
@@ -2262,24 +2521,15 @@ select:focus {
     margin: 0 0 14px;
     padding: 12px 14px;
 
-    border: 1px solid rgba(216, 179, 106, 0.20);
+    border: 1px solid rgba(193, 176, 255, 0.13);
     border-radius: 14px;
 
     background:
-        radial-gradient(circle at top left, rgba(216, 179, 106, 0.07), transparent 30%),
-        linear-gradient(135deg, rgba(31, 24, 27, 0.84), rgba(13, 10, 16, 0.90));
+        radial-gradient(circle at top left, rgba(140, 107, 232, 0.055), transparent 30%),
+        linear-gradient(135deg, rgba(18, 14, 27, 0.82), rgba(8, 7, 12, 0.94));
 
     box-shadow:
-        inset 0 0 0 1px rgba(255, 255, 255, 0.022);
-}
-
-.deck-selection-status {
-    color: var(--color-gold);
-    font-size: 16px;
-    font-weight: 900;
-
-    text-shadow:
-        0 0 12px rgba(216, 179, 106, 0.10);
+        inset 0 0 0 1px rgba(255, 255, 255, 0.020);
 }
 
 .deck-selection-names {
@@ -2289,7 +2539,7 @@ select:focus {
 }
 
 /* ============================================================
-   Karteneditor und Formulare
+   16. Formulare und Karteneditor
    ============================================================ */
 
 .edit-creature-section-hidden {
@@ -2306,8 +2556,8 @@ select:focus {
     min-height: 20px;
     margin: 0 0 16px;
 
-    color: var(--color-danger);
-    font-weight: 700;
+    color: var(--color-danger-soft);
+    font-weight: 800;
 }
 
 .add-creature-form {
@@ -2320,12 +2570,12 @@ select:focus {
     margin: 0;
     padding: 16px;
 
-    border: 1px solid rgba(216, 179, 106, 0.15);
+    border: 1px solid rgba(193, 176, 255, 0.12);
     border-radius: 14px;
 
     background:
-        radial-gradient(circle at top left, rgba(216, 179, 106, 0.045), transparent 30%),
-        linear-gradient(135deg, rgba(24, 19, 29, 0.78), rgba(13, 10, 16, 0.88));
+        radial-gradient(circle at top left, rgba(140, 107, 232, 0.055), transparent 30%),
+        linear-gradient(135deg, rgba(18, 14, 27, 0.78), rgba(8, 7, 12, 0.92));
 
     box-shadow:
         inset 0 0 0 1px rgba(255, 255, 255, 0.018);
@@ -2334,7 +2584,7 @@ select:focus {
 .form-group legend {
     padding: 0 8px;
 
-    color: var(--color-gold-soft);
+    color: var(--color-text-soft);
     font-weight: 900;
 }
 
@@ -2382,7 +2632,7 @@ select:focus {
 .checkbox-field {
     color: var(--color-text-muted);
     font-size: 14px;
-    font-weight: 700;
+    font-weight: 750;
 }
 
 .form-field input[type="file"] {
@@ -2392,7 +2642,7 @@ select:focus {
 .form-hint {
     margin: 0;
 
-    color: var(--color-text-soft);
+    color: var(--color-text-faint);
     font-size: 13px;
 }
 
@@ -2408,12 +2658,11 @@ select:focus {
     width: 18px;
     height: 18px;
 
-    accent-color: var(--color-purple);
+    accent-color: var(--color-arcane);
 }
 
 .add-creature-form .add-creature-button {
     justify-self: start;
-
     padding: 10px 16px;
 }
 
@@ -2432,7 +2681,7 @@ select:focus {
 
     padding: 7px 10px;
 
-    border: 1px solid rgba(124, 91, 182, 0.22);
+    border: 1px solid rgba(193, 176, 255, 0.16);
     border-radius: 999px;
 
     color: #ffffff;
@@ -2452,19 +2701,19 @@ select:focus {
     width: 16px;
     height: 16px;
 
-    accent-color: var(--color-purple);
+    accent-color: var(--color-arcane);
 }
 
 .condition-checkbox-field:has(input:checked) {
     opacity: 1;
 
     box-shadow:
-        0 0 0 2px rgba(124, 91, 182, 0.22),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+        0 0 0 2px rgba(127, 185, 255, 0.16),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.10);
 }
 
 /* ============================================================
-   Player View
+   17. Player View
    ============================================================ */
 
 body.player-view .dm-only {
@@ -2480,24 +2729,23 @@ body.player-view .public-preview-section {
 }
 
 /* ============================================================
-   Footer
+   18. Footer
    ============================================================ */
 
 .app-footer {
     margin-top: 40px;
     padding-top: 24px;
 
-    border-top: 1px solid rgba(216, 179, 106, 0.14);
+    border-top: 1px solid rgba(193, 176, 255, 0.10);
 }
 
 .project-notice {
-    border: 1px solid rgba(216, 179, 106, 0.16);
+    border: 1px solid rgba(193, 176, 255, 0.12);
     border-radius: 14px;
 
     background:
-        radial-gradient(circle at top left, rgba(216, 179, 106, 0.045), transparent 30%),
-        radial-gradient(circle at top right, rgba(124, 91, 182, 0.06), transparent 34%),
-        linear-gradient(135deg, rgba(30, 24, 36, 0.92), rgba(16, 13, 20, 0.92));
+        radial-gradient(circle at top left, rgba(140, 107, 232, 0.045), transparent 30%),
+        linear-gradient(135deg, rgba(18, 14, 27, 0.82), rgba(8, 7, 12, 0.94));
 
     color: var(--color-text-muted);
 
@@ -2509,15 +2757,15 @@ body.player-view .public-preview-section {
 .project-notice summary {
     padding: 14px 16px;
 
-    color: var(--color-gold-soft);
+    color: var(--color-text-soft);
     cursor: pointer;
 
-    font-weight: 800;
-    letter-spacing: 0.02em;
+    font-weight: 850;
+    letter-spacing: 0.01em;
 }
 
 .project-notice summary:hover {
-    color: #ffe2a0;
+    color: var(--color-active-soft);
 }
 
 .project-notice-content {
@@ -2536,7 +2784,7 @@ body.player-view .public-preview-section {
 }
 
 /* ============================================================
-   Animation
+   19. Animationen
    ============================================================ */
 
 @keyframes publicCardEnter {
@@ -2551,17 +2799,26 @@ body.player-view .public-preview-section {
 }
 
 /* ============================================================
-   Responsive
+   20. Responsive
    ============================================================ */
+
+@media (max-width: 1100px) {
+    .encounter-control-layout,
+    .combat-action-row,
+    .combat-support-row,
+    .combat-management-row {
+        grid-template-columns: 1fr;
+    }
+
+    .turn-command-actions {
+        justify-content: flex-start;
+        min-width: 0;
+    }
+}
 
 @media (max-width: 900px) {
     .app-header-card {
         min-height: 270px;
-    }
-
-    .combat-action-row,
-    .combat-support-row {
-        grid-template-columns: 1fr;
     }
 
     .form-grid-three,
@@ -2624,10 +2881,6 @@ body.player-view .public-preview-section {
         gap: 14px;
     }
 
-    .turn-info-main {
-        width: auto;
-    }
-
     .turn-actions-inline {
         width: 100%;
         justify-content: stretch;
@@ -2652,14 +2905,14 @@ body.player-view .public-preview-section {
         background:
             linear-gradient(
                 90deg,
-                rgba(16, 13, 20, 0.98) 0%,
-                rgba(16, 13, 20, 0.90) 58%,
-                rgba(16, 13, 20, 0.56) 100%
+                rgba(7, 6, 11, 0.98) 0%,
+                rgba(7, 6, 11, 0.90) 58%,
+                rgba(7, 6, 11, 0.56) 100%
             ),
             linear-gradient(
                 180deg,
-                rgba(16, 13, 20, 0.16),
-                rgba(16, 13, 20, 0.68)
+                rgba(7, 6, 11, 0.16),
+                rgba(7, 6, 11, 0.68)
             );
     }
 
@@ -2681,14 +2934,12 @@ body.player-view .public-preview-section {
 
     .app-view-actions {
         gap: 8px;
-
         margin-top: 14px;
     }
 
     .app-view-actions button,
     .app-help-button {
         padding: 7px 10px;
-
         font-size: 12px;
     }
 
@@ -2784,12 +3035,18 @@ body.player-view .public-preview-section {
         box-shadow: none;
     }
 
+    .turn-command-actions,
+    .management-button-row,
+    .inline-details-panel,
     .turn-action-buttons,
     .selection-actions,
     .mass-action-buttons {
         width: 100%;
     }
 
+    .turn-command-actions button,
+    .management-button-row button,
+    .inline-details-panel button,
     .turn-action-buttons button,
     .selection-actions button,
     .mass-action-buttons button {
@@ -2819,7 +3076,6 @@ body.player-view .public-preview-section {
 
     .add-creature-form .add-creature-button {
         width: 100%;
-
         justify-self: stretch;
     }
 
@@ -2950,7 +3206,6 @@ body.player-view .public-preview-section {
 
     .project-notice summary {
         padding: 12px 14px;
-
         font-size: 14px;
     }
 
@@ -2980,7 +3235,6 @@ body.player-view .public-preview-section {
     .public-initiative-button {
         min-width: 32px;
         min-height: 42px;
-
         font-size: 26px;
     }
 
@@ -3000,567 +3254,139 @@ body.player-view .public-preview-section {
     }
 }
 
+
 /* ============================================================
-   FIX: Encounter-Steuerung: 
-   Einheitliche Kacheln, ruhige Buttons, keine Zusatzsymbole
+   21. Finale Komponenten-Korrekturen
    ============================================================ */
 
-/* ------------------------------------------------------------
-   Encounter-Gesamtbereich
-   ------------------------------------------------------------ */
-
-.combat-control-section {
-    overflow: visible;
-
-    border-color: rgba(216, 179, 106, 0.18);
-
-    background:
-        radial-gradient(circle at 10% 0%, rgba(216, 179, 106, 0.055), transparent 30%),
-        radial-gradient(circle at 82% 8%, rgba(124, 91, 182, 0.115), transparent 38%),
-        linear-gradient(135deg, rgba(24, 19, 29, 0.99), rgba(9, 7, 12, 0.99));
-
-    box-shadow:
-        0 22px 46px rgba(0, 0, 0, 0.46),
-        0 0 42px rgba(124, 91, 182, 0.045),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.028);
-}
-
-.combat-control-section .section-header-row {
+/* Große Abschnitt-Menüs wie Hand-Aktionen / Deck-Aktionen:
+   Text optisch zentrieren, Pfeil rechts halten. */
+.section-menu-summary {
     position: relative;
-    z-index: 100;
-
-    margin-bottom: 18px;
-    padding-bottom: 16px;
-
-    border-bottom-color: rgba(216, 179, 106, 0.16);
+    justify-content: center;
+    text-align: center;
+    padding-left: 18px;
+    padding-right: 34px;
 }
 
-.combat-control-section .section-header-row h2 {
-    color: var(--color-gold-soft);
-    font-size: 25px;
-    letter-spacing: -0.035em;
-}
-
-/* Keine automatisch eingefügten Symbole. */
-.combat-control-section .section-header-row h2::before,
-.selection-control-panel h3::before,
-.combat-action-row .control-group:nth-child(2) h3::before,
-.combat-action-row .control-group:nth-child(3) h3::before,
-.combat-support-row .control-group h3::before,
-.combat-log-panel h3::before {
-    content: none !important;
-    display: none !important;
-}
-
-
-/* ------------------------------------------------------------
-   Runden-Anzeige neu
-   ------------------------------------------------------------ */
-
-.turn-control-card {
-    margin-bottom: 18px;
-}
-
-.turn-info {
-    position: relative;
-    z-index: 10;
-
-    display: grid;
-    grid-template-columns: minmax(220px, max-content) max-content;
-    align-items: center;
-    justify-content: start;
-    gap: 18px;
-
-    min-height: 86px;
-    padding: 17px 20px;
-
-    border: 1px solid rgba(216, 179, 106, 0.20);
-    border-radius: 18px;
-
-    background:
-        radial-gradient(circle at 10% 20%, rgba(216, 179, 106, 0.075), transparent 30%),
-        radial-gradient(circle at 78% 10%, rgba(124, 91, 182, 0.10), transparent 36%),
-        linear-gradient(135deg, rgba(20, 15, 20, 0.95), rgba(8, 6, 10, 0.97));
-
-    box-shadow:
-        0 12px 26px rgba(0, 0, 0, 0.24),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.024);
-}
-
-.turn-info::before {
-    content: "";
-
+.section-menu-summary::after {
     position: absolute;
-    top: 0;
-    left: 18px;
-    right: 18px;
-
-    height: 1px;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            rgba(216, 179, 106, 0.38),
-            rgba(124, 91, 182, 0.18),
-            transparent
-        );
-
-    pointer-events: none;
+    right: 16px;
+    margin-left: 0;
 }
 
-.turn-info-main {
-    display: grid;
-    gap: 4px;
-
-    width: auto;
-    min-width: 0;
-    padding-right: 4px;
-}
-
-.turn-info h2 {
-    margin: 0;
-
-    color: var(--color-gold-soft);
-    font-size: 30px;
-    line-height: 1;
-    letter-spacing: -0.05em;
-}
-
-.turn-info p {
-    margin: 0;
-
-    color: var(--color-text-muted);
-    font-size: 15px;
-    font-weight: 800;
-}
-
-.active-creature-name {
-    color: #ffffff;
-    font-size: 17px;
-    font-weight: 900;
-
-    text-shadow:
-        0 0 14px rgba(128, 183, 255, 0.26);
-}
-
-/* Button-Gruppe neben der Rundenanzeige */
-.turn-actions-inline {
+/* Kurzanleitung im Header:
+   eigener Button mit Pseudo-Text, darf nicht wie ein großes Abschnitt-Menü aussehen. */
+.app-help-button {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
 
-    padding: 5px;
-
-    border: 1px solid rgba(124, 91, 182, 0.22);
-    border-radius: 999px;
-
-    background:
-        linear-gradient(135deg, rgba(10, 7, 13, 0.78), rgba(23, 17, 30, 0.64));
-
-    box-shadow:
-        inset 0 0 0 1px rgba(255, 255, 255, 0.018);
-}
-
-.turn-actions-inline button {
-    min-height: 34px;
-    padding: 7px 14px;
-
-    border-color: rgba(124, 91, 182, 0.38);
-
-    background:
-        radial-gradient(circle at top left, rgba(124, 91, 182, 0.12), transparent 42%),
-        linear-gradient(135deg, rgba(42, 32, 56, 0.88), rgba(18, 14, 24, 0.94));
-
-    color: var(--color-purple-soft);
-
-    font-size: 14px;
-    font-weight: 900;
-    white-space: nowrap;
-
-    box-shadow:
-        0 6px 14px rgba(0, 0, 0, 0.16),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.024);
-}
-
-.turn-actions-inline button:hover {
-    border-color: rgba(128, 183, 255, 0.50);
-
-    background:
-        radial-gradient(circle at top left, rgba(128, 183, 255, 0.10), transparent 42%),
-        linear-gradient(135deg, rgba(35, 55, 82, 0.82), rgba(18, 14, 24, 0.96));
-
-    color: var(--color-blue-soft);
-}
-
-
-/* ------------------------------------------------------------
-   Alle Encounter-Kacheln vereinheitlichen
-   ------------------------------------------------------------ */
-
-.combat-action-row {
-    display: grid;
-    grid-template-columns:
-        minmax(280px, 0.9fr)
-        minmax(320px, 1fr)
-        minmax(320px, 1fr);
-    gap: 16px;
-
-    margin-bottom: 16px;
-}
-
-.combat-support-row {
-    display: grid;
-    grid-template-columns:
-        minmax(380px, 0.75fr)
-        minmax(460px, 1.25fr);
-    gap: 16px;
-}
-
-.control-group,
-.combat-log-panel {
-    position: relative;
-    overflow: hidden;
-
-    padding: 18px;
-
-    border: 1px solid rgba(216, 179, 106, 0.15);
-    border-radius: 17px;
-
-    background:
-        radial-gradient(circle at 12% 0%, rgba(216, 179, 106, 0.042), transparent 30%),
-        radial-gradient(circle at 100% 0%, rgba(124, 91, 182, 0.06), transparent 34%),
-        linear-gradient(135deg, rgba(18, 13, 19, 0.96), rgba(8, 6, 10, 0.98));
-
-    box-shadow:
-        0 12px 26px rgba(0, 0, 0, 0.22),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.024);
-}
-
-.control-group::before,
-.combat-log-panel::before {
-    content: "";
-
-    position: absolute;
-    top: 0;
-    left: 16px;
-    right: 16px;
-
-    height: 1px;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            rgba(216, 179, 106, 0.28),
-            rgba(124, 91, 182, 0.16),
-            transparent
-        );
-
-    pointer-events: none;
-}
-
-.control-group h3,
-.combat-log-panel h3 {
-    margin: 0 0 14px;
-
-    color: var(--color-gold-soft);
-    font-size: 17px;
-    font-weight: 900;
-    letter-spacing: -0.025em;
-}
-
-
-/* ------------------------------------------------------------
-   Ziele-Kachel: kein Sonderhintergrund mehr
-   ------------------------------------------------------------ */
-
-/*
-   Wichtig:
-   Falls .selection-control-panel auf derselben Box wie .control-group liegt,
-   darf sie keine eigene Extra-Box erzeugen.
-*/
-.selection-control-panel {
-    display: grid;
-    gap: 10px;
-
-    padding: 18px !important;
-
-    border: 1px solid rgba(216, 179, 106, 0.15) !important;
-    border-radius: 17px !important;
-
-    background:
-        radial-gradient(circle at 12% 0%, rgba(216, 179, 106, 0.042), transparent 30%),
-        radial-gradient(circle at 100% 0%, rgba(124, 91, 182, 0.06), transparent 34%),
-        linear-gradient(135deg, rgba(18, 13, 19, 0.96), rgba(8, 6, 10, 0.98)) !important;
-
-    box-shadow:
-        0 12px 26px rgba(0, 0, 0, 0.22),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.024) !important;
-}
-
-.selection-status {
-    margin: 0 !important;
-    padding: 0 !important;
-
-    border: 0 !important;
-    background: transparent !important;
-    box-shadow: none !important;
-
-    color: var(--color-gold);
-    font-size: 21px;
-    font-weight: 900;
-    line-height: 1.15;
-    letter-spacing: -0.035em;
-
-    text-shadow:
-        0 0 12px rgba(216, 179, 106, 0.10);
-}
-
-.selection-target-names {
-    margin: 0;
-
-    color: var(--color-text-muted);
-    font-size: 14px;
-    line-height: 1.45;
-}
-
-
-/* ------------------------------------------------------------
-   Einheitliches Button-System
-   ------------------------------------------------------------ */
-
-.selection-actions,
-.mass-action-buttons,
-.cleanup-action-buttons {
-    display: flex;
-    gap: 9px;
-    flex-wrap: wrap;
-}
-
-/*
-   Ziel-Buttons NICHT mehr gelb.
-   Sie sind normale violette Interface-Buttons.
-   Gold bleibt nur für den Text "3 Ziele ausgewählt".
-*/
-.selection-actions button,
-.mass-action-buttons button,
-.cleanup-action-buttons button,
-.combat-action-row .control-group button {
+    min-width: 0;
+    width: auto;
     min-height: 38px;
     padding: 8px 14px;
 
-    border-color: rgba(124, 91, 182, 0.38);
+    border-radius: 999px;
 
-    background:
-        radial-gradient(circle at top left, rgba(124, 91, 182, 0.12), transparent 42%),
-        linear-gradient(135deg, rgba(42, 32, 56, 0.88), rgba(18, 14, 24, 0.94));
-
-    color: var(--color-purple-soft);
-
-    font-weight: 900;
-
-    box-shadow:
-        0 8px 16px rgba(0, 0, 0, 0.18),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.024);
+    font-size: 0;
+    line-height: 1;
+    text-align: center;
 }
 
-.selection-actions button:hover,
-.mass-action-buttons button:hover,
-.cleanup-action-buttons button:hover,
-.combat-action-row .control-group button:hover {
-    transform: translateY(-1px);
-
-    border-color: rgba(216, 179, 106, 0.42);
-
-    background:
-        radial-gradient(circle at top left, rgba(216, 179, 106, 0.09), transparent 42%),
-        linear-gradient(135deg, rgba(52, 40, 64, 0.96), rgba(28, 22, 36, 0.98));
-
-    color: var(--color-gold-soft);
+.app-help-button::before {
+    display: inline-block;
+    font-size: 13px;
+    line-height: 1;
 }
 
-/* Dezente Rollenfarben nur als Rand, nicht als kompletter Stilbruch. */
-.mass-action-buttons button:nth-child(1) {
-    border-color: rgba(255, 143, 154, 0.36);
+.app-help-button::after {
+    display: inline-block;
+    position: static;
+    right: auto;
+    margin-left: 0;
+    font-size: 12px;
+    line-height: 1;
 }
 
-.mass-action-buttons button:nth-child(1):hover {
-    border-color: rgba(255, 143, 154, 0.58);
-    color: #ffd0d5;
+.app-header .section-menu-summary,
+.app-header .app-help-button {
+    padding-left: 14px;
+    padding-right: 14px;
 }
 
-.mass-action-buttons button:nth-child(2) {
-    border-color: rgba(216, 179, 106, 0.34);
-}
+/* HP- und Condition-Eingaben im DM-Panel:
+   kompakt, gleich hoch, ohne riesiges Number-Input. */
+.hp-action-control-group .mass-action-field input,
+.condition-action-control-group .mass-action-field select {
+    height: 44px;
+    min-height: 44px;
+    padding: 8px 12px;
 
-.mass-action-buttons button:nth-child(2):hover {
-    border-color: rgba(216, 179, 106, 0.58);
-    color: var(--color-gold-soft);
-}
-
-.mass-action-buttons button:nth-child(3) {
-    border-color: rgba(128, 183, 255, 0.34);
-}
-
-.mass-action-buttons button:nth-child(3):hover {
-    border-color: rgba(128, 183, 255, 0.58);
-    color: var(--color-blue-soft);
-}
-
-/* Gefährliche Aktion bleibt klar rot. */
-.end-combat-button {
-    border-color: rgba(255, 143, 154, 0.42) !important;
-
-    background:
-        linear-gradient(135deg, rgba(92, 35, 49, 0.94), rgba(48, 22, 31, 0.98)) !important;
-
-    color: #ffc7cd !important;
-}
-
-.end-combat-button:hover {
-    border-color: var(--color-danger) !important;
-
-    background:
-        linear-gradient(135deg, rgba(116, 45, 62, 0.98), rgba(62, 27, 39, 0.98)) !important;
-
-    color: #ffe2e5 !important;
-}
-
-
-/* ------------------------------------------------------------
-   Eingabefelder: HP-Feld und Condition-Dropdown gleich hoch
-   ------------------------------------------------------------ */
-
-.mass-action-field input,
-.mass-action-field select,
-.control-group select {
-    height: 44px !important;
-    min-height: 44px !important;
-    padding: 9px 12px;
-
-    border-color: rgba(124, 91, 182, 0.30);
     border-radius: 12px;
 
-    background:
-        radial-gradient(circle at top left, rgba(124, 91, 182, 0.06), transparent 42%),
-        linear-gradient(135deg, rgba(8, 6, 11, 0.96), rgba(16, 12, 20, 0.96));
-
-    color: var(--color-text);
-
-    font: inherit;
+    font-size: 18px;
+    font-weight: 750;
     line-height: 1.2;
-
-    box-shadow:
-        inset 0 0 0 1px rgba(255, 255, 255, 0.020);
 }
 
-.mass-action-field input:focus,
-.mass-action-field select:focus,
-.control-group select:focus {
-    border-color: rgba(124, 91, 182, 0.62);
-
-    box-shadow:
-        0 0 0 3px rgba(124, 91, 182, 0.16),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.026);
+.hp-action-control-group input[type="number"] {
+    appearance: textfield;
+    -moz-appearance: textfield;
 }
 
-
-/* ------------------------------------------------------------
-   Encounter-Log etwas sauberer
-   ------------------------------------------------------------ */
-
-.combat-log-panel {
-    border-color: rgba(124, 91, 182, 0.18);
-
-    background:
-        radial-gradient(circle at top right, rgba(124, 91, 182, 0.08), transparent 34%),
-        linear-gradient(135deg, rgba(14, 10, 18, 0.97), rgba(6, 5, 8, 0.98));
+.hp-action-control-group input[type="number"]::-webkit-outer-spin-button,
+.hp-action-control-group input[type="number"]::-webkit-inner-spin-button {
+    margin: 0;
+    -webkit-appearance: none;
 }
 
-.combat-log-header {
+.hp-action-control-group .mass-action-field {
+    margin-bottom: 16px;
+}
+
+.hp-action-control-group .mass-action-buttons {
     align-items: center;
 }
 
-.storage-status {
-    border-color: rgba(128, 183, 255, 0.24);
-
-    background:
-        radial-gradient(circle at top left, rgba(128, 183, 255, 0.08), transparent 42%),
-        linear-gradient(135deg, rgba(25, 33, 47, 0.84), rgba(12, 10, 16, 0.90));
-
-    color: var(--color-blue-soft);
+/* Kartenbereich:
+   aktive Karten werden nach oben versetzt. Deshalb braucht der horizontale
+   Bereich oben und unten bewusst mehr Luft, damit nichts abgeschnitten wird. */
+.creature-list-section,
+.card-row-shell,
+.creature-list {
+    overflow-y: visible;
 }
 
-.combat-log-entry {
-    border-color: rgba(124, 91, 182, 0.20);
-
-    background:
-        linear-gradient(135deg, rgba(28, 22, 36, 0.68), rgba(10, 8, 12, 0.78));
+.creature-list {
+    padding-top: 18px;
+    padding-bottom: 36px;
 }
 
-.combat-log-time {
-    color: var(--color-purple-soft);
+.creature-card {
+    margin-bottom: 8px;
 }
 
-.combat-log-text {
-    color: var(--color-text-muted);
+/* Aktive Karte bleibt angehoben, aber nicht so stark, dass sie aus dem
+   Kartenbereich herausgeschnitten wirkt. */
+.creature-card.active {
+    transform: translateY(-6px);
 }
 
-
-/* ------------------------------------------------------------
-   Responsive
-   ------------------------------------------------------------ */
-
-@media (max-width: 900px) {
-    .combat-action-row,
-    .combat-support-row {
-        grid-template-columns: 1fr;
-    }
+.creature-card.active.selectable-card:hover {
+    transform: translateY(-6px);
 }
 
-@media (max-width: 760px) {
-    .turn-info {
-        grid-template-columns: 1fr;
-        gap: 14px;
-    }
-
-    .turn-actions-inline {
-        width: 100%;
-        justify-content: stretch;
-    }
-
-    .turn-actions-inline button {
-        flex: 1 1 150px;
-    }
-}
-
+/* Mobile Anpassung für die zusätzliche Karten-Luft. */
 @media (max-width: 560px) {
-    .turn-info {
-        padding: 16px;
+    .creature-list {
+        padding-top: 12px;
+        padding-bottom: 24px;
     }
 
-    .turn-info h2 {
-        font-size: 28px;
-    }
-
-    .control-group,
-    .combat-log-panel,
-    .selection-control-panel {
-        padding: 16px !important;
-    }
-
-    .turn-actions-inline {
-        padding: 0;
-        border: 0;
-        background: transparent;
-        box-shadow: none;
-    }
-
-    .turn-actions-inline button,
-    .selection-actions button,
-    .mass-action-buttons button,
-    .cleanup-action-buttons button {
-        transform: none;
+    .creature-card {
+        margin-bottom: 4px;
     }
 }
+
