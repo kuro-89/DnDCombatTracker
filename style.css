@@ -3401,3 +3401,75 @@ body.player-view .public-preview-section {
     }
 }
 
+/* ============================================================
+   Mobile Fix: Encounter-Steuerung
+   Verhindert horizontales Überlaufen auf Handybreite
+   ============================================================ */
+
+@media (max-width: 760px) {
+    .encounter-command-section {
+        overflow: hidden;
+    }
+
+    .encounter-control-layout {
+        grid-template-columns: 1fr;
+        gap: 14px;
+        min-width: 0;
+    }
+
+    .turn-info {
+        grid-template-columns: 1fr;
+        gap: 14px;
+        min-width: 0;
+        width: 100%;
+    }
+
+    .turn-info-main {
+        min-width: 0;
+    }
+
+    .turn-info h2,
+    .turn-info p {
+        max-width: 100%;
+    }
+
+    .turn-actions-inline {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 8px;
+
+        width: 100%;
+        min-width: 0;
+        padding: 0;
+
+        border: 0;
+        background: transparent;
+        box-shadow: none;
+    }
+
+    .turn-actions-inline button {
+        width: 100%;
+        min-width: 0;
+
+        text-align: center;
+        white-space: normal;
+    }
+
+    .turn-command-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+
+        width: 100%;
+        min-width: 0;
+        padding: 14px;
+    }
+
+    .turn-command-actions button {
+        width: 100%;
+        min-width: 0;
+
+        text-align: center;
+        white-space: normal;
+    }
+}
